@@ -34,13 +34,13 @@ The following parameters are used for identifying resources:
 
 Parameter | Type | Description
 --- | --- | ---
-agencyID | *string compliant with the SDMX common:NCNameIDType* | The agency maintaining the artefact to be returned.
-resourceID | *string compliant with the SDMX common:IDType* | The id of the artefact to be returned. 
-version | *string compliant with the SDMX common:VersionType* | The version of the artefact to be returned.
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned.
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. 
+version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned.
 
 The parameters mentioned above are specified using the following syntax:
 
-protocol://ws-entry-point/resource/agencyID/resourceID/version
+    protocol://ws-entry-point/resource/agencyID/resourceID/version
     
 Furthermore, some keywords may be used:
 
