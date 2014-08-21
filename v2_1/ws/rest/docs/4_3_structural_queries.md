@@ -44,26 +44,19 @@ The parameters mentioned above are specified using the following syntax:
     
 Furthermore, some keywords may be used:
 
-Keywords | Scope | Description
---- | --- | ---
-all<sup>[6](#fn-6)</sup> | agencyID | Default, returns artefacts maintained by any maintenance agency<sup>[7](#fn-7)</sup>
-all | resourceID | Default, returns all resources of the type defined by the resource parameter<sup>[7](#fn-7)</sup>
-all | version | Returns all versions of the resource
-latest | version | Default, returns the latest version in production of the resource<sup>[7](#fn-7)</sup>
+Keywords | Scope | Description | Default?
+--- | --- | --- | ---
+all<sup>[6](#fn-6)</sup> | agencyID | Returns artefacts maintained by any maintenance agency<sup>[7](#fn-7)</sup> | Yes
+all | resourceID | Returns all resources of the type defined by the resource parameter<sup>[7](#fn-7)</sup> | Yes
+all | version | Returns all versions of the resource | No
+latest | version | Returns the latest version in production of the resource<sup>[7](#fn-7)</sup> | Yes
 
 The following rules apply:
 
-- If no version is specified, the version currently used in production should
-be returned. It is therefore equivalent to using the keyword "latest".
--  If no agencyID is specified, the matching artefacts maintained by any
-maintenance agency should be returned. It is therefore equivalent to using the
-keyword "all"<sup>[8](#fn-8)</sup>.
-- If no resourceID is specified, all matching artefacts (according to the other
-criteria used) should be returned. It's is therefore equivalent to using the
-keyword "all".
-- If no parameters are specified, the "latest" version of "all" resources of
-the type identified by the resource parameter, maintained by any maintenance
-agency should be returned.
+- If no version is specified, the version currently used in production should be returned. It is therefore equivalent to using the keyword "latest".
+-  If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the keyword "all"<sup>[8](#fn-8)</sup>.
+- If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword "all".
+- If no parameters are specified, the "latest" version of "all" resources of the type identified by the resource parameter, maintained by any maintenance agency should be returned.
 
 
 #### Parameters used to further describe the desired results
