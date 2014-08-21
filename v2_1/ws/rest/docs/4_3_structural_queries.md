@@ -40,7 +40,7 @@ version | *string compliant with the SDMX common:VersionType* | The version of t
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol://ws-entry-point/resource/agencyID/resourceID/version
+protocol://ws-entry-point/resource/agencyID/resourceID/version
     
 Furthermore, some keywords may be used:
 
@@ -101,23 +101,23 @@ StructureSet | DataStructureDefinitions, MetadataStructureDefinitions, CategoryS
 
 ### Examples
 
-1. To retrieve version 1.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
+* To retrieve version 1.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
 
         http://ws-entry-point/datastructure/ECB/ECB_EXR1/1.0?references=children
 
-2. To retrieve the latest version in production of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
+* To retrieve the latest version in production of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
 
         http://ws-entry-point/datastructure/ECB/ECB_EXR1
 
-3. To retrieve all DSDs maintained by the ECB, as well as the dataflows using these DSDs:
+* To retrieve all DSDs maintained by the ECB, as well as the dataflows using these DSDs:
 
         http://ws-entry-point/datastructure/ECB?references=dataflow
 
-4. To retrieve the latest version in production of all code lists maintained by all maintenance agencies, but without the codes:
+* To retrieve the latest version in production of all code lists maintained by all maintenance agencies, but without the codes:
 
         http://ws-entry-point/codelist?detail=allstubs
 
-5. To retrieve, as stubs, the latest version in production of all maintainable artefacts maintained by the ECB:
+* To retrieve, as stubs, the latest version in production of all maintainable artefacts maintained by the ECB:
 
         http://ws-entry-point/structure/ECB?detail=allstubs
 
