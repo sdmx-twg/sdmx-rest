@@ -33,35 +33,24 @@ The following resources are defined:
 
 The following parameters are used for identifying resources:
 
-agencyID
-  : *string compliant with the SDMX common:NCNameIDType*
-
-	  The agency maintaining the artefact to be returned. Keywords:
-
-    all
-      : Default, returns artefacts maintained by any maintenance agency
-
-resourceID
-  : *string compliant with the SDMX common:IDType*
-
-	  The id of the artefact to be returned. Keywords:
-
-    all
-      : Default, returns all resources of the type defined by the resource parameter
-
-version
-  : *string compliant with the SDMX common:VersionType*
-
-	  The version of the artefact to be returned. Keywords:
-
-    all
-      : Returns all versions of the resource
-    latest
-      : Default, returns the latest version in production of the resource
+Parameter | Type | Description
+--- | --- | ---
+agencyID | *string compliant with the SDMX common:NCNameIDType* | The agency maintaining the artefact to be returned.
+resourceID | *string compliant with the SDMX common:IDType* | The id of the artefact to be returned. 
+version | *string compliant with the SDMX common:VersionType* | The version of the artefact to be returned.
 
 The parameters mentioned above are specified using the following syntax:
 
     protocol://ws-entry-point/resource/agencyID/resourceID/version
+    
+Furthermore, some keywords may be used:
+
+Keywords | Scope | Description
+--- | --- | ---
+all | agencyID | Default, returns artefacts maintained by any maintenance agency
+all | resourceID | Default, returns all resources of the type defined by the resource parameter 
+all | version | Returns all versions of the resource
+latest | version | Default, returns the latest version in production of the resource
 
 The following rules apply:
 
