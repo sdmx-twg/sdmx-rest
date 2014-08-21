@@ -53,10 +53,10 @@ latest | version | Returns the latest version in production of the resource<sup>
 
 The following rules apply:
 
-- If no version is specified, the version currently used in production should be returned. It is therefore equivalent to using the keyword "latest".
--  If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the keyword "all"<sup>[8](#fn-8)</sup>.
-- If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword "all".
-- If no parameters are specified, the "latest" version of "all" resources of the type identified by the resource parameter, maintained by any maintenance agency should be returned.
+- If no version is specified, the version currently used in production should be returned. It is therefore equivalent to using the keyword `latest`.
+-  If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the keyword `all`<sup>[8](#fn-8)</sup>.
+- If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `all`.
+- If no parameters are specified, the **latest** version of **all** resources of the type identified by the resource parameter, maintained by **any** maintenance agency should be returned.
 
 
 #### Parameters used to further describe the desired results
