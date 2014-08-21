@@ -16,31 +16,24 @@ This resource allows a client to ask a service to return an XML schema, which de
 
 The following parameters are used for identifying resources:
 
-- **context**
-    - *Type*: One of the following:
-        - datastructure
-        - metadatastructure
-        - dataflow
-        - metadataflow
-        - provisionagreement
-    - *Description*: The value of this parameter determines the constraints that need to be taken into account, when generating the schema. If datastructure or metadatastructure is used, constraints attached to the DSD or MSD must be applied when generating the schema. If dataflow or metadataflow is used, constraints attached to the dataflow or metadataflow and to the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema. If provisionagreement is used, constraints attached to the provision agreement, as well as to the dataflow or metadafalow used in the agreement and the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema.
-- **agencyID**
-    - *Type*: A string compliant with the SDMX common:NCNameIDType
-    - *Description*: The agency maintaining the artefact used to generate the schema to be returned.
-- **resourceID**
-    - *Type*: A string compliant with the SDMX common: IDType
-    - *Description*: The id of the artefact used to generate the schema to be returned.
-- **version**
-    - *Type*: A string compliant with the SDMX common:VersionType
-    - *Description*: The version of the artefact used to generate the schema to be returned.
-    - *Keywords*:
-        - latest: Returns the latest version in production of the resource
-
-As the query for schema must match one artefact only, the keyword "all" is not supported for agencyId and resourceId.
+Parameter | Type | Description
+--- | --- | ---
+context | One of the following: datastructure, metadatastructure, dataflow, metadataflow, provisionagreement | The value of this parameter determines the constraints that need to be taken into account, when generating the schema. If datastructure or metadatastructure is used, constraints attached to the DSD or MSD must be applied when generating the schema. If dataflow or metadataflow is used, constraints attached to the dataflow or metadataflow and to the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema. If provisionagreement is used, constraints attached to the provision agreement, as well as to the dataflow or metadafalow used in the agreement and the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema.
+agencyID | A string compliant with the SDMX common:NCNameIDType | The agency maintaining the artefact used to generate the schema to be returned.
+resourceID | A string compliant with the SDMX common:IDType | The id of the artefact used to generate the schema to be returned.
+version | A string compliant with the SDMX common:VersionType | The version of the artefact used to generate the schema to be returned.
 
 The parameters mentioned above are specified using the following syntax:
 
     protocol:// ws-entry-point/schema/context/agencyID/resourceID/version
+    
+Furthermore, a keyword may be used:
+
+Keyword | Scope | Description 
+--- | --- | ---
+latest | version | Returns the latest version in production of the resource
+
+As the query for schema must match one artefact only, the keyword "all" is not supported for agencyId and resourceId.
 
 The following rules apply:
 
@@ -50,12 +43,10 @@ The following rules apply:
 
 The following parameters are used to further describe the desired results, once the resource has been identified:
 
-- **dimensionAtObservation**
-    - *Type*: A string compliant with the SDMX common: NCNameIDType
-    - *Description*: The ID of the dimension to be attached at the observation level.
-- **explicitMeasure**
-    - *Type*: Boolean
-    - *Description*: For cross-sectional data validation, indicates whether observations are strongly typed (defaults to false).
+Parameter | Type | Description
+--- | --- | ---
+dimensionAtObservation | A string compliant with the SDMX common: NCNameIDType | The ID of the dimension to be attached at the observation level.
+explicitMeasure | Boolean | For cross-sectional data validation, indicates whether observations are strongly typed (defaults to false).
 
 ### Examples
 
