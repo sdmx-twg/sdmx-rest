@@ -79,96 +79,26 @@ references | *String* | This attribute instructs the web service to return (or n
 #### Applicability and meaning of references attribute
 
 The table below lists the artefacts that will be returned if the references
-parameter is set to "all" (Maintainable artefact, Artefacts returned).
+parameter is set to "all".
 
-Categorisation
-  : All
-
-    - All
-
-CategoryScheme
-  :
-
-    - Categorisations
-
-Codelist
-  :
-
-    HierarchicalCodelist
-
-ConceptScheme
-  :
-
-    Codelists
-
-Constraint
-  :
-
-    - OrganisationSchemes
-    - DataProviderSchemes
-
-+------------------------------+------------------------------+
-| Categorisation               | All                          |
-+------------------------------+------------------------------+
-| CategoryScheme               | - Categorisations            |
-+------------------------------+------------------------------+
-| Codelist                     | HierarchicalCodelist         |
-+------------------------------+------------------------------+
-| ConceptScheme                | Codelists                    |
-+------------------------------+------------------------------+
-| Constraint                   | OrganisationSchemes          |
-|                              | DataProviderSchemes          |
-+------------------------------+------------------------------+
-| Dataflow                     | - Constraints                |
-|                              | - DataStructureDefinitions   |
-|                              | - ProvisionAgreements        |
-|                              | - ReportingTaxonomies        |
-|                              | - StructureSets              |
-+------------------------------+------------------------------+
-| DataProviderScheme           | Constraint                   |
-|                              | ProvisionAgreement           |
-+------------------------------+------------------------------+
-| HierarchicalCodelist         | Codelists                    |
-+------------------------------+------------------------------+
-| DataStructureDefinition      | Codelists                    |
-|                              | ConceptSchemes               |
-|                              | Constraints                  |
-|                              | Dataflows                    |
-|                              | StructureSets                |
-+------------------------------+------------------------------+
-| Metadataflow                 | Constraints                  |
-|                              | MetadataStructureDefinitions |
-|                              | ProvisionAgreements          |
-|                              | ReportingTaxonomies          |
-|                              | StructureSets                |
-+------------------------------+------------------------------+
-| MetadataStructureDefinition  | ConceptSchemes               |
-|                              | Codelists                    |
-|                              | DataProviderSchemes          |
-|                              | DataConsumerSchemes          |
-|                              | AgencySchemes                |
-|                              | OrganisationSchemes          |
-|                              | Constraints                  |
-|                              | Metadataflows                |
-|                              | StructureSets                |
-+------------------------------+------------------------------+
-
-
-OrganisationScheme
-:    None
-
-Process
-:    All
-
-ProvisionAgreement
-:    DataProviderSchemes, Dataflows, Metadataflows
-
-ReportingTaxonomy
-:    Dataflows, Metadataflows
-
-StructureSet
-:    DataStructureDefinitions, MetadataStructureDefinitions, CategorySchemes, DataProviderSchemes, DataConsumerSchemes, AgencySchemes, OrganisationSchemes, ConceptSchemes, Codelists, HierarchicalCodelists
-
+Maintainable artefact | Artefacts returned
+--- | ---
+Categorisation | All
+CategoryScheme | Categorisations
+Codelist | HierarchicalCodelist
+ConceptScheme |  Codelists
+Constraint | OrganisationSchemes, DataProviderSchemes, DataStructureDefinitions, Dataflows, MetadataStructureDefinitions, Metadataflows, ProvisionAgreements
+Dataflow | Constraints, DataStructureDefinitions, ProvisionAgreements, ReportingTaxonomies, StructureSets
+DataProviderScheme | Constraint, ProvisionAgreement
+HierarchicalCodelist | Codelists
+DataStructureDefinition | Codelists, ConceptSchemes, Constraints, Dataflows, StructureSets
+Metadataflow | Constraints, MetadataStructureDefinitions, ProvisionAgreements, ReportingTaxonomies, StructureSets
+MetadataStructureDefinition | ConceptSchemes, Codelists, DataProviderSchemes, DataConsumerSchemes, AgencySchemes, OrganisationSchemes, Constraints, Metadataflows, StructureSets
+OrganisationScheme | None
+Process | All
+ProvisionAgreement | DataProviderSchemes, Dataflows, Metadataflows
+ReportingTaxonomy | Dataflows, Metadataflows
+StructureSet | DataStructureDefinitions, MetadataStructureDefinitions, CategorySchemes, DataProviderSchemes, DataConsumerSchemes, AgencySchemes, OrganisationSchemes, ConceptSchemes, Codelists, HierarchicalCodelists
 
 ### Examples
 
