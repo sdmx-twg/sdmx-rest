@@ -1,4 +1,4 @@
-  ## Structural Metadata Queries
+## Structural Metadata Queries
 
 ### Resources
 
