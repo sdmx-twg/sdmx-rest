@@ -13,36 +13,27 @@ The following resources should be supported:
 
 The following parameters are used for identifying resources in data queries:
 
-- **flowRef**[^C44_13]
-    - *Type*: A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a ",". For example:
-        - AGENCY_ID,FLOW_ID,VERSION
-        - In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. ALL,FLOW_ID,LATEST
-        - In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,LATEST
-    - *Description*: The data (or metadata) flow of the data (or metadata) to be returned
-- **key**
-    - *Type*: A string compliant with the KeyType defined in the SDMX WADL.
-    - *Description*: The key of the artefact to be returned.
-        - Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A.
-        - The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
-    - *Keywords*:
-        - "all": Returns all data belonging to the specified dataflow and provided by the specified provider.
-- **providerRef**[^C44_14]
-    - *Type*: A string identifying the provider. The syntax is agency id, provider id, separated by a ",". For example: AGENCY_ID,PROVIDER_ID. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. ALL,PROVIDER_ID.
-    - *Description*: The provider of the data (or metadata) to be retrieved. If not supplied, the returned message will contain data (or metadata) provided by any provider.
-    - *Keywords*:
-        - "all": Returns all data matching the supplied key and belonging to the specified dataflow that has been provided by any data provider.
-
-[^C44_13]: Its a common use case in SDMX-based web services that the flow id is sufficient to uniquely identify a dataflow. Should this not be the case, the agency id and the dataflow version, can be used, in conjunction with the flow id, in order to uniquely identify a dataflow.
+Parameter | Type | Description
+--- | --- | ---
+flowRef[^C44_13] | A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a ",". For example: AGENCY_ID,FLOW_ID,VERSION. In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. ALL,FLOW_ID,LATEST. In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,LATEST. | The data (or metadata) flow of the data (or metadata) to be returned
+key | A string compliant with the KeyType defined in the SDMX WADL. | The key of the artefact to be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A.The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
+providerRef[^C44_14] | A string identifying the provider. The syntax is agency id, provider id, separated by a ",". For example: AGENCY_ID,PROVIDER_ID. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. ALL,PROVIDER_ID. | The provider of the data (or metadata) to be retrieved. If not supplied, the returned message will contain data (or metadata) provided by any provider.
 
 The parameters mentioned above are specified using the following syntax:
 
     protocol://ws-entry-point/resource/flowRef/key/providerRef
+    
+Furthermore, some keywords may be used:
+
+Keywords | Scope | Description
+--- | --- | ---
+all | key | Returns all data belonging to the specified dataflow and provided by the specified provider.
+all | providerRef | Returns all data matching the supplied key and belonging to the specified dataflow that has been provided by any data provider.
 
 The following rules apply:
 
 - If no key is specified, all data (or metadata) belonging to the dataflow (or metadataflow) identified by the flowRef should be supplied. It is therefore equivalent to using the keyword "all".
 - If no providerRef is specified, the matching data (or metadata) provided by any data provider should be returned. It is therefore equivalent to using the keyword "all".
-
 
 #### Parameters used to further filter the desired results
 
@@ -135,3 +126,5 @@ The table below defines the meaning of parameters combinations:
 
         http://ws-entry-point/data/ECB_EXR1_WEB/D.USD.EUR.SP00.A?
         startPeriod=2009-05-01&endPeriod=2009-05-31
+        
+[^C44_13]: Its a common use case in SDMX-based web services that the flow id is sufficient to uniquely identify a dataflow. Should this not be the case, the agency id and the dataflow version, can be used, in conjunction with the flow id, in order to uniquely identify a dataflow.
