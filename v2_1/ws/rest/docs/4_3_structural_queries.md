@@ -122,13 +122,24 @@ StructureSet | DataStructureDefinitions, MetadataStructureDefinitions, CategoryS
         http://ws-entry-point/structure/ECB?detail=allstubs
 
 <a name="fn-1"></a>[1]: This has been shortened from DataStructureDefinition to allow for shorter URLs.
+
 <a name="fn-2"></a>[2]: This has been shortened from MetadataStructureDefinition to allow for shorter URLs.
+
 <a name="fn-3"></a>[3] The organisationscheme resource can be used whenever the role played by the organisation schemes (e.g. maintenance agencies) is not known/relevant.
+
 <a name="fn-4"></a>[4]: For 3 of the subtypes of OrganisationScheme (AgencyScheme, DataProviderScheme and DataConsumerScheme), the id and version parameters have fixed values. See Section 03 of the SDMX information model document for additional information.
+
 <a name="fn-5"></a>[5]: This type can be used to retrieve any type of structural metadata matching the supplied parameters.
+
 <a name="fn-6"></a>[6]: As "all" is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for agencies, resources or a specific version.
+
 <a name="fn-7"></a>[7]: Default, if parameter not specified
+
 <a name="fn-8"></a>[8]: This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/all/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
+
 <a name="fn-9"></a>[9]: The equivalent in SDMX-ML query is: Stub at the query level and Stub at the reference level.
+
 <a name="fn-10"></a>[10]: The equivalent in SDMX-ML query is: Full at the query level and Stub at the reference level.
+
 <a name="fn-11"></a>[11]: The equivalent in SDMX-ML query is: Full at the query level and Full at the reference level.
+
