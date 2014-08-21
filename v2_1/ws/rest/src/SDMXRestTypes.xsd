@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.sdmx.org/resources/rest/schemas/v2_1/types"
+    xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common"
+    targetNamespace="http://www.sdmx.org/resources/rest/schemas/v2_1/types"> 
+    <xs:import namespace="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" schemaLocation="../schemas/SDMXCommonReferences.xsd"/>
+
+    <xs:simpleType name="KeyType">
+        <xs:annotation>
+            <xs:documentation>The key of the artefact to be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. 
+                For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, 
+                then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A. 
+                The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates 
+                against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([A-z0-9_@$\-]+)(\.(([A-z0-9_@$\-]+)(\+([A-z0-9_@$\-]+))*)?)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="ProviderRefType">
+        <xs:annotation>
+            <xs:documentation>A string identifying the provider. The syntax is agency id, provider id, separated by a “,”. For example: AGENCY_ID,PROVIDER_ID.
+                In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. ALL,PROVIDER_ID.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([A-z][A-z0-9_\-]*(\.[A-z][A-z0-9_\-]*)*\,)?([A-z0-9_@$\-]+)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="FlowRefType">
+        <xs:annotation>
+            <xs:documentation>A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a “,”. For example: AGENCY_ID,FLOW_ID,VERSION
+                In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. ALL,FLOW_ID,LATEST
+                In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,LATEST
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([A-z0-9_@$\-]+)|(([A-z][A-z0-9_\-]*(\.[A-z][A-z0-9_\-]*)*)(\,[A-z0-9_@$\-]+)(\,(latest|([0-9]+(\.[0-9]+)*)))?)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+
+    <xs:simpleType name="allType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="all"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="latestType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="latest"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="IDType">
+        <xs:annotation>
+            <xs:documentation>IDType for WADL is used to indicate the possible values for a WADL Resource parameter.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="allType common:IDType"></xs:union>
+    </xs:simpleType>
+    
+    <xs:simpleType name="NCNameIDType">
+        <xs:annotation>
+            <xs:documentation>NCNameIDType for WADL is used to indicate the possible values for a WADL Resource parameter.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="allType common:NCNameIDType"></xs:union>
+    </xs:simpleType>
+    
+    <xs:simpleType name="VersionType">
+        <xs:annotation>
+            <xs:documentation>VersionType for WADL is used to indicate the possible values for a WADL Resource parameter</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="latestType allType common:VersionType"></xs:union>
+    </xs:simpleType>
+
+    <xs:simpleType name="DetailType">
+        <xs:annotation>
+            <xs:documentation>DetailType for WADL is used to indicate the possible values for a WADL Resource parameter. 
+                This parameter specifies the desired amount of information to be returned. 
+                For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). 
+                Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). 
+                Possible values are: "allstubs" (all artefacts should be returned as stubs ), "referencestubs" (referenced artefacts should be returned as stubs ) 
+                and full (all available information for all artefacts should be returned ).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="allstubs"/>
+            <xs:pattern value="referencestubs"/>
+            <xs:pattern value="full"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="ReferencesType">
+        <xs:annotation>
+            <xs:documentation>ReferencesType for WADL is used to indicate the possible values for a WADL Resource parameter.
+                This parameter instructs the web service to return (or not) the artefacts referenced by the artefact to be returned 
+                (for example, the code lists and concepts used by the data structure definition matching the query), 
+                as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). 
+                Possible values are: "none" (no references will be returned), "parents" (the artefacts that use the artefact matching the query), 
+                "parentsandsiblings" (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), 
+                "children" (artefacts referenced by the artefact to be returned), "descendants" (references of references, up to any level, will also be returned), 
+                "all" (the combination of parentsandsiblings and descendants).  In addition, a concrete type of resource, as defined in 3.3.1, may also be used (for example, references=codelist).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="none"/>
+            <xs:pattern value="parents"/>
+            <xs:pattern value="parentsandsiblings"/>
+            <xs:pattern value="children"/>
+            <xs:pattern value="descendants"/>
+            <xs:pattern value="all"/>
+            <!-- Specific reference artefact type -->
+            <xs:pattern value="datastructure"/>
+            <xs:pattern value="metadatastructure"/>
+            <xs:pattern value="categoryscheme"/>
+            <xs:pattern value="conceptscheme"/>
+            <xs:pattern value="codelist"/>
+            <xs:pattern value="hierarchicalcodelist"/>
+            <xs:pattern value="organisationscheme "/>
+            <xs:pattern value="agencyscheme"/>
+            <xs:pattern value="dataproviderscheme"/>
+            <xs:pattern value="dataconsumerscheme"/>
+            <xs:pattern value="organisationunitscheme"/>
+            <xs:pattern value="dataflow"/>
+            <xs:pattern value="metadataflow"/>
+            <xs:pattern value="reportingtaxonomy"/>
+            <xs:pattern value="provisionagreement"/>
+            <xs:pattern value="structureset"/>
+            <xs:pattern value="process"/>
+            <xs:pattern value="categorisation"/>
+            <xs:pattern value="contentconstraint"/>
+            <xs:pattern value="attachmentconstraint"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	<xs:simpleType name="SchemaContextType">
+		<xs:annotation>
+            <xs:documentation>SchemaContextType for WADL is used to indicate the possible values for a WADL Resource parameter.
+                The value of this parameter determines the constraints that need to be taken into account, when generating the schema. 
+                If datastructure or metadatastructure is used, constraints attached to the DSD or MSD must be applied when generating the schema. 
+                If dataflow or metadataflow is used, constraints attached to the dataflow or metadataflow and to the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema. 
+                If provisionagreement is used, constraints attached to the provision agreement, as well as to the dataflow or metadafalow used in the agreement and the DSD or MSD 
+                used in the dataflow or metadataflow must be applied when generating the schema.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="datastructure"/>
+            <xs:pattern value="dataflow"/>
+            <xs:pattern value="provisionagreement"/>
+            <xs:pattern value="metadatastructure"/>
+            <xs:pattern value="metadatafow"/>                        
+        </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DataDetailType">
+        <xs:annotation>
+            <xs:documentation>DataDetailType for WADL is used to indicate the possible values for a WADL Resource parameter.
+                This attribute specifies the desired amount of information to be returned. 
+                For example, it is possible to instruct the web service to return data only (i.e. no attributes). 
+                Possible options are: "full" (all data and documentation, including annotations - This is the default), 
+                "dataonly" (attributes, and therefore groups, will be excluded from the returned message), 
+                "serieskeysonly" (returns only the series elements and the dimensions that make up the series keys. 
+                This is useful for performance reasons, to return the series that match a certain query, without returning the actual data), 
+                "nodata" (returns the groups and series, including attributes and annotations, without observations).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="full"/>
+            <xs:pattern value="dataonly"/>
+            <xs:pattern value="serieskeysOnly"/>
+            <xs:pattern value="nodata"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
