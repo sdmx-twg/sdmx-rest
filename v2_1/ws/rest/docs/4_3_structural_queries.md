@@ -44,12 +44,12 @@ The parameters mentioned above are specified using the following syntax:
     
 Furthermore, some keywords may be used:
 
-Keywords | Scope | Description | Default?
---- | --- | --- | ---
-all<sup>[6](#fn-6)</sup> | agencyID | Returns artefacts maintained by any maintenance agency<sup>[7](#fn-7)</sup> | Yes
-all | resourceID | Returns all resources of the type defined by the resource parameter<sup>[7](#fn-7)</sup> | Yes
-all | version | Returns all versions of the resource | No
-latest | version | Returns the latest version in production of the resource<sup>[7](#fn-7)</sup> | Yes
+Keywords | Scope | Description
+--- | --- | ---
+all<sup>[6](#fn-6)</sup> | agencyID | Returns artefacts maintained by any maintenance agency<sup>[7](#fn-7)</sup>
+all | resourceID | Returns all resources of the type defined by the resource parameter<sup>[7](#fn-7)</sup>
+all | version | Returns all versions of the resource
+latest | version | Returns the latest version in production of the resource<sup>[7](#fn-7)</sup>
 
 The following rules apply:
 
