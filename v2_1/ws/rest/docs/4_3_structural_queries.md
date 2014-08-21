@@ -124,7 +124,7 @@ StructureSet | DataStructureDefinitions, MetadataStructureDefinitions, CategoryS
 
 <a name="fn-5"></a>[5] This type can be used to retrieve any type of structural metadata matching the supplied parameters.
 
-<a name="fn-6"></a>[6] As "all" is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for agencies, resources or a specific version.
+<a name="fn-6"></a>[6] As `all` is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for agencies, resources or a specific version.
 
 <a name="fn-7"></a>[7] Default, if parameter not specified
 
