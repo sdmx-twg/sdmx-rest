@@ -71,47 +71,10 @@ agency should be returned.
 
 The following parameters are used to further describe the desired results, once the resource has been identified. As mentioned in 3.2, these parameters appear in the query string part of the URL.
 
-detail
-  : *String*
-
-    This attribute specifies the desired amount of information to be returned.
-    For example, it is possible to instruct the web service to return only basic
-    information about the maintainable artefact (i.e.: id, agency id, version
-    and name). Most notably, items of item schemes will not be returned (for
-    example, it will not return the codes in a code list query). Keywords:
-
-    allstubs
-      : all artefacts should be returned as stubs[^10]
-    referencestubs
-      : referenced artefacts should be returned as stubs[^11]
-    full
-      : default, all available information for all artefacts should be returned[^12]
-
-references
-  : *String*
-
-    This attribute instructs the web service to return (or not) the artefacts
-    referenced by the artefact to be returned (for example, the code lists and
-    concepts used by the data structure definition matching the query), as well
-    as the artefacts that use the matching artefact (for example, the dataflows
-    that use the data structure definition matching the query). Keywords:
-
-	  none
-      : default, no references will be returned
-    parents
-      : the artefacts that use the artefact matching the query
-    parentsandsiblings
-      : the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts
-    children
-      : artefacts referenced by the artefact to be returned
-    descendants
-      : references of references, up to any level, will also be returned
-    all
-      : the combination of parentsandsiblings and descendants
-
-    In addition, a concrete type of resource, as defined in 3.3.1, may also be
-    used (for example, references=codelist).
-
+Parameter | Type | Description | Default
+--- | --- | --- | ---
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: *allstubs* (all artefacts should be returned as stubs[^10]), *referencestubs* (referenced artefacts should be returned as stubs[^11]) and *full* (all available information for all artefacts should be returned[^12]). | full
+references | *String* | This attribute instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). Possible values are: *none* (no references will be returned), *parents* (the artefacts that use the artefact matching the query), *parentsandsiblings* (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), *children* (artefacts referenced by the artefact to be returned), *descendants* (references of references, up to any level, will also be returned), *all* (the combination of parentsandsiblings and descendants). In addition, a concrete type of resource, as defined in 3.3.1, may also be used (for example, references=codelist). | none
 
 #### Applicability and meaning of references attribute
 
