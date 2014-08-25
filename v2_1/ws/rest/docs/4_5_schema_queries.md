@@ -19,7 +19,7 @@ The following parameters are used for identifying resources:
 Parameter | Type | Description
 --- | --- | ---
 context | One of the following: `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement` | The value of this parameter determines the constraints that need to be taken into account, when generating the schema. If datastructure or metadatastructure is used, constraints attached to the DSD or MSD must be applied when generating the schema. If dataflow or metadataflow is used, constraints attached to the dataflow or metadataflow and to the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema. If provisionagreement is used, constraints attached to the provision agreement, as well as to the dataflow or metadafalow used in the agreement and the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema.
-agencyID | A string compliant with the SDMX common:NCNameIDType | The agency maintaining the artefact used to generate the schema to be returned.
+agencyID | A string compliant with the *SDMX common:NCNameIDType* | The agency maintaining the artefact used to generate the schema to be returned.
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact used to generate the schema to be returned.
 version | A string compliant with the SDMX *common:VersionType* | The version of the artefact used to generate the schema to be returned.
 
@@ -46,7 +46,7 @@ The following parameters are used to further describe the desired results, once 
 Parameter | Type | Description
 --- | --- | ---
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level.
-explicitMeasure | Boolean | For cross-sectional data validation, indicates whether observations are strongly typed (defaults to `false`).
+explicitMeasure | *Boolean* | For cross-sectional data validation, indicates whether observations are strongly typed (defaults to `false`).
 
 ### Examples
 
