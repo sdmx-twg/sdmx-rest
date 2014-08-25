@@ -70,27 +70,28 @@ references | *String* | This attribute instructs the web service to return (or n
 
 #### Applicability and meaning of references attribute
 
-The table below lists the artefacts that will be returned if the references
-parameter is set to "all".
+The table below lists the 1st level artefacts (one level up, one level down) that will be returned if the references parameter is set to `all`. Artefacts referenced by the matching artefact are displayed in regular style, while the artefacts that reference the matching artefact are displayed in *Italic*.
 
 Maintainable artefact | Artefacts returned
 --- | ---
+AgencyScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
 Categorisation | All
-CategoryScheme | Categorisations
-Codelist | HierarchicalCodelist
-ConceptScheme |  Codelists
-Constraint | OrganisationSchemes, DataProviderSchemes, DataStructureDefinitions, Dataflows, MetadataStructureDefinitions, Metadataflows, ProvisionAgreements
-Dataflow | Constraints, DataStructureDefinitions, ProvisionAgreements, ReportingTaxonomies, StructureSets
-DataProviderScheme | Constraint, ProvisionAgreement
-HierarchicalCodelist | Codelists
-DataStructureDefinition | Codelists, ConceptSchemes, Constraints, Dataflows, StructureSets
-Metadataflow | Constraints, MetadataStructureDefinitions, ProvisionAgreements, ReportingTaxonomies, StructureSets
-MetadataStructureDefinition | ConceptSchemes, Codelists, DataProviderSchemes, DataConsumerSchemes, AgencySchemes, OrganisationSchemes, Constraints, Metadataflows, StructureSets
-OrganisationScheme | None
+CategoryScheme | *Categorisations*, *Process*, *StructureSet*
+Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
+ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
+Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
+DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
+DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*
+DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*
+HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*
+Metadataflow | *Categorisation*, *Process*, *Constraint*, MetadataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
+MetadataStructureDefinition | *Categorisation*, *Process*, ConceptScheme, Codelist, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, *Constraint*, *Metadataflow*, *StructureSet*
+OrganisationUnitScheme | *Categorisation*, *Process*, *Constraint*, *MetadataStructureDefinition*, *StructureSet*
 Process | All
-ProvisionAgreement | DataProviderSchemes, Dataflows, Metadataflows
-ReportingTaxonomy | Dataflows, Metadataflows
-StructureSet | DataStructureDefinitions, MetadataStructureDefinitions, CategorySchemes, DataProviderSchemes, DataConsumerSchemes, AgencySchemes, OrganisationSchemes, ConceptSchemes, Codelists, HierarchicalCodelists
+ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
+ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
+StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
 
 ### Examples
 
