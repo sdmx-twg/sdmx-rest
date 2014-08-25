@@ -16,9 +16,9 @@ A few examples are listed below
 
 In case the client does not specify the desired format and version of the response message, or only specifies the generic application/xml format, the SDMX RESTful web service should return:
 
-- The most recent version, that the service support, of the SDMX-ML Structure format for structural metadata queries;
-- The most recent version, that the service support, of the SDMX-ML Generic Data format for data queries;
-- The most recent version, that the service support, of the SDMX-ML Generic Metadata format for metadata queries.
+- The most recent version, that the service supports, of the SDMX-ML Structure format for structural metadata queries;
+- The most recent version, that the service supports, of the SDMX-ML Generic Data format for data queries;
+- The most recent version, that the service supports, of the SDMX-ML Generic Metadata format for metadata queries.
 
 The list below indicates the valid formats for SDMX RESTful web services, compliant with version 2.1 of the SDMX standard:
 
