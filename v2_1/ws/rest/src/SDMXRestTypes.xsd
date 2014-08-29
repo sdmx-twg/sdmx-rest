@@ -16,7 +16,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="([A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+))?([.]([A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+))?)*"/>
+            <!-- (common:IDType([+]common:IDType)*)?([.](common:IDType([+]common:IDType)*)?)* -->
+            <xs:pattern value="([A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+)*)?([.]([A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+)*)?)*"/>
         </xs:restriction>
     </xs:simpleType>
     
@@ -27,6 +28,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
+            <!-- (common:NestedNCNameIDType\,)?(common:IDType) -->
             <xs:pattern value="([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*\,)?([A-Za-z0-9_@$\-]+)"/>
         </xs:restriction>
     </xs:simpleType>
@@ -39,6 +41,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
+            <!-- (common:IDType)|((common:NestedNCNameIDType)(\,common:IDType)(\,(latest|(common:VersionType)))?) -->
             <xs:pattern value="([A-Za-z0-9_@$\-]+)|(([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*)(\,[A-Za-z0-9_@$\-]+)(\,(latest|([0-9]+(\.[0-9]+)*)))?)"/>
         </xs:restriction>
     </xs:simpleType>
