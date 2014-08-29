@@ -16,7 +16,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="([A-Za-z0-9_@$-]+([+][A-Za-z0-9_@$-]+))?([.]([A-Za-z0-9_@$-]+([+][A-Za-z0-9_@$-]+))?)*"/>
+            <xs:pattern value="([A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+))?([.]([A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+))?)*"/>
         </xs:restriction>
     </xs:simpleType>
     
@@ -27,7 +27,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="([A-z][a-zA-Z0-9_\-]*(\.[A-z][a-zA-Z0-9_\-]*)*\,)?([a-zA-Z0-9_@$\-]+)"/>
+            <xs:pattern value="([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*\,)?([A-Za-z0-9_@$\-]+)"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -39,7 +39,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="([a-zA-Z0-9_@$\-]+)|(([a-zA-Z][a-zA-Z0-9_\-]*(\.[a-zA-Z][a-zA-Z0-9_\-]*)*)(\,[a-zA-Z0-9_@$\-]+)(\,(latest|([0-9]+(\.[0-9]+)*)))?)"/>
+            <xs:pattern value="([A-Za-z0-9_@$\-]+)|(([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*)(\,[A-Za-z0-9_@$\-]+)(\,(latest|([0-9]+(\.[0-9]+)*)))?)"/>
         </xs:restriction>
     </xs:simpleType>
     
