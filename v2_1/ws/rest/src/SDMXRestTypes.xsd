@@ -23,7 +23,7 @@
     <xs:simpleType name="ProviderRefType">
         <xs:annotation>
             <xs:documentation>A string identifying the provider. The syntax is agency id, provider id, separated by a “,”. For example: AGENCY_ID,PROVIDER_ID.
-                In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. ALL,PROVIDER_ID.
+                In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. all,PROVIDER_ID.
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
@@ -34,8 +34,8 @@
     <xs:simpleType name="FlowRefType">
         <xs:annotation>
             <xs:documentation>A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a “,”. For example: AGENCY_ID,FLOW_ID,VERSION
-                In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. ALL,FLOW_ID,LATEST
-                In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,LATEST
+                In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. all,FLOW_ID,latest
+                In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,latest
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
