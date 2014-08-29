@@ -18,107 +18,107 @@
     	
     	<!-- Resources for Maintainable artefacts -->
     	<resource id="datastructure" path="datastructure/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-	    	<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>
+	    	<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="metadatastructure" path="metadatastructure/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="categoryscheme" path="categoryscheme/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="conceptscheme" path="conceptscheme/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="codelist" path="codelist/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="hierarchicalcodelist" path="hierarchicalcodelist/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="organisationscheme" path="organisationscheme/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="agencyscheme" path="agencyscheme/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" fixed="AGENCIES"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" fixed="1.0"/>
     	</resource>
     	<resource id="dataproviderscheme" path="dataproviderscheme/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" fixed="DATA_PROVIDERS"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" fixed="1.0"/>
     	</resource>
     	<resource id="dataconsumerscheme" path="dataconsumerscheme/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" fixed="DATA_CONSUMERS"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" fixed="1.0"/>
     	</resource>
     	<resource id="organisationunitscheme" path="organisationunitscheme/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="dataflow" path="dataflow/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="metadataflow" path="metadataflow/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="reportingtaxonomy" path="reportingtaxonomy/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="provisionagreement" path="provisionagreement/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="structureset" path="structureset/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="process" path="process/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="categorisation" path="categorisation/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="contentconstraint" path="contentconstraint/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="attachmentconstraint" path="attachmentconstraint/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
     	<resource id="structure" path="structure/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
-    		<param name="agencyID" type="types:NCNameIDType" style="template" required="false" default="all"/>    	
+    		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     	</resource>
@@ -126,7 +126,7 @@
     	<!-- Resources for Schemas   -->
     	<resource id="schema" path="schema/{context}/{agencyID}/{resourceID}/{version}"> 
     	    <param name="context" type="types:SchemaContextType" style="template" required="true"/>
-    	    <param name="agencyID" type="common:NCNameIDType" style="template" required="true"/>
+    	    <param name="agencyID" type="common:NestedNCNameIDType" style="template" required="true"/>
     		<param name="resourceID" type="common:IDType" style="template" required="true"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     		
