@@ -15,9 +15,9 @@ The following parameters are used for identifying resources in data queries:
 
 Parameter | Type | Description
 --- | --- | ---
-flowRef<sup>[13](#fn-13)</sup> | A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a ",". For example: AGENCY_ID,FLOW_ID,VERSION. In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. ALL,FLOW_ID,LATEST. In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,LATEST. | The data (or metadata) flow of the data (or metadata) to be returned
+flowRef<sup>[13](#fn-13)</sup> | A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a ",". For example: AGENCY_ID,FLOW_ID,VERSION. In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. all,FLOW_ID,latest. In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,latest. | The data (or metadata) flow of the data (or metadata) to be returned
 key | A string compliant with the KeyType defined in the SDMX WADL. | The key of the artefact to be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A.The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
-providerRef<sup>[14](#fn-14)</sup> | A string identifying the provider. The syntax is agency id, provider id, separated by a ",". For example: AGENCY_ID,PROVIDER_ID. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. ALL,PROVIDER_ID. | The provider of the data (or metadata) to be retrieved. If not supplied, the returned message will contain data (or metadata) provided by any provider.
+providerRef<sup>[14](#fn-14)</sup> | A string identifying the provider. The syntax is agency id, provider id, separated by a ",". For example: AGENCY_ID,PROVIDER_ID. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. all,PROVIDER_ID. | The provider of the data (or metadata) to be retrieved. If not supplied, the returned message will contain data (or metadata) provided by any provider.
 
 The parameters mentioned above are specified using the following syntax:
 
@@ -71,9 +71,9 @@ updatedAfterDate + startPeriod/endPeriod | The observations, within the supplied
 
 * To retrieve the data, provided by the ECB for the ECB_EXR1_WEB dataflow, for the supplied series keys, using wildcarding for the second dimension:
 
-        http://ws-entry-point/data/ECB,ECB_EXR1_WEB,LATEST/M..EUR.SP00.A/ECB
+        http://ws-entry-point/data/ECB,ECB_EXR1_WEB,latest/M..EUR.SP00.A/ECB
 
-    In this example, the full reference to the dataflow is supplied (ECB as maintenance agency, ECB_EXR1_WEB as dataflow id and LATEST for the version)
+    In this example, the full reference to the dataflow is supplied (ECB as maintenance agency, ECB_EXR1_WEB as dataflow id and latest for the version)
 
 * To retrieve the updates and revisions for the data matching the supplied series keys, using the OR operator for the second dimension, and using percent encoding for the updatedAfterDate:
 
