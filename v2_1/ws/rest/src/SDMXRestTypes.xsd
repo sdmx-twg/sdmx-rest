@@ -16,7 +16,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="([A-z0-9_@$\-]+)(\.(([A-z0-9_@$\-]+)(\+([A-z0-9_@$\-]+))*)?)*"/>
+            <xs:pattern value="([A-Za-z0-9_@$-]+([+][A-Za-z0-9_@$-]+))?([.]([A-Za-z0-9_@$-]+([+][A-Za-z0-9_@$-]+))?)*"/>
         </xs:restriction>
     </xs:simpleType>
     
