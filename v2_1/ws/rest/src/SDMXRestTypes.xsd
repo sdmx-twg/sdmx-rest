@@ -66,11 +66,11 @@
         <xs:union memberTypes="allType common:IDType"></xs:union>
     </xs:simpleType>
     
-    <xs:simpleType name="NCNameIDType">
+    <xs:simpleType name="NestedNCNameIDType">
         <xs:annotation>
-            <xs:documentation>NCNameIDType for WADL is used to indicate the possible values for a WADL Resource parameter.</xs:documentation>
+            <xs:documentation>NestedNCNameIDType for WADL is used to indicate the possible values for a WADL Resource parameter.</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="allType common:NCNameIDType"></xs:union>
+        <xs:union memberTypes="allType common:NestedNCNameIDType"></xs:union>
     </xs:simpleType>
     
     <xs:simpleType name="VersionType">
