@@ -60,6 +60,42 @@ The following rules apply:
 - If no parameters are specified, the **latest** version of **all** resources of the type identified by the resource parameter, maintained by **any** maintenance agency should be returned.
 
 
+#### Additional parameter used for identifying a resource, for item scheme types
+
+SDMX uses the item scheme pattern to model SDMX collections of items. These are:
+
+- categoryscheme
+- conceptscheme
+- codelist
+- organisationscheme
+- agencyscheme
+- dataproviderscheme
+- dataconsumerscheme
+- organisationunitscheme
+- reportingtaxonomy
+
+For these collections, it is possible to use a 4th parameter for identifying a resource. The rules for the 3 other parameters, as defined in the section above, remain valid.
+
+Parameter | Type | Description
+--- | --- | ---
+itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned.
+
+
+This 4th parameter is used as follows:
+
+    protocol://ws-entry-point/resource/agencyID/resourceID/version/itemID
+
+Furthermore, a keyword may be used:
+
+Keyword | Scope | Description
+--- | --- | ---
+all | itemID | Returns all items belonging to the item scheme
+
+The following rules apply:
+
+- If no itemID is specified, all the items belonging to the item scheme should be returned. It is therefore equivalent to using the keyword `all`.
+- If `itemID` is set, and such an item exists in the matching item scheme, the item scheme returned should contain only the matching item and its `isPartial` parameter should be set to `true`.
+
 #### Parameters used to further describe the desired results
 
 The following parameters are used to further describe the desired results, once the resource has been identified. As mentioned in 3.2, these parameters appear in the query string part of the URL.
@@ -115,6 +151,10 @@ StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStr
 * To retrieve, as stubs, the latest version in production of all maintainable artefacts maintained by the ECB:
 
         http://ws-entry-point/structure/ECB?detail=allstubs
+        
+* To retrieve the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as the categorisations referencing that category:
+
+        http://ws-entry-point/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
 
 <a name="fn-1"></a>[1] This has been shortened from DataStructureDefinition to allow for shorter URLs.
 
