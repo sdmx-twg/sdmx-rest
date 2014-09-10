@@ -108,3 +108,7 @@ If the value of the includeHistory is set to true, the web service should return
 * The second dataset contains the new data disseminated in March. It will contain one observation (2012-02). The dataset action flag is also `Replace`.
 * The third dataset contains the deleted data, removed with the March dissemination. It will contain one observation (2011-12). The dataset action flag is `Delete`.
 * The fourth dataset contains the data disseminated in April. It will contain the revised observation (2012-02) and the new one (2012-03). The dataset action flag is `Replace`.
+
+The `validFrom` and `validTo` flags should be used as follows:
+* For datasets whose action flag is `Replace`, the `validFromDate` is used to indicate from which point in time the values are considered valid.
+* For datasets whose action flag is `Delete`, the `validToDate` is used to indicate until which point in time the values were considered valid.
