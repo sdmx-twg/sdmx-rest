@@ -48,6 +48,7 @@ firstNObservations | Positive integer | Integer specifying the maximum number of
 lastNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, counting back from the most recent observation
 dimensionAtObservation<sup> | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to: Default to TimeDimension, if the data structure definition has one; If not, default to MeasureDimension, if the data structure definition has one; If none of the above is true, default to AllDimensions.
 detail | String | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return data only (i.e. no attributes). Possible options are: `full` (all data and documentation, including annotations - This is the default), `dataonly` (attributes  and therefore groups will be excluded from the returned message), `serieskeysonly` (returns only the series elements and the dimensions that make up the series keys. This is useful for performance reasons, to return the series that match a certain query, without returning the actual data) and `nodata` (returns the groups and series, including attributes and annotations, without observations).
+includeHistory | Boolean | This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned SDMX-ML data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source<sup>[19](#fn-19)</sup>. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. Default to `false`.
 
 The table below defines the meaning of parameters combinations:
 
@@ -96,3 +97,18 @@ updatedAfterDate + startPeriod/endPeriod | The observations, within the supplied
 <a name="fn-17"></a>[17] See http://en.wikipedia.org/wiki/URL_encoding#Percent-encoding_reserved_characters for additional information.
 
 <a name="fn-18"></a>[18] If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level).
+
+<a name="fn-19"></a>[19] For example, for a particular series, there were, so far, 3 disseminations:
+* In February 2012, there was the initial dissemination, with 2 periods: 2011-12 and 2012-01.
+* In March, the decision was taken to delete all observations before 2012 (so, 2011-12). In addition, a new observation has been published for 2012-02.
+* In April, the value for February has been revised, and the value for March has been published.
+
+If the value of the includeHistory is set to true, the web service should return 4 datasets:
+* The first dataset contains the data disseminated in February, so 2 observations (2011-12 and 2012-01). The dataset action flag is `Replace`.
+* The second dataset contains the new data disseminated in March. It will contain one observation (2012-02). The dataset action flag is also `Replace`.
+* The third dataset contains the deleted data, removed with the March dissemination. It will contain one observation (2011-12). The dataset action flag is `Delete`.
+* The fourth dataset contains the data disseminated in April. It will contain the revised observation (2012-02) and the new one (2012-03). The dataset action flag is `Replace`.
+
+The `validFrom` and `validTo` flags should be used as follows:
+* For datasets whose action flag is `Replace`, the `validFromDate` is used to indicate from which point in time the values are considered valid.
+* For datasets whose action flag is `Delete`, the `validToDate` is used to indicate until which point in time the values were considered valid.
