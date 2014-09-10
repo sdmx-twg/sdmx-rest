@@ -3,6 +3,7 @@
 ### Resources
 
 The following resources are defined:
+
 - datastructure<sup>[1](#fn-1)</sup>
 - metadatastructure<sup>[2](#fn-2)</sup>
 - categoryscheme
@@ -35,13 +36,13 @@ The following parameters are used for identifying resources:
 Parameter | Type | Description
 --- | --- | ---
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned.
-resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. 
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned.
 version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned.
 
 The parameters mentioned above are specified using the following syntax:
 
     protocol://ws-entry-point/resource/agencyID/resourceID/version
-    
+
 Furthermore, some keywords may be used:
 
 Keywords | Scope | Description
