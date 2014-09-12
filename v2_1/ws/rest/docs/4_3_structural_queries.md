@@ -94,7 +94,8 @@ all | itemID | Returns all items belonging to the item scheme
 The following rules apply:
 
 - If no itemID is specified, all the items belonging to the item scheme should be returned. It is therefore equivalent to using the keyword `all`.
-- If `itemID` is set, and such an item exists in the matching item scheme, the item scheme returned should contain only the matching item and its `isPartial` parameter should be set to `true`.
+- If `itemID` is set and is a *top-level* id (e.g.: Code A (Annual) in the Frequency Codelist), and such an item exists in the matching item scheme, the item scheme returned should contain only the matching item and its `isPartial` parameter should be set to `true`.
+- If `itemID` is set and is a *nested* id (e.g.: Category A.1.1, belonging to Category A.1, belonging to Category A in a Category Scheme), and such an item exists in the matching item scheme, the item scheme returned should contain the matching item and its ancestors, and its `isPartial` parameter should be set to `true`.
 
 #### Parameters used to further describe the desired results
 
