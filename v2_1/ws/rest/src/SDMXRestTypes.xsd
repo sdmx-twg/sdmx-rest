@@ -68,9 +68,16 @@
     
     <xs:simpleType name="NestedNCNameIDType">
         <xs:annotation>
-            <xs:documentation>NestedNCNameIDType for WADL is used to indicate the possible values for a WADL Resource parameter.</xs:documentation>
+            <xs:documentation>NestedNCNameIDType restricts the NestedIDType, so that the id may be used to generate valid XML components. IDs created from this type conform to the W3C XML Schema NCNAME type, and therefore can be used as element or attribute names.</xs:documentation>
         </xs:annotation>
         <xs:union memberTypes="allType common:NestedNCNameIDType"></xs:union>
+    </xs:simpleType>
+    
+    <xs:simpleType name="NestedIDType">
+        <xs:annotation>
+            <xs:documentation>NestedIDType is the least restrictive form of an identifier used throughout all SDMX-ML messages. It allows for a hierarchical identifier, with each portion separated by the '.' character. For the identifier portions, valid characters include A-Z, a-z, @, 0-9, _, -, $.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="allType common:NestedIDType"></xs:union>
     </xs:simpleType>
     
     <xs:simpleType name="VersionType">
