@@ -1,8 +1,6 @@
 ## Error handling
 
-RESTful web services should indicate errors using the proper HTTP status code.
-
-In addition, whenever appropriate, the error should also be returned using the error message offered starting with version 2.1 of SDMX-ML.
+RESTful web services should indicate errors using the proper HTTP status code. In addition, whenever appropriate, the error should also be returned using the error message offered starting with version 2.1 of SDMX-ML.
 
 ### Error categories
 
@@ -16,7 +14,7 @@ The numbering of error messages divides the three types of messages up, and prov
 
 #### No results found - 100
 
-If the result from the query is empty the webservice should return this message. This is a way to inform the client that the result is empty.
+If the result from the query is empty the web service should return this message. This is a way to inform the client that the result is empty.
 
 #### Unauthorized - 110
 
@@ -34,17 +32,15 @@ A web service should return this error when a request is syntactically correct b
 
 #### Internal Server Error – 500
 
-The webservice should return this error code when none of the other error codes better describes the reason for the failure of the service to provide a meaningful response.
+The web service should return this error code when none of the other error codes better describes the reason for the failure of the service to provide a meaningful response.
 
 #### Not implemented – 501
 
-If the webservice has not yet implemented one of the methods defined in the API, then the webservice should return this error.
-
-All SDMX web services should implement all the standard interfaces, even if their only function is to return this error message. This eases interoperability between SDMX compliant web services and it also eases the development of generic SDMX web services clients.
+All SDMX web services should implement all the standard interfaces, even if their only function is to return this error message. This eases interoperability between SDMX compliant web services and it also eases the development of generic SDMX web services clients. If the web service has not yet implemented one of the methods defined in the API, then it should return this error.
 
 #### Service unavailable - 503
 
-If a web service is temporarily unavailable because of maintenance or for some other similar reasons, then the webservice should return this error code.
+If a web service is temporarily unavailable because of maintenance or for some other similar reasons, then it should return this error code.
 
 #### Response size exceeds service limit - 510
 
