@@ -149,7 +149,7 @@
     			<response status="200">
     				<representation mediaType="application/vnd.sdmx.schema+xml;version=2.1" element="xsd:schema"/>
     			</response> 
-    			<response status="400 401 404 500 501 503"> 
+    			<response status="400 401 403 404 500 501 503"> 
     				<representation mediaType="*/*"/>
     			</response>
     			<response status="413"> 
@@ -181,7 +181,7 @@
     				<representation mediaType="application/vnd.sdmx.generictimeseriesdata+xml;version=2.1" element="message:GenericTimeSeriesData"/>
     				<representation mediaType="application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1" element="message:StructureSpecificTimeSeriesData"/>
     			</response> 
-    			<response status="400 401 404 500 501 503"> 
+    			<response status="400 401 403 404 500 501 503"> 
     				<representation mediaType="*/*"/> 
     			</response>
     			<response status="413"> 
@@ -205,7 +205,7 @@
     				<representation mediaType="application/vnd.sdmx.genericmetadata+xml;version=2.1" element="message:GenericMetadata"/>
     				<representation mediaType="application/vnd.sdmx.structurespecificmetadata+xml;version=2.1" element="message:StructureSpecificMetadata"/>
     			</response> 
-    			<response status="400 401 404 500 501 503"> 
+    			<response status="400 401 403 404 500 501 503"> 
     				<representation mediaType="*/*"/> 
     			</response>
     			<response status="413"> 
@@ -226,7 +226,7 @@
 			<response status="200"> 
 				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
 			</response> 
-			<response status="400 401 404 500 501 503"> 
+			<response status="400 401 403 404 500 501 503"> 
 				<representation mediaType="*/*"/>
 			</response> 
 			<response status="413"> 
