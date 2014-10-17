@@ -17,121 +17,436 @@
     	<doc title="baseDoc" xml:lang="en">The base URL is a sample. The service base can be named according to the implementor needs</doc>
     	
     	<!-- Resources for Maintainable artefacts -->
-    	<resource id="datastructure" path="datastructure/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="datastructure" path="datastructure/{agencyID}/{resourceID}/{version}"> 
 	    	<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="metadatastructure" path="metadatastructure/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="metadatastructure" path="metadatastructure/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="hierarchicalcodelist" path="hierarchicalcodelist/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="hierarchicalcodelist" path="hierarchicalcodelist/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="dataflow" path="dataflow/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="dataflow" path="dataflow/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="metadataflow" path="metadataflow/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="metadataflow" path="metadataflow/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="provisionagreement" path="provisionagreement/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="provisionagreement" path="provisionagreement/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="structureset" path="structureset/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="structureset" path="structureset/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="process" path="process/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="process" path="process/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="categorisation" path="categorisation/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="categorisation" path="categorisation/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="contentconstraint" path="contentconstraint/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="contentconstraint" path="contentconstraint/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="attachmentconstraint" path="attachmentconstraint/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="attachmentconstraint" path="attachmentconstraint/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="structure" path="structure/{agencyID}/{resourceID}/{version}" type="#MaintainableArtefact"> 
+    	<resource id="structure" path="structure/{agencyID}/{resourceID}/{version}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
     	
     	<!-- Resources for Maintainable ItemScheme artefacts -->
-    	<resource id="categoryscheme" path="categoryscheme/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="categoryscheme" path="categoryscheme/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     		<param name="itemID" type="types:NestedIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="conceptscheme" path="conceptscheme/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="conceptscheme" path="conceptscheme/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     		<param name="itemID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="codelist" path="codelist/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="codelist" path="codelist/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     		<param name="itemID" type="types:NestedIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="organisationscheme" path="organisationscheme/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="organisationscheme" path="organisationscheme/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     		<param name="itemID" type="types:NestedIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="agencyscheme" path="agencyscheme/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="agencyscheme" path="agencyscheme/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" fixed="AGENCIES"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" fixed="1.0"/>
     		<param name="itemID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="dataproviderscheme" path="dataproviderscheme/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="dataproviderscheme" path="dataproviderscheme/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" fixed="DATA_PROVIDERS"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" fixed="1.0"/>
     		<param name="itemID" type="types:NestedIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="dataconsumerscheme" path="dataconsumerscheme/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="dataconsumerscheme" path="dataconsumerscheme/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" fixed="DATA_CONSUMERS"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" fixed="1.0"/>
     		<param name="itemID" type="types:NestedIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="organisationunitscheme" path="organisationunitscheme/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="organisationunitscheme" path="organisationunitscheme/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     		<param name="itemID" type="types:NestedIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
-    	<resource id="reportingtaxonomy" path="reportingtaxonomy/{agencyID}/{resourceID}/{version}/{itemID}" type="#MaintainableArtefact"> 
+    	<resource id="reportingtaxonomy" path="reportingtaxonomy/{agencyID}/{resourceID}/{version}/{itemID}"> 
     		<param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>    	
     		<param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
     		<param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
     		<param name="itemID" type="types:NestedIDType" style="template" required="false" default="all"/>
+    		<method name="GET" id="MaintainableArtefactQuery"> 
+			<request> 
+				<param name="detail" type="types:DetailType" style="query" default="full"/>
+				<param name="references" type="types:ReferencesType" style="query" default="none"/>
+			</request> 
+			<response status="200"> 
+				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+			</response> 
+			<response status="400 401 403 404 500 501 503"> 
+				<representation mediaType="*/*"/>
+			</response> 
+			<response status="413"> 
+    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+    			</response>
+		</method>
     	</resource>
     	
     	<!-- Resources for Schemas   -->
@@ -214,25 +529,4 @@
     		</method>
     	</resource>
     </resources>
-	
-	<!-- Resource Types definition -->
-	<resource_type id="MaintainableArtefact">
-		<doc title="maintTypeDoc" xml:lang="en">The MaintainableArtefact resource type defines the common behaviour for all the maintainable artefacts, which inherit from it.</doc>
-		<method name="GET" id="MaintainableArtefactQuery"> 
-			<request> 
-				<param name="detail" type="types:DetailType" style="query" default="full"/>
-				<param name="references" type="types:ReferencesType" style="query" default="none"/>
-			</request> 
-			<response status="200"> 
-				<representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
-			</response> 
-			<response status="400 401 403 404 500 501 503"> 
-				<representation mediaType="*/*"/>
-			</response> 
-			<response status="413"> 
-    				<representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
-    			</response>
-		</method>
-	</resource_type>
-	
 </application>
