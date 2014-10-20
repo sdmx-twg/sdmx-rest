@@ -488,7 +488,7 @@
     				<param name="lastNObservations" type="xsd:positiveInteger" style="query" />
     				<param name="dimensionAtObservation" type="common:NCNameIDType" style="query" />
     				<param name="detail" type="types:DataDetailType" style="query" default="full"/>
-				<param name="includeHistory" type="xs:boolean" style="query" default="false"/>
+				<param name="includeHistory" type="xsd:boolean" style="query" default="false"/>
     			</request>
     			<response status="200"> 
     				<representation mediaType="application/vnd.sdmx.genericdata+xml;version=2.1" element="message:GenericData"/>
