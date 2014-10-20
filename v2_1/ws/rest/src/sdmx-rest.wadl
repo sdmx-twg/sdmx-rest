@@ -486,7 +486,7 @@
                     <param name="updatedAfter" type="xsd:dateTime" style="query" />
                     <param name="firstNObservations" type="xsd:positiveInteger" style="query" />
                     <param name="lastNObservations" type="xsd:positiveInteger" style="query" />
-                    <param name="dimensionAtObservation" type="common:NCNameIDType" style="query"/>
+                    <param name="dimensionAtObservation" type="common:NCNameIDType" style="query" default="TIME_PERIOD"/>
                     <param name="detail" type="types:DataDetailType" style="query" default="full"/>
                     <param name="includeHistory" type="xsd:boolean" style="query" default="false"/>
                 </request>
@@ -508,7 +508,7 @@
         <resource id="metadata" path="metadata/{flowRef}/{key}/{providerRef}">
             <param name="flowRef" type="types:FlowRefType" style="template" required="true"/> 
             <param name="key" type="types:KeyType" style="template" required="false"  default="all"/>
-            <param name="providerRef" type="types:ProviderRefType" style="template" required="false"  default="all"/>
+            <param name="providerRef" type="types:ProviderRefType" style="template" required="false" default="all"/>
             
             <method name="GET" id="MetadataQuery">
                 <request> 
