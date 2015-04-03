@@ -58,8 +58,8 @@ startPeriod with no endPeriod | Until the most recent
 endPeriod and no startPeriod | From the beginning
 startPeriod and endPeriod | Within the supplied time range
 lastNObservations + startPeriod/endPeriod | The specified number of observations, starting from the end, within the supplied time range
-firstNObservations + startPeriod/endPeriod + updatedAfterDate | The specified number of observations, starting from the beginning, that have changed since the supplied timestamp, within the supplied time range
-updatedAfterDate + startPeriod/endPeriod | The observations, within the supplied time range, that have changed since the supplied timestamp.
+firstNObservations + startPeriod/endPeriod + updatedAfter | The specified number of observations, starting from the beginning, that have changed since the supplied timestamp, within the supplied time range
+updatedAfter + startPeriod/endPeriod | The observations, within the supplied time range, that have changed since the supplied timestamp.
 
 
 ### Examples
@@ -76,7 +76,7 @@ updatedAfterDate + startPeriod/endPeriod | The observations, within the supplied
 
     In this example, the full reference to the dataflow is supplied (ECB as maintenance agency, ECB_EXR1_WEB as dataflow id and latest for the version)
 
-* To retrieve the updates and revisions for the data matching the supplied series keys, using the OR operator for the second dimension, and using percent encoding for the updatedAfterDate:
+* To retrieve the updates and revisions for the data matching the supplied series keys, using the OR operator for the second dimension, and using percent encoding for the updatedAfter:
 
         http://ws-entry-point/Data/ECB_EXR1_WEB/M.USD+GBP+JPY.EUR.SP00.A?
         updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
