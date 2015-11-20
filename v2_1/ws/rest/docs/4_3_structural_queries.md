@@ -4,14 +4,14 @@
 
 The following resources are defined:
 
-- datastructure<sup>[1](#fn-1)</sup>
-- metadatastructure<sup>[2](#fn-2)</sup>
+- datastructure (This has been shortened from DataStructureDefinition to allow for shorter URLs)
+- metadatastructure (This has been shortened from MetadataStructureDefinition to allow for shorter URLs)
 - categoryscheme
 - conceptscheme
 - codelist
 - hierarchicalcodelist
-- organisationscheme<sup>[3](#fn-3)</sup>
-- agencyscheme<sup>[4](#fn-4)</sup>
+- organisationscheme (The organisationscheme resource can be used whenever the role played by the organisation schemes is not known/relevant)
+- agencyscheme (For 3 of the subtypes of OrganisationScheme, the id and version parameters have fixed values. See Section 03 of the SDMX information model document for additional information)
 - dataproviderscheme
 - dataconsumerscheme
 - organisationunitscheme
@@ -24,7 +24,7 @@ The following resources are defined:
 - categorisation
 - contentconstraint
 - attachmentconstraint
-- structure<sup>[5](#fn-5)</sup>
+- structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
 
 
 ### Parameters
@@ -47,15 +47,17 @@ Furthermore, some keywords may be used:
 
 Keywords | Scope | Description
 --- | --- | ---
-all<sup>[6](#fn-6)</sup> | agencyID | Returns artefacts maintained by any maintenance agency<sup>[7](#fn-7)</sup>
-all | resourceID | Returns all resources of the type defined by the resource parameter<sup>[7](#fn-7)</sup>
+all | agencyID | Returns artefacts maintained by any maintenance agency
+all | resourceID | Returns all resources of the type defined by the resource parameter
 all | version | Returns all versions of the resource
-latest | version | Returns the latest version in production of the resource<sup>[7](#fn-7)</sup>
+latest | version | Returns the latest version in production of the resource
+
+As `all` is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for agencies, resources or a specific version.
 
 The following rules apply:
 
 - If no version is specified, the version currently used in production should be returned. It is therefore equivalent to using the keyword `latest`.
--  If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the keyword `all`<sup>[8](#fn-8)</sup>.
+-  If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the keyword `all`. This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/all/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
 - If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `all`.
 - If no parameters are specified, the **latest** version of **all** resources of the type identified by the resource parameter, maintained by **any** maintenance agency should be returned.
 
@@ -103,7 +105,7 @@ The following parameters are used to further describe the desired results, once 
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
-detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: `allstubs` (all artefacts should be returned as stubs<sup>[9](#fn-9)</sup>), `referencestubs` (referenced artefacts should be returned as stubs<sup>[10](#fn-10)</sup>) and `full` (all available information for all artefacts should be returned<sup>[11](#fn-11)</sup>). | **full**
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: `allstubs` (all artefacts should be returned as stubs. The equivalent in SDMX-ML query is: Stub at the query level and Stub at the reference level), `referencestubs` (referenced artefacts should be returned as stubs. The equivalent in SDMX-ML query is: Full at the query level and Stub at the reference level) and `full` (all available information for all artefacts should be returned. The equivalent in SDMX-ML query is: Full at the query level and Full at the reference level). | **full**
 references | *String* | This attribute instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). Possible values are: `none` (no references will be returned), `parents` (the artefacts that use the artefact matching the query), `parentsandsiblings` (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), `children` (artefacts referenced by the artefact to be returned), `descendants` (references of references, up to any level, will also be returned), `all` (the combination of parentsandsiblings and descendants). In addition, a `concrete type of resource` may also be used (for example, references=codelist). | **none**
 
 #### Applicability and meaning of references attribute
@@ -156,26 +158,3 @@ StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStr
 * To retrieve the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as the categorisations referencing that category:
 
         http://ws-entry-point/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
-
-<a name="fn-1"></a>[1] This has been shortened from DataStructureDefinition to allow for shorter URLs.
-
-<a name="fn-2"></a>[2] This has been shortened from MetadataStructureDefinition to allow for shorter URLs.
-
-<a name="fn-3"></a>[3] The organisationscheme resource can be used whenever the role played by the organisation schemes (e.g. maintenance agencies) is not known/relevant.
-
-<a name="fn-4"></a>[4] For 3 of the subtypes of OrganisationScheme (AgencyScheme, DataProviderScheme and DataConsumerScheme), the id and version parameters have fixed values. See Section 03 of the SDMX information model document for additional information.
-
-<a name="fn-5"></a>[5] This type can be used to retrieve any type of structural metadata matching the supplied parameters.
-
-<a name="fn-6"></a>[6] As `all` is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for agencies, resources or a specific version.
-
-<a name="fn-7"></a>[7] Default, if parameter not specified
-
-<a name="fn-8"></a>[8] This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/all/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
-
-<a name="fn-9"></a>[9] The equivalent in SDMX-ML query is: Stub at the query level and Stub at the reference level.
-
-<a name="fn-10"></a>[10] The equivalent in SDMX-ML query is: Full at the query level and Stub at the reference level.
-
-<a name="fn-11"></a>[11] The equivalent in SDMX-ML query is: Full at the query level and Full at the reference level.
-
