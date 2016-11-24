@@ -64,7 +64,7 @@ The following rules apply:
 
 #### Additional parameter used for identifying a resource, for item scheme types
 
-SDMX uses the item scheme pattern to model SDMX collections of items. These are:
+SDMX uses the *item scheme* pattern to model SDMX collections of items. These are:
 
 - categoryscheme
 - conceptscheme
@@ -76,11 +76,13 @@ SDMX uses the item scheme pattern to model SDMX collections of items. These are:
 - organisationunitscheme
 - reportingtaxonomy
 
-For these collections, it is possible to use a 4th parameter for identifying a resource. The rules for the 3 other parameters, as defined in the section above, remain valid.
+Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
+
+For these collections (those following the *item scheme* pattern or the *hierarchicalcodelist*), it is possible to use a 4th parameter for identifying a resource. The rules for the 3 other parameters, as defined in the section above, remain valid.
 
 Parameter | Type | Description
 --- | --- | ---
-itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned.
+itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned.
 
 
 This 4th parameter is used as follows:
