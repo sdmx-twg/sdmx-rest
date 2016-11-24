@@ -57,10 +57,11 @@
 	                </response>
 	        </method>
         </resource>
-        <resource id="hierarchicalcodelist" path="hierarchicalcodelist/{agencyID}/{resourceID}/{version}"> 
+        <resource id="hierarchicalcodelist" path="hierarchicalcodelist/{agencyID}/{resourceID}/{version}/{itemID}"> 
             <param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>        
             <param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
             <param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+	    <param name="itemID" type="types:IDType" style="template" required="false" default="all"/>
             <method name="GET" id="HierarchicalCodelistQuery"> 
 	            <request> 
 	                <param name="detail" type="types:DetailType" style="query" default="full"/>
