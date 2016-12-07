@@ -1,4 +1,4 @@
-## Error handling
+## Error handling and status information
 
 RESTful web services should indicate errors using the proper HTTP status code. In addition, whenever appropriate, the error should also be returned using the error message offered starting with version 2.1 of SDMX-ML.
 
@@ -66,3 +66,10 @@ SDMX error | HTTP status code
 503 Service unavailable | 503 Service unavailable
 510 Response size exceeds service limit | 413 Request entity too large
 1000+ | 500 Internal server error
+
+### Other useful HTTP status codes
+
+Apart from the error codes mentioned above, there are a few additional [HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) that are typically encountered when consuming a SDMX RESTful web service. These are:
+
+- `200`: This is the standard response for successful HTTP requests. With `GET` requests, it is used to indicate that the request was successfully processed and that the data are available in the body of the response.
+- `304`: This is used to indicate that there are no changes since the version specified by the request headers `If-Modified-Since` or `If-None-Match`. The response does not include matching data, as the client can still use the previously-downloaded copy.
