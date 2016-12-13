@@ -37,7 +37,7 @@ The list below indicates the valid formats for SDMX RESTful web services, compli
     
 ### Selection of the Appropriate language
 
-The [Accept-Language header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the language preference of the client. Multiple values, along with their respective weights, are possible. For example:
+The [Accept-Language header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the language preferences of the client. Multiple values, along with their respective weights, are possible. For example:
 
 ```
 Accept-Language: ru, en-gb;q=0.8, en;q=0.7
