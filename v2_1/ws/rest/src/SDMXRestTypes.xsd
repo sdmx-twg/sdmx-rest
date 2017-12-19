@@ -93,13 +93,15 @@
                 This parameter specifies the desired amount of information to be returned. 
                 For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). 
                 Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). 
-                Possible values are: "allstubs" (all artefacts should be returned as stubs ), "referencestubs" (referenced artefacts should be returned as stubs ) 
-                and full (all available information for all artefacts should be returned ).
+                Possible values are: "allstubs" (all artefacts should be returned as stubs), "referencestubs" (referenced artefacts should be returned as stubs),
+		"referencepartial" (referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD and its isPartial flag would be set to true)
+                and "full" (all available information for all artefacts should be returned).
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:pattern value="allstubs"/>
             <xs:pattern value="referencestubs"/>
+	    <xs:pattern value="referencepartial"/>
             <xs:pattern value="full"/>
         </xs:restriction>
     </xs:simpleType>
