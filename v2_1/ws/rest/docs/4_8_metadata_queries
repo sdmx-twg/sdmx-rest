@@ -1,0 +1,262 @@
+## Referential Metadata Queries
+
+Referential metadata is attached to structural metadata (resources) or to data. Referential metadata queries therefore have to include the structure resources or the selection of the data to which the requested referential metadata is attached.
+
+## Referential Metadata attached to Structural Resources
+
+### Parameters used for identifying a resource to which the requested referential metadata is attached
+
+#### Resource Type Parameter
+
+The query needs to specify the type of structural resources to which the requested referential metadata is attached. The following values can be used for the `resource` parameter in the query URL:
+
+- datastructure (This has been shortened from DataStructureDefinition to allow for shorter URLs)
+- metadatastructure (This has been shortened from MetadataStructureDefinition to allow for shorter URLs)
+- categoryscheme
+- conceptscheme
+- codelist
+- hierarchicalcodelist
+- organisationscheme (The organisationscheme resource can be used whenever the role played by the organisation schemes is not known/relevant)
+- agencyscheme (For 3 of the subtypes of OrganisationScheme, the id and version parameters have fixed values. See Section 03 of the SDMX information model document for additional information)
+- dataproviderscheme
+- dataconsumerscheme
+- organisationunitscheme
+- dataflow
+- metadataflow
+- reportingtaxonomy
+- provisionagreement
+- structureset
+- process
+- categorisation
+- contentconstraint
+- attachmentconstraint
+- structure (This type can be used to retrieve referential metadata for any type of structural metadata matching the supplied parameters)
+
+#### Resource Identification Parameters
+
+The following other parameters are used for identifying resources to which requested referential metadata is attached:
+
+Parameter | Type | Description
+--- | --- | ---
+`agencyID` | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to which the requested referential metadata is attached.
+`resourceID` | A string compliant with the SDMX *common:IDType* | The id of the artefact to which the requested referential metadata is attached.
+`version` | A string compliant with the SDMX *common:VersionType* | The version of the artefact to which the requested referential metadata is attached.
+
+The parameters mentioned above are specified using the following syntax:
+
+    protocol://`ws-entry-point`/metadata/`resource`/`agencyID`/`resourceID`/`version`
+
+Furthermore, some keywords may be used:
+
+Keywords | Scope | Description
+--- | --- | ---
+`all` | `agencyID` | Returns the referential metadata for artefacts maintained by any maintenance agency
+`all` | `resourceID` | Returns the referential metadata for all resources of the type defined by the resource parameter
+`all` | `version` | Returns the referential metadata for all versions of the resource
+`latest` | `version` | Returns the referential metadata for the latest version in production of the resource
+
+As `all` is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for agencies, resources or a specific version.
+
+The following rules apply:
+
+- If no `version` is specified, the version currently used in production should be used. It is therefore equivalent to using the keyword `latest`.
+- If no `agencyID` is specified, the referential metadata for the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the keyword `all`. This would potentially return the referential metadata for more than one artefact, if different agencies give the same identifier to a referenced resource (for example, http:// `ws-entry-point`/metadata/codelist/all/CL_FREQ, could return the referential metadata for more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
+- If no `resourceID` is specified, the referential metadata for all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `all`.
+- If no parameters are specified, the referential metadata for the `latest` version of `all` resources of the type identified by the resource parameter, maintained by `any` maintenance agency should be returned.
+
+#### Additional parameter used for identifying a resource to which the requested referential metadata is attached, for item scheme types
+
+SDMX uses the *item scheme* pattern to model SDMX collections of items. These are:
+
+- categoryscheme
+- conceptscheme
+- codelist
+- organisationscheme
+- agencyscheme
+- dataproviderscheme
+- dataconsumerscheme
+- organisationunitscheme
+- reportingtaxonomy
+
+Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
+
+For these collections (those following the *item scheme* pattern or the *hierarchicalcodelist*), it is possible to use a 4th parameter for identifying a referenced resource. The rules for the 3 other parameters, as defined in the section above, remain valid.
+
+Parameter | Type | Description
+--- | --- | ---
+`itemID` | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to which the requested referential metadata is attached.
+
+
+This 4th parameter is used as follows:
+
+    protocol://`ws-entry-point`/metadata/`resource`/`agencyID`/`resourceID`/`version`/`itemID`
+
+Furthermore, a keyword may be used:
+
+Keyword | Scope | Description
+--- | --- | ---
+`all` | `itemID` | Returns the referential metadata for all items belonging to the item scheme
+
+The following rules apply:
+
+- If no `itemID` is specified, the referential metadata for all the items belonging to the item scheme should be returned. It is therefore equivalent to using the keyword `all`.
+- If `itemID` is set and is a *top-level* id (e.g.: Code A (Annual) in the Frequency Codelist), and such an item exists in the matching item scheme, the item scheme for which referential metadata are returned should contain only the matching item and its `isPartial` parameter should be set to `true`.
+- If `itemID` is set and is a *nested* id (e.g.: Category A.1.1, belonging to Category A.1, belonging to Category A in a Category Scheme), and such an item exists in the matching item scheme, the item scheme returned should contain the matching item and its ancestors, and its `isPartial` parameter should be set to `true`.
+
+#### Parameters used to further describe the desired results
+
+The following parameters are used to further describe the desired results, once the resource, to which the requested referential metadata is attached, has been identified. As mentioned in 3.2, these parameters appear in the query string part of the URL.
+
+Parameter | Type | Description | Default
+--- | --- | --- | ---
+`references` | *String* | This attribute instructs the web service to return (or not) the referential metadata also for other artefacts: the artefacts referenced by the artefacts specified in the query (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the artefact specified in the query (for example, the dataflows that use the data structure definition specified in the query). Possible values are: `none` (no artefacts in addition to those specified in the query), `parents` (artefacts that use the artefact specified in the query), `parentsandsiblings` (artefacts that use the artefact specified in the query, as well as artefacts referenced by these artefacts), `children` (artefacts referenced by the artefacts specified in the query), `descendants` (references of references, up to any level), `all` (the combination of parentsandsiblings and descendants). In addition, a `concrete type of resource` linked to the artefacts specified in the query may also be used (for example, references=codelist). | **none**
+`detail` | *String* | This attribute specifies the desired amount of information to be returned. Possible options are: `full`, `targetsonly`, `nodata`, `allstubs`, `allstubstargetsonly`, `allstubsnodata`, `referencestubs`, `referencestubstargetsonly`, `referencestubsnodata`, `referencepartial`, `referencepartialtargetsonly` and `referencepartialnodata`. By default, all metadata information including annotations for all concerned artefacts (specified in the query or `reference`d) and for their items (if applicable) is returned - this is the default option `full`. If the option contains `targetsonly` then only the metadata targets (which means the indication of the resources to which the referential metadata is attached) are returned. This is useful for performance reasons, to return the metadata availability for a certain query, without returning the actual metadata values. If the option contains `nodata` then the metadata targets and the annotations, without metadata values are returned. If the option contains `allstubs` then the appropriate metadata information is returned for all concerned artefacts (specified in the query or `reference`d) but not for their items (if applicable). If the option contains `referencestubs` then the appropriate metadata information is returned for the artefacts specified in the query, for their items (if applicable) and for `reference`d artefacts but not for their items (if applicable). If the option contains `referencepartial` then the appropriate metadata information is returned for the artefacts specified in the query, for their items (if applicable), for `reference`d artefacts and for their partial list of items used by the artefact specified in the query (if applicable, for example, only the concepts of a conceptscheme which are used in a DSD that is specified in the query).| **full**
+
+#### Applicability and meaning of the references parameter
+
+The table below lists the 1st level artefacts (one level up, one level down) for which referential metadata will be returned if the references parameter is set to `all`. Artefacts referenced by the artefact specified in the query are displayed in regular style, while the artefacts that reference the artefact specified in the query are displayed in *Italic*.
+
+Maintainable artefact | Artefacts concerned by the references parameter
+--- | ---
+AgencyScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
+Categorisation | All
+CategoryScheme | *Categorisations*, *Process*, *StructureSet*
+Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
+ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
+Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
+DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
+DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*
+DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*
+HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*
+Metadataflow | *Categorisation*, *Process*, *Constraint*, MetadataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
+MetadataStructureDefinition | *Categorisation*, *Process*, ConceptScheme, Codelist, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, *Constraint*, *Metadataflow*, *StructureSet*
+OrganisationUnitScheme | *Categorisation*, *Process*, *Constraint*, *MetadataStructureDefinition*, *StructureSet*
+Process | All
+ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
+ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
+StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
+
+### Examples
+
+* To retrieve the referential metadata for version 1.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as for the code lists and the concepts used in the DSD:
+
+        http://`ws-entry-point`/metadata/datastructure/ECB/ECB_EXR1/1.0?references=children&detail=referencepartial
+
+* To retrieve the referential metadata for the latest version in production of the DSD with id ECB_EXR1 maintained by the ECB, but not for the code lists and concepts of the DSD:
+
+        http://`ws-entry-point`/metadata/datastructure/ECB/ECB_EXR1
+
+* To retrieve the referential metadata for all DSDs maintained by the ECB, as well as for the dataflows using these DSDs:
+
+        http://`ws-entry-point`/metadata/datastructure/ECB?references=dataflow
+
+* To retrieve the targets of the referential metadata (the metadata availability) for the latest version in production of all code lists maintained by all maintenance agencies, but not for the codes:
+
+        http://`ws-entry-point`/metadata/codelist?detail=allstubstargetsonly
+
+* To retrieve the targets of the referential metadata (the metadata availability) for the latest version in production of all maintainable artefacts maintained by the ECB:
+
+        http://`ws-entry-point`/metadata/structure/ECB?detail=targetsonly
+        
+* To retrieve the referential metadata for the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as for the categorisations referencing that category:
+
+        http://`ws-entry-point`/metadata/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
+
+
+## Referential Metadata attached to Data
+
+### Parameters used for identifying the data to which the requested referential metadata is attached
+
+#### Data Identification Parameters
+
+The following parameters are used for identifying data resources in metadata queries:
+
+Parameter | Type | Description
+--- | --- | ---
+`flowRef` | A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a ",". For example: AGENCY_ID,FLOW_ID,VERSION. In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. all,FLOW_ID,latest. In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,latest. | The data flow of the data to which the requested referential metadata is attached. It’s a common use case in SDMX-based web services that the flow id is sufficient to uniquely identify a dataflow. Should this not be the case, the agency id and the dataflow version, can be used, in conjunction with the flow id, in order to uniquely identify a dataflow.
+`key` | A string compliant with the KeyType defined in the SDMX WADL. | The key of the data to which the requested referential metadata is attached. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to select the data for all currencies against the euro: D..EUR.SP00.A.The OR operator is supported using the + character. For example, the following series key can be used to select the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
+`providerRef` | A string identifying the provider. The syntax is agency id, provider id, separated by a ",". For example: AGENCY_ID,PROVIDER_ID. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. all,PROVIDER_ID. | The provider of the data to which the to be retrieved referential metadata is attached. If not supplied, the returned message will contain the referential metadata for the data provided by any provider. Its a common use case in SDMX-based web services that the provider id is sufficient to uniquely identify a data provider. Should this not be the case, the agency can be used, in conjunction with the provider id, in order to uniquely identify a data provider.
+
+The parameters mentioned above are specified using the following syntax:
+
+    protocol://`ws-entry-point`/metadata/data/`flowRef`/`key`/`providerRef`
+    
+Furthermore, some keywords may be used:
+
+Keywords | Scope | Description
+--- | --- | ---
+`all` | `key` | Returns all data belonging to the specified dataflow and provided by the specified provider.
+`all` | `providerRef` | Returns all data matching the supplied key and belonging to the specified dataflow that has been provided by any data provider. As `all` is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for providers.
+
+The following rules apply:
+
+- If no `key` is specified, the referential metadata attached to all data belonging to the dataflow identified by the flowRef should be supplied. It is therefore equivalent to using the keyword `all`.
+- If no `providerRef` is specified, the referential metadata attached to the matching data (or metadata) provided by any data provider should be returned. It is therefore equivalent to using the keyword `all`.
+
+#### Parameters used to further filter the desired results
+
+The following parameters are used to further describe (or filter) the desired results, once the resource has been identified. As mentioned in 3.2, these parameters go in the query string part of the URL.
+
+Parameter | Type | Description
+--- | --- | ---
+`startPeriod` | common:StandardTimePeriodType, as defined in the SDMXCommon.xsd schema. Can be expressed using *dateTime* (all data that falls between the calendar dates will be matched), *Gregorian Period* (all data that falls between the calendar dates will be matched) or *Reporting Period* (all data reported as periods that fall between the specified periods will be returned. When comparing reporting weeks and days to higher order periods (e.g. quarters) one must account for the actual time frames covered by the periods to determine whether the data should be considered. Data reported as Gregorian periods or distinct ranges will be considered if it falls between the specified reporting periods, based on a reporting year start day of January 1). In case the `:` or `+` characters are used, the parameter must be [percent-encoded](http://en.wikipedia.org/wiki/URL_encoding#Percent-encoding_reserved_characters) by the client. Note that this value is assumed to be inclusive to the range of data being sought. For additional information about the formats, see section 4.2.14 of Section 06 (SDMX Technical Notes). | The start period for the data to which the requested referential metadata is attached (inclusive).
+`endPeriod` | Same as above | The end period for the data to which the requested referential metadata is attached (inclusive).
+`firstNObservations` | Positive integer | Integer specifying the maximum number of observations to which the requested referential metadata is attached for each of the matching series, starting from the first observation
+`lastNObservations` | Positive integer | Integer specifying the maximum number of observations to which the requested referential metadata is attached for each of the matching series, counting back from the most recent observation
+`updatedAfter` | xs:dateTime | The last time the query was performed by the client in the database. If this attribute is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include referential metadata values that have been added since the last time the query was performed (INSERT), referential metadata values that have been revised since the last time the query was performed (UPDATE) and referential metadata values that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the referential metadata values has been updated is not available at the referential metadata value level, the web service should return referential metadata values for a larger scope for which the last update information is known.
+`detail` | String | This attribute specifies the desired amount of information to be returned. Possible options are: `full` - all metadata information including annotations and metadata values for all data specified in the query is returned - this is the default. `targetsonly` - only the metadata targets (which means the indication of the data to which the referential metadata is attached) are returned. This is useful for performance reasons, to return the metadata availability for a certain query, without returning the actual metadata values. `nodata` - the metadata targets and the annotations, without metadata values are returned.
+`includeHistory` | Boolean | This attribute allows retrieving previous versions of the referential metadata, as they were disseminated in the past (*history* or *timemachine* functionality). When the value is set to `true`, the returned SDMX-ML data message should contain one or two metadatasets per data dissemination, depending on whether a dissemination also deleted referential metadata from the data source. The `validFromDate` and/or `validToDate` attributes of the metadataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. Default to `false`.
+
+The table below defines the meaning of parameters combinations:
+
+Combination | Meaning for the data concerned
+--- | ---
+`startPeriod` with no `endPeriod` | Until the most recent
+`endPeriod` and no `startPeriod` | From the beginning
+`startPeriod` and `endPeriod` | Within the supplied time range
+`lastNObservations` and `startPeriod`/`endPeriod` | The specified number of observations, starting from the end, within the supplied time range
+`firstNObservations` and `startPeriod`/`endPeriod` | The specified number of observations, starting from the beginning, within the supplied time range
+
+
+### Examples
+
+* To retrieve the referential metadata for data for the series M.USD.EUR.SP00.A supplied by the ECB for the ECB_EXR1_WEB dataflow:
+
+        http://`ws-entry-point`/metadata/data/ECB_EXR1_WEB/M.USD.EUR.SP00.A/ECB
+
+    In this example, the assumption is made that the dataflow id (ECB_EXR1_WEB) is sufficient to uniquely identify the dataflow, and the data provider id (ECB) is sufficient to uniquely identify the data provider.
+
+* To retrieve the referential metadata for the data, provided by the ECB for the ECB_EXR1_WEB dataflow, for the supplied series keys, using wildcarding for the second dimension:
+
+        http://`ws-entry-point`/metadata/data/ECB,ECB_EXR1_WEB,latest/M..EUR.SP00.A/ECB
+
+    In this example, the full reference to the dataflow is supplied (ECB as maintenance agency, ECB_EXR1_WEB as dataflow id and latest for the version)
+
+* To retrieve the updates and revisions of the referential metadata for the data matching the supplied series keys, using the OR operator for the second dimension, and using percent encoding for the updatedAfter:
+
+        http://`ws-entry-point`/metadata/data/ECB_EXR1_WEB/M.USD+GBP+JPY.EUR.SP00.A?
+        updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
+
+* To retrieve the referential metadata for the data matching the supplied series key and restricted in the start and end dates:
+
+        http://`ws-entry-point`/metadata/data/ECB_EXR1_WEB/D.USD.EUR.SP00.A?
+        startPeriod=2009-05-01&endPeriod=2009-05-31
+
+### Example: How to handle the `includeHistory` parameter
+
+For example, for the referential metadata for a particular dataflow, there were, so far, 3 disseminations:
+* In February 2012, there was the initial dissemination, for 2 series: A and B.
+* In March 2012, the decision was taken to delete the referential metadata for A. In addition, a new referential metadata has been published for C.
+* In April 2012, the referential metadata for C has been revised, and the referential metadata for series D has been published.
+
+If the value of the includeHistory is set to true, the web service should return 4 metadatasets:
+* The first metadataset contains the referential metadata disseminated in February 2012, so the referential metadata for 2 series A and B. The dataset action flag is `Replace`.
+* The second metadataset contains the new referential metadata disseminated in March 2012. It will contain the referential metadata for one series C. The metadataset action flag is also `Replace`.
+* The third metadataset contains the deleted referential metadata, removed with the March 2012 dissemination. It will contain the referential metadata for one series A. The metadataset action flag is `Delete`.
+* The fourth metadataset contains the referential metadata disseminated in April 2012. It will contain the revised referential metadata for series C and the new referential metadata for series D. The metadataset action flag is `Replace`.
+
+The `validFrom` and `validTo` flags should be used as follows:
+* For metadatasets whose action flag is `Replace`, the `validFromDate` is used to indicate from which point in time the referential metadata are considered valid.
+* For metadatasets whose action flag is `Delete`, the `validToDate` is used to indicate until which point in time the referential metadata were considered valid.
+
