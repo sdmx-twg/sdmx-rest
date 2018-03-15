@@ -88,6 +88,13 @@
         </xs:annotation>
         <xs:union memberTypes="latestType allType common:VersionType"></xs:union>
     </xs:simpleType>
+	
+    <xs:simpleType name="SchemaVersionType">
+        <xs:annotation>
+            <xs:documentation>SchemaVersionType for WADL is used to indicate the possible values for a WADL Resource parameter</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="latestType allType common:VersionType"></xs:union>
+    </xs:simpleType>
 
     <xs:simpleType name="DetailType">
         <xs:annotation>
