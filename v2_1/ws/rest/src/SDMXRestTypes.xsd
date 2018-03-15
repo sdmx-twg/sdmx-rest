@@ -63,7 +63,9 @@
         <xs:annotation>
             <xs:documentation>IDType for WADL is used to indicate the possible values for a WADL Resource parameter.</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="allType common:IDType"></xs:union>
+	<xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+)*"/>
+        </xs:restriction>
     </xs:simpleType>
     
     <xs:simpleType name="NestedNCNameIDType">
