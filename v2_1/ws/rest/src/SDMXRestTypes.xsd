@@ -86,7 +86,9 @@
         <xs:annotation>
             <xs:documentation>VersionType for WADL is used to indicate the possible values for a WADL Resource parameter</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="latestType allType common:VersionType"></xs:union>
+	<xs:restriction base="xs:string">
+            <xs:pattern value="all|latest|[0-9]+(\.[0-9]+)*([+][0-9]+(\.[0-9]+)*)*"/>
+        </xs:restriction>
     </xs:simpleType>
 	
     <xs:simpleType name="SchemaVersionType">
