@@ -46,7 +46,6 @@
         </xs:restriction>
     </xs:simpleType>
     
-
     <xs:simpleType name="allType">
         <xs:restriction base="xs:string">
             <xs:pattern value="all"/>
@@ -79,7 +78,9 @@
         <xs:annotation>
             <xs:documentation>NestedIDType is the least restrictive form of an identifier used throughout all SDMX-ML messages. It allows for a hierarchical identifier, with each portion separated by the '.' character. For the identifier portions, valid characters include A-Z, a-z, @, 0-9, _, -, $.</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="allType common:NestedIDType"></xs:union>
+	<xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9_@$\-]+(\.[A-Za-z0-9_@$\-]+)*([+][A-Za-z0-9_@$\-]+(\.[A-Za-z0-9_@$\-]+)*)*"/>
+        </xs:restriction>
     </xs:simpleType>
     
     <xs:simpleType name="VersionType">
