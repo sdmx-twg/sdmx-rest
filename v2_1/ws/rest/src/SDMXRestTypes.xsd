@@ -84,14 +84,18 @@
             <xs:pattern value="[A-Za-z0-9_@$\-]+(\.[A-Za-z0-9_@$\-]+)*([+][A-Za-z0-9_@$\-]+(\.[A-Za-z0-9_@$\-]+)*)*"/>
         </xs:restriction>
     </xs:simpleType>
+	
+    <xs:simpleType name="multipleVersionsType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+(\.[0-9]+)*([+][0-9]+(\.[0-9]+)*)*"/>
+        </xs:restriction>
+    </xs:simpleType>
     
     <xs:simpleType name="VersionType">
         <xs:annotation>
             <xs:documentation>VersionType for WADL is used to indicate the possible values for a WADL Resource parameter</xs:documentation>
         </xs:annotation>
-	<xs:restriction base="xs:string">
-            <xs:pattern value="all|latest|[0-9]+(\.[0-9]+)*([+][0-9]+(\.[0-9]+)*)*"/>
-        </xs:restriction>
+	<xs:union memberTypes="latestType allType multipleVersionsType"></xs:union>
     </xs:simpleType>
 	
     <xs:simpleType name="SchemaVersionType">
