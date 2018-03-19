@@ -71,7 +71,9 @@
         <xs:annotation>
             <xs:documentation>NestedNCNameIDType restricts the NestedIDType, so that the id may be used to generate valid XML components. IDs created from this type conform to the W3C XML Schema NCNAME type, and therefore can be used as element or attribute names.</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="[A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*([+][A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*)*"></xs:union>
+	<xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*([+][A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*)*"/>
+	</xs:restriction>
     </xs:simpleType>
     
     <xs:simpleType name="NestedIDType">
