@@ -29,7 +29,7 @@
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- (common:NestedNCNameIDType\,)?(common:IDType) -->
-            <xs:pattern value="([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*\,)?([A-Za-z0-9_@$\-]+)"/>
+            <xs:pattern value="([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*[,])?([A-Za-z0-9_@$\-]+)"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -42,11 +42,10 @@
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- (common:IDType)|((common:NestedNCNameIDType)(\,common:IDType)(\,(latest|(common:VersionType)))?) -->
-            <xs:pattern value="([A-Za-z0-9_@$\-]+)|(([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*)(\,[A-Za-z0-9_@$\-]+)(\,(latest|([0-9]+(\.[0-9]+)*)))?)"/>
+            <xs:pattern value="([A-Za-z0-9_@$\-]+)|(([A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*)([,][A-Za-z0-9_@$\-]+)([,](latest|([0-9]+(\.[0-9]+)*)))?)"/>
         </xs:restriction>
     </xs:simpleType>
     
-
     <xs:simpleType name="allType">
         <xs:restriction base="xs:string">
             <xs:pattern value="all"/>
@@ -63,26 +62,45 @@
         <xs:annotation>
             <xs:documentation>IDType for WADL is used to indicate the possible values for a WADL Resource parameter.</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="allType common:IDType"></xs:union>
+	<xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9_@$\-]+([+][A-Za-z0-9_@$\-]+)*"/>
+        </xs:restriction>
     </xs:simpleType>
     
     <xs:simpleType name="NestedNCNameIDType">
         <xs:annotation>
             <xs:documentation>NestedNCNameIDType restricts the NestedIDType, so that the id may be used to generate valid XML components. IDs created from this type conform to the W3C XML Schema NCNAME type, and therefore can be used as element or attribute names.</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="allType common:NestedNCNameIDType"></xs:union>
+	<xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*([+][A-Za-z][A-Za-z0-9_\-]*(\.[A-Za-z][A-Za-z0-9_\-]*)*)*"/>
+	</xs:restriction>
     </xs:simpleType>
     
     <xs:simpleType name="NestedIDType">
         <xs:annotation>
             <xs:documentation>NestedIDType is the least restrictive form of an identifier used throughout all SDMX-ML messages. It allows for a hierarchical identifier, with each portion separated by the '.' character. For the identifier portions, valid characters include A-Z, a-z, @, 0-9, _, -, $.</xs:documentation>
         </xs:annotation>
-        <xs:union memberTypes="allType common:NestedIDType"></xs:union>
+	<xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9_@$\-]+(\.[A-Za-z0-9_@$\-]+)*([+][A-Za-z0-9_@$\-]+(\.[A-Za-z0-9_@$\-]+)*)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+    <xs:simpleType name="multipleVersionsType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+(\.[0-9]+)*([+][0-9]+(\.[0-9]+)*)*"/>
+        </xs:restriction>
     </xs:simpleType>
     
     <xs:simpleType name="VersionType">
         <xs:annotation>
             <xs:documentation>VersionType for WADL is used to indicate the possible values for a WADL Resource parameter</xs:documentation>
+        </xs:annotation>
+	<xs:union memberTypes="latestType allType multipleVersionsType"></xs:union>
+    </xs:simpleType>
+	
+    <xs:simpleType name="SchemaVersionType">
+        <xs:annotation>
+            <xs:documentation>SchemaVersionType for WADL is used to indicate the possible values for a WADL Resource parameter</xs:documentation>
         </xs:annotation>
         <xs:union memberTypes="latestType allType common:VersionType"></xs:union>
     </xs:simpleType>

@@ -455,7 +455,7 @@
             <param name="context" type="types:SchemaContextType" style="template" required="true"/>
             <param name="agencyID" type="common:NestedNCNameIDType" style="template" required="true"/>
             <param name="resourceID" type="common:IDType" style="template" required="true"/> 
-            <param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+            <param name="version" type="types:SchemaVersionType" style="template" required="false" default="latest"/>
             
             <method name="GET" id="SchemaQuery"> 
                 <request> 

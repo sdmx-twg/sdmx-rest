@@ -35,9 +35,9 @@ The following parameters are used for identifying resources:
 
 Parameter | Type | Description
 --- | --- | ---
-agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned.
-resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned.
-version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned.
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `+` as separator (e.g. BIS+ECB).
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `+` as separator (e.g. CL_FREQ+CL_CONF_STATUS).
+version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned. It is possible to set more than one version, using `+` as separator (e.g. 1.0+2.1).
 
 The parameters mentioned above are specified using the following syntax:
 
@@ -82,7 +82,7 @@ For these collections (those following the *item scheme* pattern or the *hierarc
 
 Parameter | Type | Description
 --- | --- | ---
-itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned.
+itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned. It is possible to set more than one id, using `+` as separator (e.g. A+Q+M).
 
 
 This 4th parameter is used as follows:
@@ -160,3 +160,6 @@ StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStr
 * To retrieve the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as the categorisations referencing that category:
 
         http://ws-entry-point/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
+
+* To retrieve the latest version of the CL_FREQ codelists maintained by the BIS or the ECB:
+        http://ws-entry-point/codelist/BIS+ECB/CL_FREQ
