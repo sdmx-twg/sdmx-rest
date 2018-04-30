@@ -23,6 +23,8 @@ The following resources are defined:
 - process
 - categorisation
 - contentconstraint
+- actualconstraint (a type of contentconstraint stating what data are actually present)
+- allowedconstraint (a type of contentconstraint defining what data are allowed)
 - attachmentconstraint
 - structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
 
