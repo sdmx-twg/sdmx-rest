@@ -218,6 +218,46 @@
 	                </response>
 	        </method>
         </resource>
+	<resource id="actualconstraint" path="actualconstraint/{agencyID}/{resourceID}/{version}"> 
+            <param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>        
+            <param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
+            <param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+            <method name="GET" id="ActualConstraintQuery"> 
+	            <request> 
+	                <param name="detail" type="types:DetailType" style="query" default="full"/>
+	                <param name="references" type="types:ReferencesType" style="query" default="none"/>
+	            </request> 
+	            <response status="200"> 
+	                <representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+	            </response> 
+	            <response status="400 401 403 404 500 501 503"> 
+	                <representation mediaType="*/*"/>
+	            </response> 
+	            <response status="413"> 
+	                    <representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+	                </response>
+	        </method>
+        </resource>
+	<resource id="allowedconstraint" path="allowedconstraint/{agencyID}/{resourceID}/{version}"> 
+            <param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>        
+            <param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
+            <param name="version" type="types:VersionType" style="template" required="false" default="latest"/>
+            <method name="GET" id="AllowedConstraintQuery"> 
+	            <request> 
+	                <param name="detail" type="types:DetailType" style="query" default="full"/>
+	                <param name="references" type="types:ReferencesType" style="query" default="none"/>
+	            </request> 
+	            <response status="200"> 
+	                <representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+	            </response> 
+	            <response status="400 401 403 404 500 501 503"> 
+	                <representation mediaType="*/*"/>
+	            </response> 
+	            <response status="413"> 
+	                    <representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+	                </response>
+	        </method>
+        </resource>
         <resource id="attachmentconstraint" path="attachmentconstraint/{agencyID}/{resourceID}/{version}"> 
             <param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>        
             <param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
