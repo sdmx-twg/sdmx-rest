@@ -278,6 +278,32 @@
 	                </response>
 	        </method>
         </resource>
+            
+	<resource id="availableconstraint" path="availableconstraint/{flowRef}/{key}/{providerRef}/{componentID}"> 
+            <param name="flowRef" type="types:FlowRefType" style="template" required="true"/> 
+            <param name="key" type="types:KeyType" style="template" required="false" default="all"/>
+            <param name="providerRef" type="types:ProviderRefType" style="template" required="false" default="all"/>
+	    <param name="componentID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>
+            <method name="GET" id="AvailableConstraintQuery"> 
+	            <request> 
+	                <param name="mode" type="types:ModeType" style="query" default="exact"/>
+	                <param name="references" type="types:ACReferencesType" style="query" default="none"/>
+			<param name="startPeriod" type="common:StandardTimePeriodType" style="query" />
+                    	<param name="endPeriod" type="common:StandardTimePeriodType" style="query" />
+                    	<param name="updatedAfter" type="xsd:dateTime" style="query" />
+	            </request> 
+	            <response status="200"> 
+	                <representation mediaType="application/vnd.sdmx.structure+xml;version=2.1" element="message:Structure"/>
+	            </response> 
+	            <response status="400 401 403 404 500 501 503"> 
+	                <representation mediaType="*/*"/>
+	            </response> 
+	            <response status="413"> 
+	                    <representation mediaType="application/vnd.sdmx.error+xml;version=2.1" element="message:Error"/>
+	                </response>
+	        </method>
+        </resource>
+	
         <resource id="structure" path="structure/{agencyID}/{resourceID}/{version}"> 
             <param name="agencyID" type="types:NestedNCNameIDType" style="template" required="false" default="all"/>        
             <param name="resourceID" type="types:IDType" style="template" required="false" default="all"/> 
