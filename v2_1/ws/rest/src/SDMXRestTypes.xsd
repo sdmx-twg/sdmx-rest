@@ -211,4 +211,30 @@
             <xs:pattern value="nodata"/>
         </xs:restriction>
     </xs:simpleType>
+	
+    <xs:simpleType name="ModeType">
+        <xs:annotation>
+            <xs:documentation>ModeType indicates the possible values for the availableconstraint mode query string parameter.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="exact"/>
+            <xs:pattern value="available"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+    <xs:simpleType name="ACReferencesType">
+        <xs:annotation>
+            <xs:documentation>ACReferencesType indicates the possible values for the availableconstraint references query string parameter. It is basically a subset of ReferencesType.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="none"/>
+            <xs:pattern value="all"/>
+            <!-- Specific reference artefact type -->
+            <xs:pattern value="datastructure"/>
+            <xs:pattern value="conceptscheme"/>
+            <xs:pattern value="codelist"/>
+            <xs:pattern value="dataproviderscheme"/>
+            <xs:pattern value="dataflow"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
