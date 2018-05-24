@@ -57,7 +57,7 @@ startPeriod and endPeriod | Within the supplied time range
 updatedAfter + startPeriod/endPeriod | Available data within the supplied time range, that have changed since the supplied timestamp
 
 ### Examples
-* To retrieve the distinct values for each Dimension for the ECB_EXR1_WEB.  The metadata used to decode the code ids and concept ids into human readable labels is also requested.  No data query filters are provided, and  
+* To retrieve the distinct values for each Dimension for the entire ECB_EXR1_WEB dataflow. The metadata used to decode the code ids and concept ids into human readable labels is also requested.   
 
         http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/
 		
