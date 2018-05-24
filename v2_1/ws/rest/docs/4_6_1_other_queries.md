@@ -70,8 +70,8 @@ In this example, the full reference to the dataflow is supplied (ECB as maintena
 
 * For the data query M..EUR.SP00.A supplied by the ECB for the ECB_EXR1_WEB dataflow, the client requests information about which dimension values will be returned as a result of executing the query:
 
-        http://ws-entry-point/data/ECB_EXR1_WEB/M..EUR.SP00.A/ECB?mode=exact
+        http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/M..EUR.SP00.A/ECB?mode=exact
 
 * As `exact` is the default value for mode, the query above can also be written as follows:
 
-        http://ws-entry-point/data/ECB_EXR1_WEB/M..EUR.SP00.A/ECB
+        http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/M..EUR.SP00.A/ECB
