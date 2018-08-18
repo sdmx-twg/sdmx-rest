@@ -23,6 +23,8 @@ The following resources are defined:
 - process
 - categorisation
 - contentconstraint
+- actualconstraint (a type of contentconstraint stating what data are actually present)
+- allowedconstraint (a type of contentconstraint defining what data are allowed)
 - attachmentconstraint
 - structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
 
@@ -35,9 +37,9 @@ The following parameters are used for identifying resources:
 
 Parameter | Type | Description
 --- | --- | ---
-agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned.
-resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned.
-version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned.
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `+` as separator (e.g. BIS+ECB).
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `+` as separator (e.g. CL_FREQ+CL_CONF_STATUS).
+version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned. It is possible to set more than one version, using `+` as separator (e.g. 1.0+2.1).
 
 The parameters mentioned above are specified using the following syntax:
 
@@ -82,7 +84,7 @@ For these collections (those following the *item scheme* pattern or the *hierarc
 
 Parameter | Type | Description
 --- | --- | ---
-itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned.
+itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned. It is possible to set more than one id, using `+` as separator (e.g. A+Q+M).
 
 
 This 4th parameter is used as follows:
@@ -107,7 +109,7 @@ The following parameters are used to further describe the desired results, once 
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
-detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: `allstubs` (all artefacts should be returned as stubs. The equivalent in SDMX-ML query is: Stub at the query level and Stub at the reference level), `referencestubs` (referenced artefacts should be returned as stubs. The equivalent in SDMX-ML query is: Full at the query level and Stub at the reference level) and `full` (all available information for all artefacts should be returned. The equivalent in SDMX-ML query is: Full at the query level and Full at the reference level). | **full**
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: `allstubs` (all artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencestubs` (referenced artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencepartial` (referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its `isPartial` flag would be set to `true`), `allcompletestubs` (all artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information), `referencecompletestubs` (referenced artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information) and `full` (all available information for all artefacts should be returned). | **full**
 references | *String* | This attribute instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). Possible values are: `none` (no references will be returned), `parents` (the artefacts that use the artefact matching the query), `parentsandsiblings` (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), `children` (artefacts referenced by the artefact to be returned), `descendants` (references of references, up to any level, will also be returned), `all` (the combination of parentsandsiblings and descendants). In addition, a `concrete type of resource` may also be used (for example, references=codelist). | **none**
 
 #### Applicability and meaning of references attribute
@@ -139,7 +141,7 @@ StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStr
 
 * To retrieve version 1.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
 
-        http://ws-entry-point/datastructure/ECB/ECB_EXR1/1.0?references=children
+        http://ws-entry-point/datastructure/ECB/ECB_EXR1/1.0?references=children&detail=referencepartial
 
 * To retrieve the latest version in production of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
 
@@ -160,3 +162,6 @@ StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStr
 * To retrieve the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as the categorisations referencing that category:
 
         http://ws-entry-point/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
+
+* To retrieve the latest version of the CL_FREQ codelists maintained by the BIS or the ECB:
+        http://ws-entry-point/codelist/BIS+ECB/CL_FREQ

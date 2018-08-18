@@ -73,3 +73,4 @@ Apart from the error codes mentioned above, there are a few additional [HTTP sta
 
 - `200`: This is the standard response for successful HTTP requests. With `GET` requests, it is used to indicate that the request was successfully processed and that the data are available in the body of the response.
 - `304`: This is used to indicate that there are no changes since the version specified by the request headers `If-Modified-Since` or `If-None-Match`. The response does not include matching data, as the client can still use the previously-downloaded copy.
+- `414`: This status code (URI Too Long) indicates that the server is refusing to service the request because the request-target is longer than the server is willing to interpret. See [the wiki page for information on the URL length](https://github.com/sdmx-twg/sdmx-rest/wiki/URL-length-in-REST).

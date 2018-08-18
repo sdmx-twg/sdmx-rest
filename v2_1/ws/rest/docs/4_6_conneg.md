@@ -30,6 +30,8 @@ The list below indicates the valid formats for SDMX RESTful web services, compli
     application/vnd.sdmx.structurespecificdata+xml;version=2.1
     application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
     application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
+    application/vnd.sdmx.data+json;version=1.0.0
+    application/vnd.sdmx.data+csv;version=1.0.0
     application/vnd.sdmx.genericmetadata+xml;version=2.1
     application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
     application/vnd.sdmx.structure+xml;version=2.1
