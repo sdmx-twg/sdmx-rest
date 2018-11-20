@@ -60,7 +60,7 @@ SDMX error | HTTP status code
 110 Unauthorized | 401 Unauthorized
 130 Response too large due to client request | 413 Request entity too large
 140 Syntax error | 400 Bad syntax
-150 Semantic error | 403 Forbidden
+150 Semantic error | 422 Unprocessable Entity
 500 Internal Server error | 500 Internal server error
 501 Not implemented | 501 Not implemented
 503 Service unavailable | 503 Service unavailable
@@ -73,4 +73,6 @@ Apart from the error codes mentioned above, there are a few additional [HTTP sta
 
 - `200`: This is the standard response for successful HTTP requests. With `GET` requests, it is used to indicate that the request was successfully processed and that the data are available in the body of the response.
 - `304`: This is used to indicate that there are no changes since the version specified by the request headers `If-Modified-Since` or `If-None-Match`. The response does not include matching data, as the client can still use the previously-downloaded copy.
+- `403`: This is used to indicate that the client is not allowed to perform the action (for example, because authentication is required).
+- `406`: This is used to indicate that the requested representation (e.g. format) is not supported by the service.
 - `414`: This status code (URI Too Long) indicates that the server is refusing to service the request because the request-target is longer than the server is willing to interpret. See [the wiki page for information on the URL length](https://github.com/sdmx-twg/sdmx-rest/wiki/URL-length-in-REST).
