@@ -28,7 +28,7 @@ The following resources are defined:
 - attachmentconstraint
 - transformationscheme
 - rulesetscheme
-- userdefineoperatorscheme
+- userdefinedoperatorscheme
 - customtypescheme
 - namepersonalisationscheme
 - namealiasscheme
@@ -144,7 +144,7 @@ ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *Struct
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
 TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefineOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, NameAliasScheme
 RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
-UserDefineOperatorScheme | *TransformationScheme*, *Categorisation*
+UserDefinedOperatorScheme | *TransformationScheme*, *Categorisation*
 CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
 NamePersonalisationScheme | *Categorisation*, *Process*, *TransformationScheme*
 NameAliasScheme | *Categorisation*, *Process*, *TransformationScheme*
