@@ -26,6 +26,12 @@ The following resources are defined:
 - actualconstraint (a type of contentconstraint stating what data are actually present)
 - allowedconstraint (a type of contentconstraint defining what data are allowed)
 - attachmentconstraint
+- transformationscheme
+- rulesetscheme
+- userdefineoperatorscheme
+- customtypescheme
+- namepersonalisationscheme
+- namealiasscheme
 - structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
 
 
@@ -136,6 +142,12 @@ Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
 ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
+TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefineOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, NameAliasScheme
+RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
+UserDefineOperatorScheme | *TransformationScheme*, *Categorisation*
+CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
+NamePersonalisationScheme | *Categorisation*, *Process*, *TransformationScheme*
+NameAliasScheme | *Categorisation*, *Process*, *TransformationScheme*
 
 ### Examples
 
