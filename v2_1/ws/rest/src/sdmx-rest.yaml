@@ -564,6 +564,258 @@ paths:
         '510': 
           $ref: '#/components/responses/510'
           
+  /transformationscheme/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Get transformation schemes'
+      tags: 
+        - VTL queries
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-struct'
+        '304':
+          $ref: '#/components/responses/304'
+        '400': 
+          $ref: '#/components/responses/400'
+        '401': 
+          $ref: '#/components/responses/401'
+        '403': 
+          $ref: '#/components/responses/403'
+        '404': 
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '413': 
+          $ref: '#/components/responses/413'
+        '414':
+          $ref: '#/components/responses/414'
+        '500': 
+          $ref: '#/components/responses/500'
+        '501': 
+          $ref: '#/components/responses/501'
+        '503': 
+          $ref: '#/components/responses/503'
+        '510': 
+          $ref: '#/components/responses/510'
+  
+  /rulesetscheme/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Get ruleset schemes'
+      tags: 
+        - VTL queries
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-struct'
+        '304':
+          $ref: '#/components/responses/304'
+        '400': 
+          $ref: '#/components/responses/400'
+        '401': 
+          $ref: '#/components/responses/401'
+        '403': 
+          $ref: '#/components/responses/403'
+        '404': 
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '413': 
+          $ref: '#/components/responses/413'
+        '414':
+          $ref: '#/components/responses/414'
+        '500': 
+          $ref: '#/components/responses/500'
+        '501': 
+          $ref: '#/components/responses/501'
+        '503': 
+          $ref: '#/components/responses/503'
+        '510': 
+          $ref: '#/components/responses/510'
+          
+  /userdefinedoperatorscheme/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Get user defined operators cheme'
+      tags: 
+        - VTL queries
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-struct'
+        '304':
+          $ref: '#/components/responses/304'
+        '400': 
+          $ref: '#/components/responses/400'
+        '401': 
+          $ref: '#/components/responses/401'
+        '403': 
+          $ref: '#/components/responses/403'
+        '404': 
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '413': 
+          $ref: '#/components/responses/413'
+        '414':
+          $ref: '#/components/responses/414'
+        '500': 
+          $ref: '#/components/responses/500'
+        '501': 
+          $ref: '#/components/responses/501'
+        '503': 
+          $ref: '#/components/responses/503'
+        '510': 
+          $ref: '#/components/responses/510'
+          
+  /customtypescheme/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Get custom type schemes'
+      tags: 
+        - VTL queries
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-struct'
+        '304':
+          $ref: '#/components/responses/304'
+        '400': 
+          $ref: '#/components/responses/400'
+        '401': 
+          $ref: '#/components/responses/401'
+        '403': 
+          $ref: '#/components/responses/403'
+        '404': 
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '413': 
+          $ref: '#/components/responses/413'
+        '414':
+          $ref: '#/components/responses/414'
+        '500': 
+          $ref: '#/components/responses/500'
+        '501': 
+          $ref: '#/components/responses/501'
+        '503': 
+          $ref: '#/components/responses/503'
+        '510': 
+          $ref: '#/components/responses/510'
+          
+  /namepersonalisationscheme/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Get name personalisation schemes'
+      tags: 
+        - VTL queries
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-struct'
+        '304':
+          $ref: '#/components/responses/304'
+        '400': 
+          $ref: '#/components/responses/400'
+        '401': 
+          $ref: '#/components/responses/401'
+        '403': 
+          $ref: '#/components/responses/403'
+        '404': 
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '413': 
+          $ref: '#/components/responses/413'
+        '414':
+          $ref: '#/components/responses/414'
+        '500': 
+          $ref: '#/components/responses/500'
+        '501': 
+          $ref: '#/components/responses/501'
+        '503': 
+          $ref: '#/components/responses/503'
+        '510': 
+          $ref: '#/components/responses/510'
+          
+  /namealiasscheme/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Get name alias schemes'
+      tags: 
+        - VTL queries
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-struct'
+        '304':
+          $ref: '#/components/responses/304'
+        '400': 
+          $ref: '#/components/responses/400'
+        '401': 
+          $ref: '#/components/responses/401'
+        '403': 
+          $ref: '#/components/responses/403'
+        '404': 
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '413': 
+          $ref: '#/components/responses/413'
+        '414':
+          $ref: '#/components/responses/414'
+        '500': 
+          $ref: '#/components/responses/500'
+        '501': 
+          $ref: '#/components/responses/501'
+        '503': 
+          $ref: '#/components/responses/503'
+        '510': 
+          $ref: '#/components/responses/510'
+          
   /structure/{agencyID}/{resourceID}/{version}:
     get:
       summary: 'Get structures'
