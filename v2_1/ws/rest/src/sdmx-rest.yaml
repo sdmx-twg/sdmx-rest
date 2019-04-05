@@ -650,7 +650,7 @@ paths:
           
   /userdefinedoperatorscheme/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Get user defined operators cheme'
+      summary: 'Get user defined operator schemes'
       tags: 
         - VTL queries
       parameters:
