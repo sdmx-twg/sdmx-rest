@@ -142,7 +142,7 @@ Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
 ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
-TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefineOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, NameAliasScheme
+TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefinedOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, NameAliasScheme
 RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
 UserDefinedOperatorScheme | *TransformationScheme*, *Categorisation*
 CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
