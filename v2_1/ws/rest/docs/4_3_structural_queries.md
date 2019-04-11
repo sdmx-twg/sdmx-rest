@@ -147,7 +147,7 @@ RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
 UserDefinedOperatorScheme | *TransformationScheme*, *Categorisation*
 CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
 NamePersonalisationScheme | *Categorisation*, *Process*, *TransformationScheme*
-NameAliasScheme | *Categorisation*, *Process*, *TransformationScheme*
+NameAliasScheme | *Categorisation*, *Process*, *TransformationScheme*, Dataflow
 
 ### Examples
 
