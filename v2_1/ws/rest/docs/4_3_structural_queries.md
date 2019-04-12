@@ -83,6 +83,12 @@ SDMX uses the *item scheme* pattern to model SDMX collections of items. These ar
 - dataconsumerscheme
 - organisationunitscheme
 - reportingtaxonomy
+- transformationscheme
+- rulesetscheme
+- userdefinedoperatorscheme
+- customtypescheme
+- namepersonalisationscheme
+- namealiasscheme
 
 Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
 
