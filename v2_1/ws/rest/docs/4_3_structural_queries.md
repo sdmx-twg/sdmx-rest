@@ -137,7 +137,7 @@ Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*,
 ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
 DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
-Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, *NameAliasScheme*
 DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*
 DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*
 HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*
