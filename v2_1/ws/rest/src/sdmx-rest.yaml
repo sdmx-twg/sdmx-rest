@@ -1716,6 +1716,16 @@ components:
         type: string
         enum: [none, parents, parentsandsiblings, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, contentconstraint, actualconstraint, allowedconstraint, attachmentconstraint]
         default: none
+    mode:
+      in: query
+      name: mode
+      description: |
+        This attribute instructs the web service to return a ContentConstraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters.
+      required: false
+      schema:
+        type: string
+        enum: [exact, available]
+        default: exact
     accept-encoding:
       in: header
       name: Accept-Encoding
