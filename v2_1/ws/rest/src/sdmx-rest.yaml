@@ -59,6 +59,51 @@ paths:
           $ref: '#/components/responses/503'
         '510': 
           $ref: '#/components/responses/510'
+
+  /availableconstraint/{flow}/{key}/{provider}:
+    get:
+      summary: 'Get information about data availability'
+      tags: 
+        - Data availability queries
+      parameters:
+        - $ref: '#/components/parameters/flow'
+        - $ref: '#/components/parameters/key'
+        - $ref: '#/components/parameters/provider'
+        - $ref: '#/components/parameters/mode'
+        - $ref: '#/components/parameters/acreferences'
+        - $ref: '#/components/parameters/startPeriod'
+        - $ref: '#/components/parameters/endPeriod'
+        - $ref: '#/components/parameters/updatedAfter'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '304':
+          $ref: '#/components/responses/304'
+        '400': 
+          $ref: '#/components/responses/400'
+        '401': 
+          $ref: '#/components/responses/401'
+        '403': 
+          $ref: '#/components/responses/403'
+        '404': 
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '413': 
+          $ref: '#/components/responses/413'
+        '414':
+          $ref: '#/components/responses/414'
+        '500': 
+          $ref: '#/components/responses/500'
+        '501': 
+          $ref: '#/components/responses/501'
+        '503': 
+          $ref: '#/components/responses/503'
+        '510': 
+          $ref: '#/components/responses/510'
   
   /datastructure/{agencyID}/{resourceID}/{version}:
     get:
