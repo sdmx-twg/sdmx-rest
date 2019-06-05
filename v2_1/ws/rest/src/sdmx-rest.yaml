@@ -60,7 +60,7 @@ paths:
         '510': 
           $ref: '#/components/responses/510'
 
-  /availableconstraint/{flow}/{key}/{provider}:
+  /availableconstraint/{flow}/{key}/{provider}/{componentID}:
     get:
       summary: 'Get information about data availability'
       tags: 
@@ -69,6 +69,7 @@ paths:
         - $ref: '#/components/parameters/flow'
         - $ref: '#/components/parameters/key'
         - $ref: '#/components/parameters/provider'
+        - $ref: '#/components/parameters/componentID'
         - $ref: '#/components/parameters/mode'
         - $ref: '#/components/parameters/acreferences'
         - $ref: '#/components/parameters/startPeriod'
@@ -1603,6 +1604,15 @@ components:
       schema:
         type: string
         pattern: '^[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*(\+[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*)*$'
+    componentId:
+      in: path
+      name: componentId
+      description: |
+        The id of the Dimension for which to obtain availability information about. Use all to indicate that data availability should be provided for all dimensions.
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z][A-Za-z\d_-]*$'
     startPeriod:
       in: query
       name: startPeriod
