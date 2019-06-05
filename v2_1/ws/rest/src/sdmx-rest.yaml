@@ -1726,6 +1726,16 @@ components:
         type: string
         enum: [exact, available]
         default: exact
+    acreferences:
+      in: query
+      name: references
+      description: |
+        Instructs the web service to return (or not) the artefacts referenced by the ContentConstraint to be returned.
+      required: false
+      schema:
+        type: string
+        enum: [none, all, datastructure, conceptscheme, codelist, dataproviderscheme, dataflow]
+        default: none
     accept-encoding:
       in: header
       name: Accept-Encoding
