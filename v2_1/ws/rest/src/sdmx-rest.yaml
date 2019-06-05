@@ -1604,9 +1604,9 @@ components:
       schema:
         type: string
         pattern: '^[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*(\+[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*)*$'
-    componentId:
+    componentID:
       in: path
-      name: componentId
+      name: componentID
       description: |
         The id of the Dimension for which to obtain availability information about. Use all to indicate that data availability should be provided for all dimensions.
       required: true
