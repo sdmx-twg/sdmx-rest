@@ -1802,5 +1802,3 @@ components:
       description: Not implemented
     '503': 
       description: Service unavailable
-    '510': 
-      description: Response size exceeds service limit
