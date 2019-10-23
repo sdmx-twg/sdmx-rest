@@ -35,6 +35,7 @@ The list below indicates the valid formats for SDMX RESTful web services, compli
     application/vnd.sdmx.genericmetadata+xml;version=2.1
     application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
     application/vnd.sdmx.structure+xml;version=2.1
+    application/vnd.sdmx.structure+json;version=1.0.0
     application/vnd.sdmx.schema+xml;version=2.1
     
 ### Selection of the Appropriate language
