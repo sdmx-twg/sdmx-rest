@@ -31,7 +31,7 @@ The following resources are defined:
 - userdefinedoperatorscheme
 - customtypescheme
 - namepersonalisationscheme
-- namealiasscheme
+- vtlmappingscheme
 - structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
 
 
@@ -88,7 +88,7 @@ SDMX uses the *item scheme* pattern to model SDMX collections of items. These ar
 - userdefinedoperatorscheme
 - customtypescheme
 - namepersonalisationscheme
-- namealiasscheme
+- vtlmappingscheme
 
 Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
 
@@ -137,7 +137,7 @@ Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*,
 ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
 DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
-Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, *NameAliasScheme*
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, *VtlMappingScheme*
 DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*
 DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*
 HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*
@@ -148,12 +148,12 @@ Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
 ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
-TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefinedOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, NameAliasScheme
+TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefinedOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, VtlMappingScheme
 RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
 UserDefinedOperatorScheme | *TransformationScheme*, *Categorisation*
 CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
 NamePersonalisationScheme | *Categorisation*, *Process*, *TransformationScheme*
-NameAliasScheme | *Categorisation*, *Process*, *TransformationScheme*, Dataflow
+VtlMappingScheme | *Categorisation*, *Process*, *TransformationScheme*, Dataflow
 
 ### Examples
 
