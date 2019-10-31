@@ -133,8 +133,8 @@ Maintainable artefact | Artefacts returned
 AgencyScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
 Categorisation | All
 CategoryScheme | *Categorisations*, *Process*, *StructureSet*
-Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
-ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
+Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
+ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
 DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
 Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, *VtlMappingScheme*
@@ -150,10 +150,10 @@ ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *Struct
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
 TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefinedOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, VtlMappingScheme
 RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
-UserDefinedOperatorScheme | *TransformationScheme*, *Categorisation*
+UserDefinedOperatorScheme | *Categorisation*, *Process*, *TransformationScheme*
 CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
 NamePersonalisationScheme | *Categorisation*, *Process*, *TransformationScheme*
-VtlMappingScheme | *Categorisation*, *Process*, *TransformationScheme*, Dataflow
+VtlMappingScheme | *Categorisation*, *Process*, *TransformationScheme*, Codelist, ConceptScheme, Dataflow
 
 ### Examples
 
