@@ -26,6 +26,12 @@ The following resources are defined:
 - actualconstraint (a type of contentconstraint stating what data are actually present)
 - allowedconstraint (a type of contentconstraint defining what data are allowed)
 - attachmentconstraint
+- transformationscheme
+- rulesetscheme
+- userdefinedoperatorscheme
+- customtypescheme
+- namepersonalisationscheme
+- vtlmappingscheme
 - structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
 
 
@@ -77,6 +83,12 @@ SDMX uses the *item scheme* pattern to model SDMX collections of items. These ar
 - dataconsumerscheme
 - organisationunitscheme
 - reportingtaxonomy
+- transformationscheme
+- rulesetscheme
+- userdefinedoperatorscheme
+- customtypescheme
+- namepersonalisationscheme
+- vtlmappingscheme
 
 Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
 
@@ -121,11 +133,11 @@ Maintainable artefact | Artefacts returned
 AgencyScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
 Categorisation | All
 CategoryScheme | *Categorisations*, *Process*, *StructureSet*
-Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
-ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
+Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
+ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
 DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
-Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, *VtlMappingScheme*
 DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*
 DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*
 HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*
@@ -136,6 +148,12 @@ Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
 ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
+TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefinedOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, VtlMappingScheme
+RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
+UserDefinedOperatorScheme | *Categorisation*, *Process*, *TransformationScheme*
+CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
+NamePersonalisationScheme | *Categorisation*, *Process*, *TransformationScheme*
+VtlMappingScheme | *Categorisation*, *Process*, *TransformationScheme*, Codelist, ConceptScheme, Dataflow
 
 ### Examples
 
