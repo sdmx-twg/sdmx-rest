@@ -1,22 +1,28 @@
 openapi: 3.0.0
 info:
-  version: '1.4.0'
-  title: 'SDMX RESTful API, v1.4.0'
+  version: '2.0.0'
+  title: 'SDMX RESTful API, v2.0.0'
   description: |
-    The SDMX RESTful API, released in June 2019.
+    The SDMX RESTful API, released in XXX 2020.
     
     For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
 
 servers:
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/sdmx-rest/sdmx-rest/1.3.0
+  - description: ECB
+    url: https://sdw-wsrest.ecb.europa.eu/service
+  - description: Eurostat
+    url: http://ec.europa.eu/eurostat/SDMX/diss-web/rest/
+  - description: OECD (data only)
+    url: http://stats.oecd.org/sdmx-json
+  - description: UNdata
+    url: http://data.un.org/ws/rest
+  - description: ILO
+    url: https://www.ilo.org/sdmx/rest
 
 paths:
   /data/{flow}/{key}/{provider}:
     get:
-      summary: 'Get data'
-      tags: 
-        - Data queries
+      summary: 'Data query'
       parameters:
         - $ref: '#/components/parameters/flow'
         - $ref: '#/components/parameters/key'
@@ -57,24 +63,26 @@ paths:
           $ref: '#/components/responses/501'
         '503': 
           $ref: '#/components/responses/503'
-  
-  /datastructure/{agencyID}/{resourceID}/{version}:
+
+  /availableconstraint/{flow}/{key}/{provider}/{componentID}:
     get:
-      summary: 'Get data structures'
-      tags: 
-        - Structure queries
+      summary: 'Data availability query'
       parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/flow'
+        - $ref: '#/components/parameters/key'
+        - $ref: '#/components/parameters/provider'
+        - $ref: '#/components/parameters/componentID'
+        - $ref: '#/components/parameters/mode'
+        - $ref: '#/components/parameters/acreferences'
+        - $ref: '#/components/parameters/startPeriod'
+        - $ref: '#/components/parameters/endPeriod'
+        - $ref: '#/components/parameters/updatedAfter'
         - $ref: '#/components/parameters/accept-encoding'
         - $ref: '#/components/parameters/accept-language'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
         '200':
-          $ref: '#/components/responses/200-struct'
+          $ref: '#/components/responses/200'
         '304':
           $ref: '#/components/responses/304'
         '400': 
@@ -97,53 +105,12 @@ paths:
           $ref: '#/components/responses/501'
         '503': 
           $ref: '#/components/responses/503'
-       
-  /metadatastructure/{agencyID}/{resourceID}/{version}:
+
+  /structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Get metadata structures'
-      tags: 
-        - Structure queries
+      summary: 'Structure query'
       parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /dataflow/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get dataflows'
-      tags: 
-        - Structure queries
-      parameters:
+        - $ref: '#/components/parameters/structureType'
         - $ref: '#/components/parameters/agencies'
         - $ref: '#/components/parameters/resourceIDs'
         - $ref: '#/components/parameters/versions'
@@ -178,1100 +145,11 @@ paths:
         '503': 
           $ref: '#/components/responses/503'
           
-  /metadataflow/{agencyID}/{resourceID}/{version}:
+  /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
     get:
-      summary: 'Get metadadataflows'
-      tags: 
-        - Structure queries
+      summary: 'Item Scheme query'
       parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /provisionagreement/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get provision agreements'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /structureset/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get structure sets'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /process/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get processes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /categorisation/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get categorisations'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /contentconstraint/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get content constraints'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /actualconstraint/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get actual constraints'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /allowedconstraint/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get allowed constraints'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /attachmentconstraint/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get attachment constraints'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /structure/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get structures'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /conceptscheme/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get concept schemes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-  
-  /codelist/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get codelists'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /categoryscheme/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get category schemes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /hierarchicalcodelist/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get hierarchical codelists'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /organisationscheme/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get organisation schemes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /agencyscheme/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get agency schemes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /dataproviderscheme/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get data provider schemes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /dataconsumerscheme/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get data consumer schemes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /organisationunitscheme/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Get organisation unit schemes'
-      tags: 
-        - Structure queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /conceptscheme/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get concepts'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-  
-  /codelist/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get codes'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /categoryscheme/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get categories'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /hierarchicalcodelist/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get hierarchies'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /organisationscheme/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get organisations'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /agencyscheme/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get agencies'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /dataproviderscheme/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get data providers'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /dataconsumerscheme/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get data consumers'
-      tags: 
-        - Item queries
-      parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        '200':
-          $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
-  /organisationunitscheme/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: 'Get organisation unit schemes'
-      tags: 
-        - Item queries
-      parameters:
+        - $ref: '#/components/parameters/itemSchemeType'
         - $ref: '#/components/parameters/agencies'
         - $ref: '#/components/parameters/resourceIDs'
         - $ref: '#/components/parameters/versions'
@@ -1309,9 +187,7 @@ paths:
           
   /schema/{context}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Get XML schemas'
-      tags: 
-        - Schema queries
+      summary: 'Schema query'
       parameters:
         - $ref: '#/components/parameters/context'
         - $ref: '#/components/parameters/agencyID'
@@ -1394,6 +270,28 @@ components:
       schema:
         type: string
         pattern: '^(([A-Za-z][A-Za-z\d_-]*)(\.[A-Za-z][A-Za-z\d_-]*)*,)?[A-Za-z\d_@$-]+(\+([A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*,)?[A-Za-z\d_@$-]+)*$'
+    structureType:
+      in: path
+      name: structureType
+      description: |
+        The type of structural metadata to be retrieved (e.g. codelist, datastructure, etc.).
+
+        The keyword `all` can be used to indicate that any type of artefact can be returned.
+      required: true
+      schema:
+        type: string
+        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, contentconstraint, allowedconstraint, attachmentconstraint, conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, all]
+    itemSchemeType:
+      in: path
+      name: itemSchemeType
+      description: |
+        The type of item schemes to be retrieved (e.g. codelist, concept scheme, etc.).
+
+        The keyword `all` can be used to indicate that any type of item scheme can be returned.
+      required: true
+      schema:
+        type: string
+        enum: [conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, all]
     context:
       in: path
       name: context
@@ -1492,6 +390,15 @@ components:
       schema:
         type: string
         pattern: '^[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*(\+[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*)*$'
+    componentID:
+      in: path
+      name: componentID
+      description: |
+        The id of the Dimension for which to obtain availability information about. Use all to indicate that data availability should be provided for all dimensions.
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z][A-Za-z\d_-]*$'
     startPeriod:
       in: query
       name: startPeriod
@@ -1510,7 +417,7 @@ components:
       required: false
       schema:
         type: string
-        pattern: '^\d{4}-?((\d{2}(-\d{2})?)|A1|S[1|2]|Q[1|4]|T[1-3]|M(0[1-9]|1[0-2])|W(0[1-9]|[1-4][0-9]|5[0-3])|D(0[0-9][1-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6]))?$'
+        pattern: '^\d{4}-?((\d{2}(-\d{2})?)|A1|S[1|2]|Q[1-4]|T[1-3]|M(0[1-9]|1[0-2])|W(0[1-9]|[1-4][0-9]|5[0-3])|D(0[0-9][1-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6]))?$'
     endPeriod:
       in: query
       name: endPeriod
@@ -1528,7 +435,7 @@ components:
       required: false
       schema:
         type: string
-        pattern: '^\d{4}-?((\d{2}(-\d{2})?)|A1|S[1|2]|Q[1|4]|T[1-3]|M(0[1-9]|1[0-2])|W(0[1-9]|[1-4][0-9]|5[0-3])|D(0[0-9][1-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6]))?$'
+        pattern: '^\d{4}-?((\d{2}(-\d{2})?)|A1|S[1|2]|Q[1-4]|T[1-3]|M(0[1-9]|1[0-2])|W(0[1-9]|[1-4][0-9]|5[0-3])|D(0[0-9][1-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6]))?$'
     updatedAfter:
       in: query
       name: updatedAfter
@@ -1649,6 +556,26 @@ components:
       schema:
         type: string
         enum: [none, parents, parentsandsiblings, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, contentconstraint, actualconstraint, allowedconstraint, attachmentconstraint]
+        default: none
+    mode:
+      in: query
+      name: mode
+      description: |
+        Instructs the web service to return a ContentConstraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters.
+      required: false
+      schema:
+        type: string
+        enum: [exact, available]
+        default: exact
+    acreferences:
+      in: query
+      name: references
+      description: |
+        Instructs the web service to return (or not) the artefacts referenced by the ContentConstraint to be returned.
+      required: false
+      schema:
+        type: string
+        enum: [none, all, datastructure, conceptscheme, codelist, dataproviderscheme, dataflow]
         default: none
     accept-encoding:
       in: header
