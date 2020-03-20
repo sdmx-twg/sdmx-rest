@@ -31,7 +31,7 @@ The list below indicates the valid formats for SDMX RESTful web services, compli
     application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
     application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
     application/vnd.sdmx.data+json;version=1.0.0
-    application/vnd.sdmx.data+csv;version=1.0.0
+    application/vnd.sdmx.data+csv;version=1.0.0;labels=[*id*|both];timeFormat=[*original*|normalized]
     application/vnd.sdmx.genericmetadata+xml;version=2.1
     application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
     application/vnd.sdmx.structure+xml;version=2.1
@@ -55,3 +55,7 @@ Compression could be enabled using the appropriate [Accept-Encoding header](http
 The [Vary header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the list of headers that are relevant for a particular service.
 
 For example, services that offer data in multiple formats will rely on the HTTP Accept header, but this header will likely be irrelevant for services that support only one format. Using the `Vary` header to indicate which headers are effectively used by the server helps web caches and Content Delivery Networks to build appropriate cache keys.
+
+### A note about SDMX-CSV
+
+SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
