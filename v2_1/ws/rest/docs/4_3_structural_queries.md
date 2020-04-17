@@ -2,32 +2,8 @@
 
 ### Resources
 
-The following resources are defined:
-
-- datastructure (This has been shortened from DataStructureDefinition to allow for shorter URLs)
-- metadatastructure (This has been shortened from MetadataStructureDefinition to allow for shorter URLs)
-- categoryscheme
-- conceptscheme
-- codelist
-- hierarchicalcodelist
-- organisationscheme (The organisationscheme resource can be used whenever the role played by the organisation schemes is not known/relevant)
-- agencyscheme (For 3 of the subtypes of OrganisationScheme, the id and version parameters have fixed values. See Section 03 of the SDMX information model document for additional information)
-- dataproviderscheme
-- dataconsumerscheme
-- organisationunitscheme
-- dataflow
-- metadataflow
-- reportingtaxonomy
-- provisionagreement
-- structureset
-- process
-- categorisation
-- contentconstraint
-- actualconstraint (a type of contentconstraint stating what data are actually present)
-- allowedconstraint (a type of contentconstraint defining what data are allowed)
-- attachmentconstraint
-- structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
-
+The following resource is defined:
+- structure
 
 ### Parameters
 
@@ -37,18 +13,20 @@ The following parameters are used for identifying resources:
 
 Parameter | Type | Description
 --- | --- | ---
+artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, contentconstraint, actualconstraint, allowedconstraint, attachmentconstraint | The type of structural metadata to be returned.
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `+` as separator (e.g. BIS+ECB).
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `+` as separator (e.g. CL_FREQ+CL_CONF_STATUS).
 version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned. It is possible to set more than one version, using `+` as separator (e.g. 1.0+2.1).
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol://ws-entry-point/resource/agencyID/resourceID/version
+    protocol://ws-entry-point/structure/artefactType/agencyID/resourceID/version
 
 Furthermore, some keywords may be used:
 
 Keywords | Scope | Description
 --- | --- | ---
+all | artefactType | Returns any type of structural metadata
 all | agencyID | Returns artefacts maintained by any maintenance agency
 all | resourceID | Returns all resources of the type defined by the resource parameter
 all | version | Returns all versions of the resource
@@ -61,7 +39,8 @@ The following rules apply:
 - If no version is specified, the version currently used in production should be returned. It is therefore equivalent to using the keyword `latest`.
 -  If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the keyword `all`. This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/all/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
 - If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `all`.
-- If no parameters are specified, the **latest** version of **all** resources of the type identified by the resource parameter, maintained by **any** maintenance agency should be returned.
+- If no artefactType is specified, all matching artefacts of any type (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `all`.
+- If no parameters are specified, the **latest** version of **all** resources, maintained by **any** maintenance agency should be returned.
 
 
 #### Additional parameter used for identifying a resource, for item scheme types
@@ -80,16 +59,16 @@ SDMX uses the *item scheme* pattern to model SDMX collections of items. These ar
 
 Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
 
-For these collections (those following the *item scheme* pattern or the *hierarchicalcodelist*), it is possible to use a 4th parameter for identifying a resource. The rules for the 3 other parameters, as defined in the section above, remain valid.
+For these collections (those following the *item scheme* pattern or the *hierarchicalcodelist*), it is possible to use a 5th parameter for identifying a resource. The rules for the 4 other parameters, as defined in the section above, remain valid.
 
 Parameter | Type | Description
 --- | --- | ---
 itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned. It is possible to set more than one id, using `+` as separator (e.g. A+Q+M).
 
 
-This 4th parameter is used as follows:
+This 5th parameter is used as follows:
 
-    protocol://ws-entry-point/resource/agencyID/resourceID/version/itemID
+    protocol://ws-entry-point/structure/artefactType/agencyID/resourceID/version/itemID
 
 Furthermore, a keyword may be used:
 
@@ -141,27 +120,28 @@ StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStr
 
 * To retrieve version 1.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
 
-        http://ws-entry-point/datastructure/ECB/ECB_EXR1/1.0?references=children&detail=referencepartial
+        http://ws-entry-point/structure/datastructure/ECB/ECB_EXR1/1.0?references=children&detail=referencepartial
 
 * To retrieve the latest version in production of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
 
-        http://ws-entry-point/datastructure/ECB/ECB_EXR1
+        http://ws-entry-point/structure/datastructure/ECB/ECB_EXR1
 
 * To retrieve all DSDs maintained by the ECB, as well as the dataflows using these DSDs:
 
-        http://ws-entry-point/datastructure/ECB?references=dataflow
+        http://ws-entry-point/structure/datastructure/ECB?references=dataflow
 
 * To retrieve the latest version in production of all code lists maintained by all maintenance agencies, but without the codes:
 
-        http://ws-entry-point/codelist?detail=allstubs
+        http://ws-entry-point/structure/codelist?detail=allstubs
 
 * To retrieve, as stubs, the latest version in production of all maintainable artefacts maintained by the ECB:
 
-        http://ws-entry-point/structure/ECB?detail=allstubs
+        http://ws-entry-point/structure/all/ECB?detail=allstubs
         
 * To retrieve the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as the categorisations referencing that category:
 
-        http://ws-entry-point/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
+        http://ws-entry-point/structure/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
 
 * To retrieve the latest version of the CL_FREQ codelists maintained by the BIS or the ECB:
-        http://ws-entry-point/codelist/BIS+ECB/CL_FREQ
+        
+        http://ws-entry-point/structure/codelist/BIS+ECB/CL_FREQ
