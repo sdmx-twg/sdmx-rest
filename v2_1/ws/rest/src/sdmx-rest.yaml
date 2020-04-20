@@ -4,9 +4,32 @@ info:
   title: 'SDMX RESTful API, v2.0.0'
   description: |
     The SDMX RESTful API, released in XXX 2020.
-    
-    For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
 
+    For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
+x-commons:
+  common_responses: &common_responses
+    '304':
+      $ref: '#/components/responses/304'
+    '400':
+      $ref: '#/components/responses/400'
+    '401':
+      $ref: '#/components/responses/401'
+    '403':
+      $ref: '#/components/responses/403'
+    '404':
+      $ref: '#/components/responses/404'
+    '406':
+      $ref: '#/components/responses/406'
+    '413':
+      $ref: '#/components/responses/413'
+    '414':
+      $ref: '#/components/responses/414'
+    '500':
+      $ref: '#/components/responses/500'
+    '501':
+      $ref: '#/components/responses/501'
+    '503':
+      $ref: '#/components/responses/503'
 servers:
   - description: ECB
     url: https://sdw-wsrest.ecb.europa.eu/service
@@ -39,30 +62,10 @@ paths:
         - $ref: '#/components/parameters/accept-language'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
+        <<: *common_responses
         '200':
           $ref: '#/components/responses/200'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
+
 
   /availableconstraint/{flow}/{key}/{provider}/{componentID}:
     get:
@@ -81,30 +84,9 @@ paths:
         - $ref: '#/components/parameters/accept-language'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
+        <<: *common_responses
         '200':
           $ref: '#/components/responses/200'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
 
   /structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
@@ -120,31 +102,10 @@ paths:
         - $ref: '#/components/parameters/accept-language'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
+        <<: *common_responses
         '200':
           $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
+
   /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
     get:
       summary: 'Item Scheme query'
@@ -160,31 +121,11 @@ paths:
         - $ref: '#/components/parameters/accept-language'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
+        <<: *common_responses
         '200':
           $ref: '#/components/responses/200-struct'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '413': 
-          $ref: '#/components/responses/413'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
+
+
   /schema/{context}/{agencyID}/{resourceID}/{version}:
     get:
       summary: 'Schema query'
@@ -198,29 +139,10 @@ paths:
         - $ref: '#/components/parameters/accept-encoding'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
+        <<: *common_responses
         '200':
           $ref: '#/components/responses/200-schemas'
-        '304':
-          $ref: '#/components/responses/304'
-        '400': 
-          $ref: '#/components/responses/400'
-        '401': 
-          $ref: '#/components/responses/401'
-        '403': 
-          $ref: '#/components/responses/403'
-        '404': 
-          $ref: '#/components/responses/404'
-        '406':
-          $ref: '#/components/responses/406'
-        '414':
-          $ref: '#/components/responses/414'
-        '500': 
-          $ref: '#/components/responses/500'
-        '501': 
-          $ref: '#/components/responses/501'
-        '503': 
-          $ref: '#/components/responses/503'
-          
+
 components:
   parameters:
     flow:
