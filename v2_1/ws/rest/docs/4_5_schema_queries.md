@@ -7,8 +7,9 @@ The following resource is defined:
 
 - schema
 
-This resource allows a client to ask a service to return an XML schema, which defines data (or reference metadata) validity within a certain context. The service must take into account the constraints that apply within that context (DSD or MSD, dataflow or metadataflow, or provision agreement).
+This resource allows a client to ask a service to return a schema, i.e. a document which defines data validity within a certain context. The service must take into account the constraints that apply within that context (DSD or MSD, dataflow or metadataflow, or provision agreement).
 
+This is typically used for validation purposes but it may also be used for communication purposes, i.e. as a way to inform providers about the data they are expected to report.
 
 ### Parameters
 
