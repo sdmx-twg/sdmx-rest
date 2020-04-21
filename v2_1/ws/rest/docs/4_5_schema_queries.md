@@ -49,6 +49,14 @@ Parameter | Type | Description
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level.
 explicitMeasure | *Boolean* | For cross-sectional data validation, indicates whether observations are strongly typed (defaults to `false`).
 
+### Using an SDMX format for the response
+
+By default, a *schema* query will return an XML schema (i.e. an `xsd` file). However, it is also possible to get the response in one of the SDMX Structure formats. In that case, the response should only include the following types of artefact: data structures, codelists, concept schemes and agency schemes. The various item schemes must only contain the following:
+
+- For codelists, the codes that are allowed after applying the constraints up to the specified *context*;
+- For concept schemes, the concepts that are used by the data structure;
+- For agency schemes, the agencies maintaining artefacts that are part of the response.
+
 ### Examples
 
 * To retrieve the schema for data supplied within the context of version 1.0 of the provision agreement EXR_WEB maintained by the ECB:
