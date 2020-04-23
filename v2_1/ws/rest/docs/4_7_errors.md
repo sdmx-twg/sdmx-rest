@@ -5,7 +5,7 @@ RESTful web services use HTTP status codes to indicate errors. In principle, any
 HTTP status code | Description
 ---|---
 200 | This is the standard response for successful HTTP requests. With `GET` requests, it is used to indicate that the request was successfully processed and that the data are available in the body of the response.
-204 | If the result from the query is empty the web service should return this message. `204` is preferred to `404` in this case, as a lack of results matching a query is an “empty but still healthy state”.
+204 | If the result from the query is empty, the web service should return this code. `204` is preferred to `404` in this case, as a lack of results matching a query is an “empty but still healthy state”.
 304 | This is used to indicate that there are no changes since the version specified by the request headers `If-Modified-Since` or `If-None-Match`. The response does not include matching data, as the client can still use the previously-downloaded copy.
 400 | This error code is used when the query string doesn’t comply with the SDMX RESTful interface.
 401 | For use when authentication is needed but has failed or has not yet been provided.
