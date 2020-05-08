@@ -223,7 +223,7 @@ paths:
           
 components:
   schemas:
-    sdmxPeriod:
+    SdmxPeriod:
       type: string
       pattern: '^\d{4}-?((\d{2}(-\d{2})?)|A1|S[1|2]|Q[1-4]|T[1-3]|M(0[1-9]|1[0-2])|W(0[1-9]|[1-4][0-9]|5[0-3])|D(0[0-9][1-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6]))?$'
       description: |
