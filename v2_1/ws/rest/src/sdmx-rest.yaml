@@ -429,7 +429,7 @@ components:
         The end of the period for which results should be supplied (inclusive).
       required: false
       schema:
-        $ref: '#/components/schemas/sdmxPeriod'
+        $ref: '#/components/schemas/SdmxPeriod'
     updatedAfter:
       in: query
       name: updatedAfter
