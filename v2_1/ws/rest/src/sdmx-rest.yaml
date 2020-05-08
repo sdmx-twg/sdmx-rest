@@ -421,7 +421,7 @@ components:
         The start of the period for which results should be supplied (inclusive).
       required: false
       schema:
-        $ref: '#/components/schemas/sdmxPeriod'
+        $ref: '#/components/schemas/SdmxPeriod'
     endPeriod:
       in: query
       name: endPeriod
