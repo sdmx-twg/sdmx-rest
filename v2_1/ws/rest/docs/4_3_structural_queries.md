@@ -148,12 +148,12 @@ Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
 ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
-TransformationScheme | *Categorisation*, *Process*, RulesetScheme, UserDefinedOperatorScheme, CustomTypeScheme, NamePersonalisationScheme, VtlMappingScheme
-RulesetScheme | *Categorisation*, *Process*, *TransformationScheme*
-UserDefinedOperatorScheme | *Categorisation*, *Process*, *TransformationScheme*
-CustomTypeScheme | *Categorisation*, *Process*, *TransformationScheme*
-NamePersonalisationScheme | *Categorisation*, *Process*, *TransformationScheme*
-VtlMappingScheme | *Categorisation*, *Process*, *TransformationScheme*, Codelist, ConceptScheme, Dataflow
+CustomTypeScheme | AgencyScheme, _Categorisation_, _TranformationScheme_
+NamePersonalisationScheme | AgencyScheme, _Categorisation_, _TranformationScheme_
+RulesetScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
+TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePersonalisationScheme, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme
+UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
+VtlMappingScheme | AgencyScheme, _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_
 
 ### Examples
 
