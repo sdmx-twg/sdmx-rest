@@ -3,7 +3,7 @@ info:
   version: '1.5.0'
   title: 'SDMX RESTful API, v1.5.0'
   description: |
-    The SDMX RESTful API, released in June 2020.
+    The SDMX RESTful API, released in September 2020.
     
     For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
 
@@ -88,7 +88,7 @@ paths:
         - $ref: '#/components/parameters/if-modified-since'
       responses:
         '200':
-          $ref: '#/components/responses/200'
+          $ref: '#/components/responses/200-struct'
         '304':
           $ref: '#/components/responses/304'
         '400': 
