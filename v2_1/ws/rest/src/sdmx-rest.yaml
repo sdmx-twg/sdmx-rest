@@ -2298,6 +2298,12 @@ components:
         application/vnd.sdmx.schema+xml;version=2.1:
           schema:
             type: string
+        application/vnd.sdmx.structure+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+json;version=1.0.0:
+          schema:
+            type: string
     '200-struct':
       description: OK
       content:
