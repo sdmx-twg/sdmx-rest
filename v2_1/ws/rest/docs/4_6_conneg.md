@@ -20,23 +20,43 @@ A few examples are listed below
 
 In case the client does not specify the desired format and version of the response message, or only specifies the generic application/xml format, the SDMX RESTful web service should return:
 
-- The most recent version, that the service supports, of the SDMX-ML Structure format for structural metadata queries;
-- The most recent version, that the service supports, of the SDMX-ML Generic Data format for data queries;
-- The most recent version, that the service supports, of the SDMX-ML Generic Metadata format for metadata queries.
+- The most recent version, that the service supports, of the SDMX-ML Structure format for **structural metadata** queries;
+- The most recent version, that the service supports, of the SDMX-ML Generic Data format for **data** queries;
+- The most recent version, that the service supports, of the SDMX-ML Generic Metadata format for **reference metadata** queries;
+- An XML schema (i.e. an `xsd` file) for **schema** queries.
+- The most recent version, that the service supports, of the SDMX-ML Structure format for **data availability** queries;
 
-The list below indicates the valid formats for SDMX RESTful web services, compliant with version 2.1 of the SDMX standard:
+The list below indicates the valid formats for SDMX RESTful web services, compliant with version 2.1 of the SDMX standard, organized by type of queries. The default media type is highlighted in bold.
 
-    application/vnd.sdmx.genericdata+xml;version=2.1
-    application/vnd.sdmx.structurespecificdata+xml;version=2.1
-    application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
-    application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
-    application/vnd.sdmx.data+json;version=1.0.0
-    application/vnd.sdmx.data+csv;version=1.0.0
-    application/vnd.sdmx.genericmetadata+xml;version=2.1
-    application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
-    application/vnd.sdmx.structure+xml;version=2.1
-    application/vnd.sdmx.structure+json;version=1.0.0
-    application/vnd.sdmx.schema+xml;version=2.1
+#### Structural metadata queries
+
+- **application/vnd.sdmx.structure+xml;version=2.1**
+- application/vnd.sdmx.structure+json;version=1.0.0
+
+#### Data queries
+
+- **application/vnd.sdmx.genericdata+xml;version=2.1**
+- application/vnd.sdmx.structurespecificdata+xml;version=2.1
+- application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
+- application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
+- application/vnd.sdmx.data+json;version=1.0.0
+- application/vnd.sdmx.data+csv;version=1.0.0;labels=[*id*|both];timeFormat=[*original*|normalized]
+    
+#### Reference metadata queries    
+  
+- **application/vnd.sdmx.genericmetadata+xml;version=2.1**
+- application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
+    
+#### Schema queries    
+
+- **application/vnd.sdmx.schema+xml;version=2.1**
+- application/vnd.sdmx.structure+xml;version=2.1
+- application/vnd.sdmx.structure+json;version=1.0.0
+
+#### Data availability queries
+
+- **application/vnd.sdmx.structure+xml;version=2.1**
+- application/vnd.sdmx.structure+json;version=1.0.0
     
 ### Selection of the Appropriate language
 
@@ -55,3 +75,7 @@ Compression could be enabled using the appropriate [Accept-Encoding header](http
 The [Vary header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the list of headers that are relevant for a particular service.
 
 For example, services that offer data in multiple formats will rely on the HTTP Accept header, but this header will likely be irrelevant for services that support only one format. Using the `Vary` header to indicate which headers are effectively used by the server helps web caches and Content Delivery Networks to build appropriate cache keys.
+
+### A note about SDMX-CSV
+
+SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).

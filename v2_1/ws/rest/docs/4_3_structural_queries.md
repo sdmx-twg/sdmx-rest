@@ -26,6 +26,12 @@ The following resources are defined:
 - actualconstraint (a type of contentconstraint stating what data are actually present)
 - allowedconstraint (a type of contentconstraint defining what data are allowed)
 - attachmentconstraint
+- transformationscheme
+- rulesetscheme
+- userdefinedoperatorscheme
+- customtypescheme
+- namepersonalisationscheme
+- vtlmappingscheme
 - structure (This type can be used to retrieve any type of structural metadata matching the supplied parameters)
 
 
@@ -77,6 +83,12 @@ SDMX uses the *item scheme* pattern to model SDMX collections of items. These ar
 - dataconsumerscheme
 - organisationunitscheme
 - reportingtaxonomy
+- transformationscheme
+- rulesetscheme
+- userdefinedoperatorscheme
+- customtypescheme
+- namepersonalisationscheme
+- vtlmappingscheme
 
 Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
 
@@ -109,7 +121,7 @@ The following parameters are used to further describe the desired results, once 
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
-detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: `allstubs` (all artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencestubs` (referenced artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencepartial` (referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its `isPartial` flag would be set to `true`), `allcompletestubs` (all artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information), `referencecompletestubs` (referenced artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information) and `full` (all available information for all artefacts should be returned). | **full**
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: `allstubs` (all artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencestubs` (referenced artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencepartial` (referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its `isPartial` flag would be set to `true`. Likewise, if a dataflow has been constrained, then the codelists referenced by the DSD referenced by the dataflow should only contain the codes allowed by the content constraint), `allcompletestubs` (all artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information), `referencecompletestubs` (referenced artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information) and `full` (all available information for all artefacts should be returned). | **full**
 references | *String* | This attribute instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). Possible values are: `none` (no references will be returned), `parents` (the artefacts that use the artefact matching the query), `parentsandsiblings` (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), `children` (artefacts referenced by the artefact to be returned), `descendants` (references of references, up to any level, will also be returned), `all` (the combination of parentsandsiblings and descendants). In addition, a `concrete type of resource` may also be used (for example, references=codelist). | **none**
 
 #### Applicability and meaning of references attribute
@@ -121,11 +133,11 @@ Maintainable artefact | Artefacts returned
 AgencyScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
 Categorisation | All
 CategoryScheme | *Categorisations*, *Process*, *StructureSet*
-Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
-ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*
+Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
+ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
 DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
-Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, *VtlMappingScheme*
 DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*
 DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*
 HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*
@@ -136,6 +148,12 @@ Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
 ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
+CustomTypeScheme | AgencyScheme, _Categorisation_, _TranformationScheme_
+NamePersonalisationScheme | AgencyScheme, _Categorisation_, _TranformationScheme_
+RulesetScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
+TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePersonalisationScheme, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme
+UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
+VtlMappingScheme | AgencyScheme, _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_
 
 ### Examples
 
