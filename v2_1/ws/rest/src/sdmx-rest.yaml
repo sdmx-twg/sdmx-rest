@@ -86,7 +86,7 @@ paths:
       responses:
         <<: *common_responses
         '200':
-          $ref: '#/components/responses/200'
+          $ref: '#/components/responses/200-struct'
 
   /structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
