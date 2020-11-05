@@ -452,6 +452,8 @@ components:
         * `referencepartial`: Referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its isPartial flag would be set to `true`
         * `allcompletestubs`: All artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information
         * `referencecompletestubs`: Referenced artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information
+        * `raw`: Returned codelists should include the `ExtendedBy` property, thereby allowing clients to see the inherited codelists (if any). 
+        * `partialraw`: Referenced item schemes should only include items used by the artefact to be returned. In addition, codelists should include the `ExtendedBy` property, thereby allowing clients to see the inherited codelists (if any), but only those used by the artefact to be returned. 
         * `full`: All available information for all artefacts should be returned
       required: false
       schema:
