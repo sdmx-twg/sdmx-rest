@@ -14,7 +14,7 @@ The following parameters are used for identifying resources:
 
 Parameter | Type | Description
 --- | --- | ---
-artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, contentconstraint, dataconstraint, metadataconstraint | The type of structural metadata to be returned.
+artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, contentconstraint, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned.
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `+` as separator (e.g. BIS+ECB).
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `+` as separator (e.g. CL_FREQ+CL_CONF_STATUS).
 version | A string compliant with the SDMX *common:VersionType* | The version of the artefact to be returned. It is possible to set more than one version, using `+` as separator (e.g. 1.0+2.1).
