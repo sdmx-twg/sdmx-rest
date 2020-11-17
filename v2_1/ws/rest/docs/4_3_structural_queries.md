@@ -95,7 +95,7 @@ The following parameters are used to further describe the desired results, once 
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
-detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: `allstubs` (all artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencestubs` (referenced artefacts should be returned as stubs, containing only identification information, as well as the artefacts' name), `referencepartial` (referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its `isPartial` flag would be set to `true`. Likewise, if a dataflow has been constrained, then the codelists referenced by the DSD referenced by the dataflow should only contain the codes allowed by the content constraint), `allcompletestubs` (all artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information), `referencecompletestubs` (referenced artefacts should be returned as complete stubs, containing identification information, the artefacts' name, description, annotations and isFinal information) and `full` (all available information for all artefacts should be returned). | **full**
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: (1) `full`: all available information for all returned artefacts should be returned. Returned extended codelists are to be resolved, i.e. include all inherited codes, and must not include the ExtendedBy property. As the inherited codelists must be resolved, they should not be returned a second time as separated codelists. (2) `allstubs`: all returned artefacts should be returned as stubs, i.e. only containing identification information and the artefacts' name. (3) `referencestubs`: same as full with the exception that referenced artefacts should be returned only as stubs, i.e. only containing identification information and the artefacts' name. (4) `allcompletestubs`: all returned artefacts should be returned as complete stubs, i.e. only containing identification information, the artefacts' name, description, annotations and isFinal information. (5) `referencecompletestubs`: same as full with the exception that referenced artefacts should be returned as complete stubs, i.e. only containing identification information, the artefacts' name, description, annotations and isFinal information. (6) `referencepartial`: same as full with the exception that referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its isPartial flag would be set to true. Likewise, if a dataflow has been constrained, then the codelists referenced by the DSD referenced by the dataflow should only contain the codes allowed by the content constraint. (7) `raw`: same as full with the exception that the returned extended codelists are not resolved and must include the ExtendedBy property, and if referenced codelists or descendants are to be returned then they include also all inherited codelists. (8) `partialraw`: same as raw with the exception that referenced item schemes, also including returned inherited codelists, should only include items used by the artefact to be returned, similar to the value 'referencepartial' | **full**
 references | *String* | This attribute instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). Possible values are: `none` (no references will be returned), `parents` (the artefacts that use the artefact matching the query), `parentsandsiblings` (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), `children` (artefacts referenced by the artefact to be returned), `descendants` (references of references, up to any level, will also be returned), `all` (the combination of parentsandsiblings and descendants). In addition, a `concrete type of resource` may also be used (for example, references=codelist). | **none**
 
 #### Applicability and meaning of references attribute
@@ -106,13 +106,12 @@ Maintainable artefact | Artefacts returned
 --- | ---
 AgencyScheme | All
 Categorisation | All
-<<<<<<< HEAD
 CategoryScheme | *Categorisations*, *Process*, *StructureSet*, AgencyScheme
-Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme
-ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme
+Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme, *VtlMappingScheme*
+ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme, *VtlMappingScheme*
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement, AgencyScheme
 DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme
-Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, AgencyScheme
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, AgencyScheme, *VtlMappingScheme*
 DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme
 DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*, AgencyScheme
 HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*, AgencyScheme
@@ -123,30 +122,12 @@ Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*, AgencyScheme
 ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*, AgencyScheme
 StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow, AgencyScheme
-=======
-CategoryScheme | *Categorisations*, *Process*, *StructureSet*
-Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
-ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, *VtlMappingScheme*
-Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement
-DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*
-Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, *VtlMappingScheme*
-DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*
-DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*
-HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*
-Metadataflow | *Categorisation*, *Process*, *Constraint*, MetadataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*
-MetadataStructureDefinition | *Categorisation*, *Process*, ConceptScheme, Codelist, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, *Constraint*, *Metadataflow*, *StructureSet*
-OrganisationUnitScheme | *Categorisation*, *Process*, *Constraint*, *MetadataStructureDefinition*, *StructureSet*
-Process | All
-ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*
-ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*
-StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow
-CustomTypeScheme | AgencyScheme, _Categorisation_, _TranformationScheme_
-NamePersonalisationScheme | AgencyScheme, _Categorisation_, _TranformationScheme_
-RulesetScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
-TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePersonalisationScheme, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme
-UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
-VtlMappingScheme | AgencyScheme, _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_
->>>>>>> master
+CustomTypeScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, AgencyScheme
+NamePersonalisationScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, AgencyScheme
+RulesetScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme, AgencyScheme, AgencyScheme
+TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePersonalisationScheme, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme, AgencyScheme
+UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme, AgencyScheme
+VtlMappingScheme | AgencyScheme, _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_, AgencyScheme
 
 ### Examples
 
