@@ -67,7 +67,7 @@ paths:
           $ref: '#/components/responses/200'
 
 
-  /availableconstraint/{flow}/{key}/{provider}/{componentID}:
+  /availability/{flow}/{key}/{provider}/{componentID}:
     get:
       summary: 'Data availability query'
       parameters:
