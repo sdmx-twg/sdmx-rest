@@ -67,7 +67,7 @@ paths:
           $ref: '#/components/responses/200'
 
 
-  /availableconstraint/{flow}/{key}/{provider}/{componentID}:
+  /availability/{flow}/{key}/{provider}/{componentID}:
     get:
       summary: 'Data availability query'
       parameters:
@@ -201,7 +201,7 @@ components:
       required: true
       schema:
         type: string
-        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, contentconstraint, allowedconstraint, attachmentconstraint, conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, all]
+        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, all]
     itemSchemeType:
       in: path
       name: itemSchemeType
@@ -478,13 +478,13 @@ components:
       required: false
       schema:
         type: string
-        enum: [none, parents, parentsandsiblings, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, contentconstraint, actualconstraint, allowedconstraint, attachmentconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme]
+        enum: [none, parents, parentsandsiblings, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme]
         default: none
     mode:
       in: query
       name: mode
       description: |
-        Instructs the web service to return a ContentConstraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters.
+        Instructs the web service to return a Constraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters.
       required: false
       schema:
         type: string
@@ -494,7 +494,7 @@ components:
       in: query
       name: references
       description: |
-        Instructs the web service to return (or not) the artefacts referenced by the ContentConstraint to be returned.
+        Instructs the web service to return (or not) the artefacts referenced by the Constraint to be returned.
       required: false
       schema:
         type: string

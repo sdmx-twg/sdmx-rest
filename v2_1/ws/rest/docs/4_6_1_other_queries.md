@@ -2,7 +2,7 @@
 
 ### Data availability
 
-The `availableconstraint` resource defines what data are available for a Dataflow, based on a data query. It returns a `ContentConstraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but the query itself is more akin to a data query. 
+The `availability` resource defines what data are available for a Dataflow, based on a data query. It returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but the query itself is more akin to a data query. 
 
 #### Parameters
 
@@ -59,19 +59,19 @@ updatedAfter + startPeriod/endPeriod | Available data within the supplied time r
 ### Examples
 * To retrieve the distinct values for each Dimension for the entire ECB_EXR1_WEB dataflow. The metadata used to decode the code ids and concept ids into human readable labels is also requested.   
 
-        http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/
+        http://ws-entry-point/availability/ECB_EXR1_WEB/
 		
 In this example, the assumption is made that the dataflow id (ECB_EXR1_WEB) is sufficient to uniquely identify the dataflow,
 
 * For the data query query M..EUR.SP00.A supplied by the ECB for the ECB_EXR1_WEB dataflow, the client requests information about which dimension values remain valid for inclusion into the query:
 
-        http://ws-entry-point/availableconstraint/ECB,ECB_EXR1_WEB,1.0/M..EUR.SP00.A/ECB?mode=available
+        http://ws-entry-point/availability/ECB,ECB_EXR1_WEB,1.0/M..EUR.SP00.A/ECB?mode=available
 In this example, the full reference to the dataflow is supplied (ECB as maintenance agency, ECB_EXR1_WEB as dataflow id and latest for the version).
 
 * For the data query M..EUR.SP00.A supplied by the ECB for the ECB_EXR1_WEB dataflow, the client requests information about which dimension values will be returned as a result of executing the query:
 
-        http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/M..EUR.SP00.A/ECB?mode=exact
+        http://ws-entry-point/availability/ECB_EXR1_WEB/M..EUR.SP00.A/ECB?mode=exact
 
 * As `exact` is the default value for mode, the query above can also be written as follows:
 
-        http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/M..EUR.SP00.A/ECB
+        http://ws-entry-point/availability/ECB_EXR1_WEB/M..EUR.SP00.A/ECB
