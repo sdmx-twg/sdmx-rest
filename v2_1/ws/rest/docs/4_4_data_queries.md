@@ -1,11 +1,10 @@
-## Data and Metadata Queries
+## Data Queries
 
 ### Resources
 
-The following resources should be supported:
+The following resource is supported:
 
-- data
-- metadata
+- `data`
 
 ### Parameters
 
@@ -15,25 +14,19 @@ The following parameters are used for identifying resources in data queries:
 
 Parameter | Type | Description
 --- | --- | ---
-flowRef | A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a ",". For example: AGENCY_ID,FLOW_ID,VERSION. In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. all,FLOW_ID,latest. In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,latest. | The data (or metadata) flow of the data (or metadata) to be returned. Its a common use case in SDMX-based web services that the flow id is sufficient to uniquely identify a dataflow. Should this not be the case, the agency id and the dataflow version, can be used, in conjunction with the flow id, in order to uniquely identify a dataflow.
-key | A string compliant with the KeyType defined in the SDMX WADL. | The key of the artefact to be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A.The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
-providerRef | A string identifying the provider. The syntax is agency id, provider id, separated by a ",". For example: AGENCY_ID,PROVIDER_ID. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. all,PROVIDER_ID. | The provider of the data (or metadata) to be retrieved. If not supplied, the returned message will contain data (or metadata) provided by any provider. Its a common use case in SDMX-based web services that the provider id is sufficient to uniquely identify a data provider. Should this not be the case, the agency can be used, in conjunction with the provider id, in order to uniquely identify a data provider. The OR operator is supported using the + character. For example, the following value can be used to indicate that the data should be provided by the Swiss National Bank (CH2) or Central Bank of Norway (NO2): CH2+NO2.
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be retrieved using a data structure, a dataflow or a provision agreement.
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported.
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported.
+version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported. Multiple versions may be supplied, using a `,` as separator.
+key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The key of the artefact to be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A. The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol://ws-entry-point/resource/flowRef/key/providerRef
-    
-Furthermore, some keywords may be used:
-
-Keywords | Scope | Description
---- | --- | ---
-all | key | Returns all data belonging to the specified dataflow and provided by the specified provider.
-all | providerRef | Returns all data matching the supplied key and belonging to the specified dataflow that has been provided by any data provider. As `all` is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for providers.
+    protocol://ws-entry-point/resource/context/agencyID/resourceID/version/key
 
 The following rules apply:
 
-- If no key is specified, all data (or metadata) belonging to the dataflow (or metadataflow) identified by the flowRef should be supplied. It is therefore equivalent to using the keyword `all`.
-- If no providerRef is specified, the matching data (or metadata) provided by any data provider should be returned. It is therefore equivalent to using the keyword `all`.
+- If no key is specified, all data matching `/context/agencyID/resourceID/version` should be supplied.
 
 #### Parameters used to further filter the desired results
 
@@ -63,26 +56,22 @@ updatedAfter + startPeriod/endPeriod | The observations, within the supplied tim
 
 ### Examples
 
-* To retrieve the data for the series M.USD.EUR.SP00.A supplied by the ECB for the ECB_EXR1_WEB dataflow:
+* To retrieve the data for the series M.USD.EUR.SP00.A reported for version 1.0 of the ECB_EXR1_WEB dataflow maintained by the ECB:
 
-        http://ws-entry-point/data/ECB_EXR1_WEB/M.USD.EUR.SP00.A/ECB
+        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/M.USD.EUR.SP00.A
 
-    In this example, the assumption is made that the dataflow id (ECB_EXR1_WEB) is sufficient to uniquely identify the dataflow, and the data provider id (ECB) is sufficient to uniquely identify the data provider.
+* To retrieve the data, reported for version 1.0 of the ECB_EXR1 data structure maintained by the ECB, for the supplied series keys, using wildcarding for the second dimension:
 
-* To retrieve the data, provided by the ECB for the ECB_EXR1_WEB dataflow, for the supplied series keys, using wildcarding for the second dimension:
-
-        http://ws-entry-point/data/ECB,ECB_EXR1_WEB,latest/M..EUR.SP00.A/ECB
-
-    In this example, the full reference to the dataflow is supplied (ECB as maintenance agency, ECB_EXR1_WEB as dataflow id and latest for the version)
+        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0/M..EUR.SP00.A
 
 * To retrieve the updates and revisions for the data matching the supplied series keys, using the OR operator for the second dimension, and using percent encoding for the updatedAfter:
 
-        http://ws-entry-point/Data/ECB_EXR1_WEB/M.USD+GBP+JPY.EUR.SP00.A?
+        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/M.USD+GBP+JPY.EUR.SP00.A?
         updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
 * To retrieve the data matching the supplied series key and restricting the start and end dates:
 
-        http://ws-entry-point/data/ECB_EXR1_WEB/D.USD.EUR.SP00.A?
+        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/D.USD.EUR.SP00.A?
         startPeriod=2009-05-01&endPeriod=2009-05-31
 
 ### Example: How to handle the `includeHistory` parameter
