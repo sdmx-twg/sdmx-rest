@@ -8,17 +8,17 @@ The following resource is supported:
 
 ### Parameters
 
-#### Parameters used for identifying a resource
+#### Path parameters
 
-The following parameters are used for identifying resources in data queries:
+The following path parameters are supported in data queries:
 
 Parameter | Type | Description
 --- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be retrieved using a data structure, a dataflow or a provision agreement.
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval.
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported.
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported.
-version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported. Multiple versions may be supplied, using a `,` as separator.
-key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The key of the artefact to be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A. The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
+version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported. Multiple versions may be selected, using a comma (`,`) as separator.
+key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A. Multiple slices may be selected, using a comma (`,`) as separator.
 
 The parameters mentioned above are specified using the following syntax:
 
@@ -27,6 +27,7 @@ The parameters mentioned above are specified using the following syntax:
 The following rules apply:
 
 - If no key is specified, all data matching `/context/agencyID/resourceID/version` should be supplied.
+- If no version is specified, the latest stable version of `/context/agencyID/resourceID` should be returned. Not supplying a version is only allowed if the key is also absent. 
 
 #### Parameters used to further filter the desired results
 
@@ -60,13 +61,13 @@ updatedAfter + startPeriod/endPeriod | The observations, within the supplied tim
 
         http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/M.USD.EUR.SP00.A
 
-* To retrieve the data, reported for version 1.0 of the ECB_EXR1 data structure maintained by the ECB, for the supplied series keys, using wildcarding for the second dimension:
+* To retrieve the data, reported for version 1.0 and 2.0 of the ECB_EXR1 data structure maintained by the ECB, for the supplied series keys, using wildcarding for the second dimension:
 
-        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0/M..EUR.SP00.A
+        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0,2.0/M..EUR.SP00.A
 
-* To retrieve the updates and revisions for the data matching the supplied series keys, using the OR operator for the second dimension, and using percent encoding for the updatedAfter:
+* To retrieve the updates and revisions for the data matching the supplied slices, using the OR operator for the second dimension, and using percent encoding for the updatedAfter:
 
-        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/M.USD+GBP+JPY.EUR.SP00.A?
+        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/M.USD.EUR.SP00.A,A.GBP.EUR.SP00.A,A.CHF.EUR.SP00.A?
         updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
 * To retrieve the data matching the supplied series key and restricting the start and end dates:
