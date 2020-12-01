@@ -15,10 +15,10 @@ The following path parameters are supported in data queries:
 Parameter | Type | Description
 --- | --- | ---
 context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval.
-agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported.
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. 
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported.
-version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported. Multiple versions may be selected, using a comma (`,`) as separator.
-key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A. Multiple slices may be selected, using a comma (`,`) as separator.
+version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported.
+key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D.*.EUR.SP00.A.
 
 The parameters mentioned above are specified using the following syntax:
 
@@ -26,8 +26,11 @@ The parameters mentioned above are specified using the following syntax:
 
 The following rules apply:
 
-- If no key is specified, all data matching `/context/agencyID/resourceID/version` should be supplied.
+- All parameters support multiple values, using comma (`,`) as separator. For example: `D.USD.EUR.SP00.A,M.GBP.EUR.SP00.A`.
+- All parameters offer the option to retrieve all existing values, using the `*` operator.
+- If the `*` is the last element in the path, it may be ommitted.
 - If no version is specified, the latest stable version of `/context/agencyID/resourceID` should be returned. Not supplying a version is only allowed if the key is also absent. 
+- Two additional operators are supported for the version parameter. These are the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. final). 
 
 #### Parameters used to further filter the desired results
 
