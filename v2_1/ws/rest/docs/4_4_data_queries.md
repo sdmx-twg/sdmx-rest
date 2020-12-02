@@ -45,6 +45,25 @@ lastNObservations | Positive integer | Integer specifying the maximum number of 
 dimensionAtObservation<sup> | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to: Default to TimeDimension, if the data structure definition has one; If not, default to MeasureDimension, if the data structure definition has one; If none of the above is true, default to AllDimensions.
 detail | String | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return data only (i.e. no attributes). Possible options are: `full` (all data and documentation, including annotations - This is the default), `dataonly` (attributes  and therefore groups will be excluded from the returned message), `serieskeysonly` (returns only the series elements and the dimensions that make up the series keys. This is useful for performance reasons, to return the series that match a certain query, without returning the actual data) and `nodata` (returns the groups and series, including attributes and annotations, without observations).
 includeHistory | Boolean | This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned SDMX-ML data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. Default to `false`.
+    
+#### Operators
+
+Operators can be used to refine the applicability of the `c` query parameter.  
+
+Operator | Meaning | Note
+-- | -- | --
+eq | Equals | Default if no operator is specified and there is only one value (e.g. `c[FREQ]=M`)
+ne | Not equal to |
+lt | Less than |
+le | Less than or equal to |
+gt | Greater than |
+ge | Greater than or equal to |
+co | Contains |
+nc | Does not contain |
+sw | Starts with |
+ew | Ends with |
+nd | And |
+or | Or | Default if no operator is specified and there are multiple values (e.g. `c[FREQ]=M,A`)
 
 ### Examples
 
