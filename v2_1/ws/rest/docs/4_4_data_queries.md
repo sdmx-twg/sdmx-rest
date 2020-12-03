@@ -10,7 +10,7 @@ The following resource is supported:
 
 #### Path parameters
 
-The following path parameters are supported in data queries:
+The following path parameters are supported:
 
 Parameter | Type | Description
 --- | --- | ---
@@ -18,7 +18,7 @@ context | One of the following: `datastructure`, `dataflow`, `provisionagreement
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. 
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported.
 version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported.
-key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D.*.EUR.SP00.A.
+key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.*.EUR.SP00.A.
 
 The parameters mentioned above are specified using the following syntax:
 
@@ -34,11 +34,11 @@ The following rules apply:
 
 #### Query parameters
 
-The following parameters are used to further describe (or filter) the desired results, once the resource has been identified. As mentioned in 3.2, these parameters go in the query string part of the URL.
+The following query parameters are supported:
 
 Parameter | Type | Description
 --- | --- | ---
-c | Map | Filter data by component values. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`). Multiple values are supported, using a comma (`,`) as separator: `C[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or B AND M, use the following: `C[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). 
+c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`). Multiple values are supported, using a comma (`,`) as separator: `C[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or B AND M, use the following: `C[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. 
 updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this attribute is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level).
 firstNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, starting from the first observation
 lastNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, counting back from the most recent observation
@@ -64,6 +64,8 @@ sw | Starts with |
 ew | Ends with |
 nd | And |
 or | Or | Default if no operator is specified and there are multiple values (e.g. `c[FREQ]=M,A`)
+
+Operators appear immediately after the `=` and are separated from the component value(s) by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01`).
 
 ### Examples
 
