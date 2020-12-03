@@ -69,23 +69,21 @@ Operators appear immediately after the `=` and are separated from the component 
 
 ### Examples
 
-* To retrieve the data for the series M.USD.EUR.SP00.A reported for version 1.0 of the ECB_EXR1_WEB dataflow maintained by the ECB:
+* Retrieve the data matching the supplied path parameters:
 
-        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/M.USD.EUR.SP00.A
+        http://ws-entry-point/data/dataflow/ECB/EXR/1.0/M.USD.EUR.SP00.A
 
-* To retrieve the data, reported for version 1.0 and 2.0 of the ECB_EXR1 data structure maintained by the ECB, for the supplied series keys, using wildcarding for the second dimension:
+* Retrieve the data matching the supplied path parameters, including multiple versions and a wildcard for the second dimension:
 
-        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0,2.0/M..EUR.SP00.A
+        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0,2.0/M.*.EUR.SP00.A
 
-* To retrieve the updates and revisions for the data matching the supplied slices, using the OR operator for the second dimension, and using percent encoding for the updatedAfter:
+* Retrieve the data matching the supplied path parameters (including multiple keys and the latest stable version), that have been updated after the supplied timestamp:
 
-        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/M.USD.EUR.SP00.A,A.GBP.EUR.SP00.A,A.CHF.EUR.SP00.A?
-        updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
+        http://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A,A.CHF.EUR.SP00.A?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
-* To retrieve the data matching the supplied series key and restricting the start and end dates:
+* Retrieve the data matching the supplied path parameters (all data reported for the latest version of the ECB EXR dataflow), and falling between the supplied the start and end periods:
 
-        http://ws-entry-point/data/dataflow/ECB/ECB_EXR1_WEB/1.0/D.USD.EUR.SP00.A?
-        startPeriod=2009-05-01&endPeriod=2009-05-31
+        http://ws-entry-point/data/dataflow/ECB/EXR/?startPeriod=2009-05-01&endPeriod=2009-05-31
 
 ### Example: How to handle the `includeHistory` parameter
 
