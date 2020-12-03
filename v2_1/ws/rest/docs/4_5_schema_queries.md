@@ -33,10 +33,11 @@ Furthermore, a reserved operator may be used:
 Keyword | Scope | Description 
 --- | --- | ---
 `+` | version | Returns the latest stable version of a resource
+`~` | version | Returns the latest, whether stable or draft, version of a resource or non-versioned resource
 
 The following rules apply:
 
-  - If no version attribute is specified, the latest stable version will be returned. It is therefore equivalent to using the `+` operator.
+  - If no version attribute is specified, the latest, whether stable or draft, version of a resource or non-versioned resource will be returned. It is therefore equivalent to using the `~` operator.
 
 #### Parameters used to further describe the desired results
 
