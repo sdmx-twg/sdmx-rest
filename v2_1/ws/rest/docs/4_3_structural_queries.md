@@ -32,11 +32,11 @@ Keywords | Scope | Description
 `*` | resourceID | Returns all resources of the type defined by the resource parameter
 `*` | version | Returns all versions of the resource
 `+` | version | Returns the latest stable version of a resource
-`~` | version | Returns the latest, possibly _draft_ version of a resource
+`~` | version | Returns the latest, whether stable or draft, version of a resource or non-versioned resource
 
 The following rules apply:
 
-- If no version is specified, the latest stable version should be returned. It is therefore equivalent to using the `+` operator.
+- If no version is specified, the latest, whether stable or draft, version or non-versioned artefact should be returned. It is therefore equivalent to using the `~` operator.
 - If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the `*` operator. This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/*/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
 - If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the `*` operator.
 - If no artefactType is specified, all matching artefacts of any type (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `*` operator.
