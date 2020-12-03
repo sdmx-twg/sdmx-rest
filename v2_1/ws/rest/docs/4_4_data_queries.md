@@ -26,9 +26,9 @@ The parameters mentioned above are specified using the following syntax:
 
 The following rules apply:
 
-- All parameters support multiple values, using comma (`,`) as separator. For example: `D.USD.EUR.SP00.A,M.GBP.EUR.SP00.A`.
+- All parameters support multiple values, using comma (`,`) as separator.
 - All parameters offer the option to retrieve all existing values, using the `*` operator.
-- Two additional operators are supported for the version parameter. These are the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. final). 
+- Two additional operators are supported for the version parameter: the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. stable). 
 - For all path parameters, the default value is `*`.
 - Default values do not need to be supplied if they are the last element in the path.
 
