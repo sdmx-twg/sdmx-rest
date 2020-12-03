@@ -28,9 +28,9 @@ The following rules apply:
 
 - All parameters support multiple values, using comma (`,`) as separator. For example: `D.USD.EUR.SP00.A,M.GBP.EUR.SP00.A`.
 - All parameters offer the option to retrieve all existing values, using the `*` operator.
-- If the `*` is the last element in the path, it may be ommitted.
-- If no version is specified, the latest stable version of `/context/agencyID/resourceID` should be returned. Not supplying a version is only allowed if the key is also absent. 
 - Two additional operators are supported for the version parameter. These are the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. final). 
+- For all path parameters, the default value is `*`.
+- Default values do not need to be supplied if they are the last element in the path.
 
 #### Query parameters
 
@@ -71,11 +71,11 @@ Operators appear immediately after the `=` and are separated from the component 
 
 * Retrieve the data matching the supplied path parameters:
 
-        http://ws-entry-point/data/dataflow/ECB/EXR/1.0/M.USD.EUR.SP00.A
+        http://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A
 
 * Retrieve the data matching the supplied path parameters, including multiple versions and a wildcard for the second dimension:
 
-        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0,2.0/M.*.EUR.SP00.A
+        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0.0,2.0.0/M.*.EUR.SP00.A
 
 * Retrieve the data matching the supplied path parameters (including multiple keys and the latest stable version), that have been updated after the supplied timestamp:
 
@@ -91,7 +91,7 @@ Operators appear immediately after the `=` and are separated from the component 
         
 * Retrieve the list of observations matching the supplied path parameters, that are above a certain threshold:
 
-        http://ws-entry-point/data/dataflow/ECB/EXR/1.0/M.USD.EUR.SP00.A?c[OBS_VALUE]=ge:10.0&dimensionAtObservation=AllDimensions
+        http://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?c[OBS_VALUE]=ge:10.0&dimensionAtObservation=AllDimensions
         
 * Retrieve the list of indicators containing euro in their title:
 
