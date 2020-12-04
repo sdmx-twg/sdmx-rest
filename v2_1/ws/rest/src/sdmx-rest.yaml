@@ -252,7 +252,9 @@ components:
       description: |
         The version of the artefact used to generate the schema to be returned.
         
-        The keyword `latest` can be used to return the latest production version of the matching resource.
+        The operator `~` can be used to return the latest version (whether stable, draft or non-versioned) of the matching resource.
+        
+        The operator `+` can be used to return the latest stable version of the matching resource.
       required: true
       schema:
         type: string
@@ -291,9 +293,11 @@ components:
         
         It is possible to set more than one version, using `+` as separator (e.g. 1.0+2.1).
         
-        The keyword `all` can be used to return all versions of the matching resource.
+        The operator `*` can be used to return all versions (whether stable, draft or non-versioned) of the matching resource.
         
-        The keyword `latest` can be used to return the latest production version of the matching resource.
+        The operator `~` can be used to return the latest version (whether stable, draft or non-versioned) of the matching resource.
+        
+        The operator `+` can be used to return the latest stable version of the matching resource.
       required: true
       schema:
         type: string
