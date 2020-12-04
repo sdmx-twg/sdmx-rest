@@ -40,7 +40,7 @@ The following rules apply:
 - If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the `*` operator. This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/*/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
 - If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the `*` operator.
 - If no artefactType is specified, all matching artefacts of any type (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `*` operator.
-- If no parameters are specified, the **latest stable** version of **all** resources, maintained by **any** maintenance agency should be returned.
+- If no parameters are specified, the **latest** version (whether stable, draft or non-versioned) of **all** resources, maintained by **any** maintenance agency should be returned.
 
 
 #### Additional parameter used for identifying a resource, for item scheme types
