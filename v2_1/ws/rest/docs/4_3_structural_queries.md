@@ -15,8 +15,8 @@ The following parameters are used for identifying resources:
 Parameter | Type | Description
 --- | --- | ---
 artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned.
-agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `+` as separator (e.g. BIS+ECB).
-resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `+` as separator (e.g. CL_FREQ+CL_CONF_STATUS).
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `,` as separator (e.g. BIS,ECB).
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `,` as separator (e.g. CL_FREQ,CL_CONF_STATUS).
 version | A string compliant with the SDMX *semantic versioning* rules | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1.7).
 
 The parameters mentioned above are specified using the following syntax:
@@ -37,7 +37,7 @@ Keywords | Scope | Description
 The following rules apply:
 
 - If no version is specified, the latest, whether stable or draft, version or non-versioned artefact should be returned. It is therefore equivalent to using the `~` operator.
-- If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the `*` operator. This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/*/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id "CL_FREQ").
+- If no agencyID is specified, the matching artefacts maintained by any maintenance agency should be returned. It is therefore equivalent to using the `*` operator. This would potentially return more than one artefact, if different agencies give the same identifier to a resource (for example, http://ws-entry-point/codelist/*/CL_FREQ, could return more than one codelist if more than one agency is maintaining a codelist with id `CL_FREQ`).
 - If no resourceID is specified, all matching artefacts (according to the other criteria used) should be returned. It's is therefore equivalent to using the `*` operator.
 - If no artefactType is specified, all matching artefacts of any type (according to the other criteria used) should be returned. It's is therefore equivalent to using the keyword `*` operator.
 - If no parameters are specified, the **latest** version (whether stable, draft or non-versioned) of **all** resources, maintained by **any** maintenance agency should be returned.
@@ -69,7 +69,7 @@ For these collections (those following the *item scheme* pattern or the *hierarc
 
 Parameter | Type | Description
 --- | --- | ---
-itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned. It is possible to set more than one id, using `+` as separator (e.g. A+Q+M).
+itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned. It is possible to set more than one id, using `,` as separator (e.g. A,Q,M).
 
 
 This 5th parameter is used as follows:
@@ -80,7 +80,7 @@ Furthermore, a keyword may be used:
 
 Keyword | Scope | Description
 --- | --- | ---
-all | itemID | Returns all items belonging to the item scheme
+`*` | itemID | Returns all items belonging to the item scheme
 
 The following rules apply:
 
