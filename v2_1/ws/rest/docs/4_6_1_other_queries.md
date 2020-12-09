@@ -25,7 +25,7 @@ The parameters mentioned above are specified using the following syntax:
 
 The following rules apply:
 
-- The `version`, `key` and `componentId` parameters offer the option to retrieve all existing values, using the `*` operator. This is the default value for these parameters, unless specified otherwise.
+- The `agencyID`, `resourceID`, `version`, `key` and `componentId` parameters offer the option to retrieve all existing values, using the `*` operator. This is the default value for these parameters, unless specified otherwise.
 - Default values do not need to be supplied if they are the last element in the path.
 - Two additional operators are supported for the version parameter: the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. stable). In addition, version supports multiple values, using comma (`,`) as separator. 
 
