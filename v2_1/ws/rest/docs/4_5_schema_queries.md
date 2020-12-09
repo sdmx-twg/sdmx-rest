@@ -26,7 +26,7 @@ version | A string compliant with the SDMX *semantic versioning* rules| The vers
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol:// ws-entry-point/schema/context/agencyID/resourceID/version
+    protocol://ws-entry-point/schema/context/agencyID/resourceID/version
     
 Furthermore, a reserved operator may be used:
 
@@ -58,7 +58,7 @@ By default, a *schema* query will return an XML schema (i.e. an `xsd` file). How
 
 ### Examples
 
-* To retrieve the schema for data supplied within the context of version 1.0 of the provision agreement EXR_WEB maintained by the ECB:
+* To retrieve the schema for data supplied within the context of version 1.0.0 of the provision agreement EXR_WEB maintained by the ECB:
 
         http://ws-entry-point/schema/provisionagreement/ECB/EXR_WEB/1.0.0/
 
