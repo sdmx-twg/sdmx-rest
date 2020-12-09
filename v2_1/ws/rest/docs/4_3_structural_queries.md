@@ -156,4 +156,4 @@ VtlMappingScheme | AgencyScheme, _Categorisation_, Codelist, ConceptScheme, Data
 
 * To retrieve the latest version of the CL_FREQ codelists maintained by the BIS or the ECB:
         
-        http://ws-entry-point/structure/codelist/BIS+ECB/CL_FREQ
+        http://ws-entry-point/structure/codelist/BIS,ECB/CL_FREQ
