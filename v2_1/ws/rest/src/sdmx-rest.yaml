@@ -37,9 +37,9 @@ paths:
       summary: 'Data query'
       parameters:
         - $ref: '#/components/parameters/dataContext'
-        - $ref: '#/components/parameters/agencyID'
-        - $ref: '#/components/parameters/resourceID'
-        - $ref: '#/components/parameters/version'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
         - $ref: '#/components/parameters/key'
         - $ref: '#/components/parameters/c'
         - $ref: '#/components/parameters/updatedAfter'
@@ -62,9 +62,9 @@ paths:
       summary: 'Data availability query'
       parameters:
         - $ref: '#/components/parameters/dataContext'
-        - $ref: '#/components/parameters/agencyID'
-        - $ref: '#/components/parameters/resourceID'
-        - $ref: '#/components/parameters/version'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
         - $ref: '#/components/parameters/key'
         - $ref: '#/components/parameters/componentID'
         - $ref: '#/components/parameters/c'
@@ -148,7 +148,7 @@ components:
       required: true
       schema:
         type: string
-        pattern: '^([\.A-Za-z\d_@$-]+(\+[A-Za-z\d_@$-]+)*)*$'
+        pattern: '^([\*\.A-Za-z\d_@$-]+(\+[A-Za-z\d_@$-]+)*)*$'
     structureType:
       in: path
       name: structureType
@@ -217,8 +217,11 @@ components:
       name: itemID
       required: true
       schema:
-        type: string
-        pattern: '^[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*(\+[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*)*$'
+        type: array
+        items:
+          type: string
+          pattern: '^[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*$'
+      style: simple
     componentID:
       in: path
       name: componentID
@@ -232,6 +235,8 @@ components:
       required: false
       schema:
         type: object
+      style: deepObject
+      explode: true
     updatedAfter:
       in: query
       name: updatedAfter
