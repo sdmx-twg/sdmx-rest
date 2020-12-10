@@ -32,15 +32,16 @@ x-commons:
       $ref: '#/components/responses/503'
 
 paths:
-  /data/{flow}/{key}/{provider}:
+  /data/{context}/{agencyID}/{resourceID}/{version}/{key}:
     get:
       summary: 'Data query'
       parameters:
-        - $ref: '#/components/parameters/flow'
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencyID'
+        - $ref: '#/components/parameters/resourceID'
+        - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/key'
-        - $ref: '#/components/parameters/provider'
-        - $ref: '#/components/parameters/startPeriod'
-        - $ref: '#/components/parameters/endPeriod'
+        - $ref: '#/components/parameters/c'
         - $ref: '#/components/parameters/updatedAfter'
         - $ref: '#/components/parameters/firstNObservations'
         - $ref: '#/components/parameters/lastNObservations'
@@ -56,18 +57,19 @@ paths:
           $ref: '#/components/responses/200'
 
 
-  /availability/{flow}/{key}/{provider}/{componentID}:
+  /availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentID}:
     get:
       summary: 'Data availability query'
       parameters:
-        - $ref: '#/components/parameters/flow'
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencyID'
+        - $ref: '#/components/parameters/resourceID'
+        - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/key'
-        - $ref: '#/components/parameters/provider'
         - $ref: '#/components/parameters/componentID'
+        - $ref: '#/components/parameters/c'
         - $ref: '#/components/parameters/mode'
         - $ref: '#/components/parameters/acreferences'
-        - $ref: '#/components/parameters/startPeriod'
-        - $ref: '#/components/parameters/endPeriod'
         - $ref: '#/components/parameters/updatedAfter'
         - $ref: '#/components/parameters/accept-encoding'
         - $ref: '#/components/parameters/accept-language'
@@ -133,53 +135,20 @@ paths:
 
 components:
   parameters:
-    flow:
+    dataContext:
       in: path
-      name: flow
-      description: |
-        The **statistical domain** (aka dataflow) of the data to be returned.
-        
-        Examples:
-        
-        * `EXR`: The ID of the domain
-        * `ECB,EXR`: The EXR domain, maintained by the ECB
-        * `ECB,EXR,1.0`: Version 1.0 of the EXR domain, maintained by the ECB
+      name: context
       required: true
       schema:
         type: string
-        pattern: '^([a-zA-Z][a-zA-Z\d_-]*(\.[a-zA-Z][a-zA-Z\d_-]*)*,)?[a-zA-Z\d_@$-]+(,(latest|(\d+(\.\d+)*)))?$'
+        enum: [datastructure, dataflow, provisionagreement]
     key:
       in: path
       name: key
-      description: |
-        The (possibly partial) **key identifying the data to be returned**. 
-        
-        The keyword `all` can be used to indicate that all data belonging to the specified dataflow and provided by the specified provider must be returned.
-        
-        The examples below are based on the following key: Frequency, Country, Component of inflation, Unit of measure.
-         * `M.DE.000000.ANR`: Full key, matching exactly one series, i.e. the monthly (`M`) rates of change (`ANR`) of overall inflation (`000000`) in Germany (`DE`).
-         * `A+M.DE.000000.ANR`: Retrieves both annual and monthly data (`A+M`), matching exactly two series
-         * `A+M..000000.ANR`: The second dimension is wildcarded, and it wil therefore match the annual and monthly rates of change of overall inflation in any country.
       required: true
       schema:
         type: string
         pattern: '^([\.A-Za-z\d_@$-]+(\+[A-Za-z\d_@$-]+)*)*$'
-    provider:    
-      in: path
-      name: provider
-      description: |
-        The **provider of the data** to be retrieved. 
-        
-        The keyword `all` can be used to indicate that all data matching the supplied key and belonging to the specified dataflow and provided by any data provider must be returned.
-        
-        Examples:
-        
-        * `ECB`: Data provided by ECB
-        * `CH2+NO2`: Data provided by CH2 or NO2
-      required: true
-      schema:
-        type: string
-        pattern: '^(([A-Za-z][A-Za-z\d_-]*)(\.[A-Za-z][A-Za-z\d_-]*)*,)?[A-Za-z\d_@$-]+(\+([A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*,)?[A-Za-z\d_@$-]+)*$'
     structureType:
       in: path
       name: structureType
@@ -222,7 +191,6 @@ components:
     agencyID:
       in: path
       name: agencyID
-      description: The agency maintaining the artefact used to generate the schema to be returned.
       required: true
       schema:
         type: string
@@ -230,7 +198,6 @@ components:
     resourceID:
       in: path
       name: resourceID
-      description: The id of the artefact used to generate the schema to be returned.
       required: true
       schema:
         type: string
@@ -238,12 +205,6 @@ components:
     version:
       in: path
       name: version
-      description: |
-        The version of the artefact used to generate the schema to be returned.
-        
-        The operator `~` can be used to return the latest version (whether stable, draft or non-versioned) of the matching resource.
-        
-        The operator `+` can be used to return the latest stable version of the matching resource.
       required: true
       schema:
         type: string
@@ -313,43 +274,12 @@ components:
       schema:
         type: string
         pattern: '^[A-Za-z][A-Za-z\d_-]*$'
-    startPeriod:
+    c:
       in: query
-      name: startPeriod
-      description: |
-        The start of the period for which results should be supplied (inclusive).
-        
-        Can be expressed using 8601 dates or SDMX reporting periods. 
-        
-        Examples:
-        * `2000`: Year (ISO 8601)
-        * `2000-01`: Month (ISO 8601)
-        * `2000-01-01`: Date (ISO 8601)
-        * `2000-Q1`: Quarter (SDMX)
-        * `2000-W01`: Week (SDMX)
-        
+      name: c
       required: false
       schema:
-        type: string
-        pattern: '^\d{4}-?((\d{2}(-\d{2})?)|A1|S[1|2]|Q[1-4]|T[1-3]|M(0[1-9]|1[0-2])|W(0[1-9]|[1-4][0-9]|5[0-3])|D(0[0-9][1-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6]))?$'
-    endPeriod:
-      in: query
-      name: endPeriod
-      description: |
-        The end of the period for which results should be supplied (inclusive).
-        
-        Can be expressed using 8601 dates or SDMX reporting periods. 
-        
-        Examples:
-        * `2000`: Year (ISO 8601)
-        * `2000-01`: Month (ISO 8601)
-        * `2000-01-01`: Date (ISO 8601)
-        * `2000-S1`: Semester (SDMX)
-        * `2000-D001`: Day (SDMX)
-      required: false
-      schema:
-        type: string
-        pattern: '^\d{4}-?((\d{2}(-\d{2})?)|A1|S[1|2]|Q[1-4]|T[1-3]|M(0[1-9]|1[0-2])|W(0[1-9]|[1-4][0-9]|5[0-3])|D(0[0-9][1-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6]))?$'
+        type: object
     updatedAfter:
       in: query
       name: updatedAfter
