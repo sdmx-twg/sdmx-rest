@@ -26,8 +26,8 @@ The parameters mentioned above are specified using the following syntax:
 
 The following rules apply:
 
-- All parameters support multiple values, using comma (`,`) as separator.
-- All parameters offer the option to retrieve all existing values, using the `*` operator.
+- All path parameters support multiple values, using comma (`,`) as separator.
+- All path parameters offer the option to retrieve all existing values, using the `*` operator.
 - Two additional operators are supported for the version parameter: the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. stable). 
 - For all path parameters, the default value is `*`.
 - Default values do not need to be supplied if they are the last element in the path.
@@ -38,7 +38,7 @@ The following query parameters are supported:
 
 Parameter | Type | Description
 --- | --- | ---
-c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `C[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `C[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. c[FREQ]=A,M&c[CONF_STATUS]=F).
+c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`).
 updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this attribute is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level).
 firstNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, starting from the first observation
 lastNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, counting back from the most recent observation
