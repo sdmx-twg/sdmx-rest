@@ -3,7 +3,7 @@ info:
   version: '2.0.0'
   title: 'SDMX RESTful API, v2.0.0'
   description: |
-    The SDMX RESTful API, released in XXX 2020.
+    The SDMX RESTful API, released in XXX 2021.
 
     For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
 x-commons:
@@ -30,17 +30,6 @@ x-commons:
       $ref: '#/components/responses/501'
     '503':
       $ref: '#/components/responses/503'
-servers:
-  - description: ECB
-    url: https://sdw-wsrest.ecb.europa.eu/service
-  - description: Eurostat
-    url: http://ec.europa.eu/eurostat/SDMX/diss-web/rest/
-  - description: OECD (data only)
-    url: http://stats.oecd.org/sdmx-json
-  - description: UNdata
-    url: http://data.un.org/ws/rest
-  - description: ILO
-    url: https://www.ilo.org/sdmx/rest
 
 paths:
   /data/{flow}/{key}/{provider}:
