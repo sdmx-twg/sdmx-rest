@@ -1,4 +1,5 @@
 
+
 ## Structural Metadata Queries
 
 ### Resources
@@ -107,9 +108,11 @@ Maintainable artefact | Artefacts returned
 AgencyScheme | All
 Categorisation | All
 CategoryScheme | *Categorisations*, *Process*, *CategorySchemeMap*, AgencyScheme
+CategorySchemeMap | *Categorisation*, *Process*, CategoryScheme, ReportingTaxonomy, AgencyScheme
 Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, AgencyScheme, *VtlMappingScheme*
 ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *ConceptSchemeMap*, AgencyScheme, *VtlMappingScheme*
-Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement, Valuelist, AgencyScheme
+ConceptSchemeMap | *Categorisation*, *Process*, ConceptScheme, AgencyScheme
+Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement, AgencyScheme
 DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
 Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, AgencyScheme, *VtlMappingScheme*
 DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
@@ -117,18 +120,20 @@ DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, 
 HierarchicalCodelist | *Categorisation*, *Process*, Codelist, AgencyScheme
 Metadataflow | *Categorisation*, *Process*, *Constraint*, MetadataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, AgencyScheme
 MetadataStructureDefinition | *Categorisation*, *Process*, ConceptScheme, Codelist, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, *Constraint*, *Metadataflow*, AgencyScheme
+OrganisationSchemeMap | *Categorisation*, *Process*, DataProviderScheme, DataConsumerScheme, OrganisationUnitScheme, AgencyScheme
 OrganisationUnitScheme | *Categorisation*, *Process*, *Constraint*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
 Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*, AgencyScheme
 ReportingTaxonomy | *Categorisation*, *CategorySchemeMap*, *Process*, Dataflow, Metadataflow, AgencyScheme
-StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow, AgencyScheme
+RepresentationMap | *Categorisation*, *Process*, Codelist, Valuelist, AgencyScheme
+StructureMap | *Categorisation*, *Process*, DataStructureDefinition, Dataflow, AgencyScheme
 CustomTypeScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, AgencyScheme
 NamePersonalisationScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, AgencyScheme
 RulesetScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme, AgencyScheme, AgencyScheme
 TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePersonalisationScheme, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme, AgencyScheme
 UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme, AgencyScheme
-Valuelist | *Categorisation*, *Process*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, AgencyScheme, *VtlMappingScheme*
-VtlMappingScheme | AgencyScheme, _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_, Valuelist, AgencyScheme
+Valuelist | *Categorisation*, *Process*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, *VtlMappingScheme*, AgencyScheme
+VtlMappingScheme | _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_, Valuelist, AgencyScheme
 
 ### Examples
 
