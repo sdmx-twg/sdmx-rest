@@ -152,10 +152,6 @@ components:
     structureType:
       in: path
       name: structureType
-      description: |
-        The type of structural metadata to be retrieved (e.g. codelist, datastructure, etc.).
-
-        The keyword `all` can be used to indicate that any type of artefact can be returned.
       required: true
       schema:
         type: string
@@ -163,10 +159,6 @@ components:
     itemSchemeType:
       in: path
       name: itemSchemeType
-      description: |
-        The type of item schemes to be retrieved (e.g. codelist, concept scheme, etc.).
-
-        The keyword `all` can be used to indicate that any type of item scheme can be returned.
       required: true
       schema:
         type: string
@@ -174,16 +166,6 @@ components:
     context:
       in: path
       name: context
-      description: |
-        The value of this parameter determines the **constraints taken into account** when generating the schema.
-        
-        Possible options are:
-        
-        * `datastructure`: Constraints attached to the DSD are applied.
-        * `metadatastructure`: Constraints attached to the MSD are applied.  
-        * `dataflow`: Constraints attached to the dataflow and to the DSD used in the dataflow are applied.
-        * `metadataflow`: Constraints attached to the metadataflow and to the MSD used in the metadataflow are applied. 
-        * `provisionagreement`: Constraints attached to the provision agreement, as well as to the dataflow or metadafalow used in the agreement and the DSD or MSD used in the dataflow or metadataflow are applied.
       required: true
       schema:
         type: string
@@ -212,12 +194,6 @@ components:
     agencies:
       in: path
       name: agencyID
-      description: |
-        The agency maintaining the artefact to be returned. 
-        
-        It is possible to set more than one agency, using `+` as separator (e.g. BIS+ECB).
-        
-        The keyword `all` can be used to indicate that artefacts maintained by any maintenance agency should be returned.
       required: true
       schema:
         type: string
@@ -225,12 +201,6 @@ components:
     resourceIDs:
       in: path
       name: resourceID
-      description: |
-        The id of the artefact to be returned.
-        
-        It is possible to set more than one id, using `+` as separator (e.g. CL_FREQ+CL_CONF_STATUS).
-        
-        The keyword `all` can be used to indicate that any artefact of the specified resource type, {agencyID} and {version} should be returned. 
       required: true
       schema:
         type: string
@@ -238,16 +208,6 @@ components:
     versions:
       in: path
       name: version
-      description: | 
-        The version of the artefact to be returned. 
-        
-        It is possible to set more than one version, using `+` as separator (e.g. 1.0+2.1).
-        
-        The operator `*` can be used to return all versions (whether stable, draft or non-versioned) of the matching resource.
-        
-        The operator `~` can be used to return the latest version (whether stable, draft or non-versioned) of the matching resource.
-        
-        The operator `+` can be used to return the latest stable version of the matching resource.
       required: true
       schema:
         type: string
@@ -255,12 +215,6 @@ components:
     items:
       in: path
       name: itemID
-      description: |
-        The id of the item to be returned. 
-        
-        It is possible to set more than one id, using `+` as separator (e.g. A+Q+M).
-        
-        The keyword `all` can be used to return all items of the matching resource.
       required: true
       schema:
         type: string
@@ -268,8 +222,6 @@ components:
     componentID:
       in: path
       name: componentID
-      description: |
-        The id of the Dimension for which to obtain availability information about. Use all to indicate that data availability should be provided for all dimensions.
       required: true
       schema:
         type: string
@@ -283,10 +235,6 @@ components:
     updatedAfter:
       in: query
       name: updatedAfter
-      description: |
-        The last time the query was performed by the client. 
-        
-        The response should include the latest version of what has changed in the database since that point in time (i.e. additions, revisions or deletions since the last time the query was performed).
       required: false
       schema:
         type: string
@@ -294,8 +242,6 @@ components:
     firstNObservations:  
       in: query
       name: firstNObservations
-      description: |
-        The maximum number of observations to be returned starting from the oldest one
       required: false
       schema:
         type: integer
@@ -303,8 +249,6 @@ components:
     lastNObservations:
       in: query
       name: lastNObservations
-      description: |
-        The maximum number of observations to be returned starting from the most recent one
       required: false
       schema:
         type: integer
@@ -312,14 +256,6 @@ components:
     dimensionAtObservation:
       in: query
       name: dimensionAtObservation
-      description: |
-        Indicates **how the data should be packaged**. 
-        
-        The options are:
-        
-        * `TIME_PERIOD`: A timeseries view
-        * The ID of any other dimension: A cross-sectional view of the data 
-        * `AllDimensions`: A flat view of the data.
       required: false
       schema:
         type: string
@@ -328,15 +264,6 @@ components:
     detail:
       in: query
       name: detail
-      description: |
-        The **amount of information** to be returned. 
-        
-        Possible options are: 
-        
-        * `full`: All data and documentation
-        * `dataonly`: Everything except attributes
-        * `serieskeysonly`: The series keys. This is useful to return the series that match a certain query, without returning the actual data (e.g. overview page)
-        * `nodata`: The series, including attributes and annotations, without observations.
       required: false
       schema:
         type: string
@@ -345,10 +272,6 @@ components:
     includeHistory:
       in: query
       name: includeHistory
-      description: | 
-        Retrieve **previous versions of the data**. 
-        
-        When `true`, the response will contain up to two datasets per dissemination, one containing new or updated values and one containing the deleted data (if any). 
       required: false
       schema:
         type: boolean
@@ -356,8 +279,6 @@ components:
     explicitMeasure:
       in: query
       name: explicitMeasure
-      description: | 
-        For cross-sectional data validation, indicates whether observations are strongly typed 
       required: false
       schema:
         type: boolean
@@ -365,19 +286,6 @@ components:
     structDetail:
       in: query
       name: detail
-      description: |
-        The amount of information to be returned.
-        
-        Possible values are: 
-        
-        * `full`: all available information for all returned artefacts should be returned. Returned extended codelists are to be resolved, i.e. include all inherited codes, and must not include the `ExtendedBy` property. As the inherited codelists must be resolved, they should not be returned a second time as separated codelists.
-        * `allstubs`: all returned artefacts should be returned as stubs, i.e. only containing identification information and the artefacts' name. 
-        * `referencestubs`: same as full with the exception that referenced artefacts should be returned only as stubs, i.e. only containing identification information and the artefacts' name. 
-        * `allcompletestubs`: all returned artefacts should be returned as complete stubs, i.e. only containing identification information, the artefacts' name, description, annotations and isFinal information. 
-        * `referencecompletestubs`: same as full with the exception that referenced artefacts should be returned as complete stubs, i.e. only containing identification information, the artefacts' name, description, annotations and isFinal information.
-        * `referencepartial`: same as full with the exception that referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its isPartial flag would be set to true. Likewise, if a dataflow has been constrained, then the codelists referenced by the DSD referenced by the dataflow should only contain the codes allowed by the content constraint.
-        * `raw`: same as full with the exception that the returned extended codelists are not resolved and must include the `ExtendedBy` property, and if referenced codelists or descendants are to be returned then they include also all inherited codelists.
-        * `partialraw`: same as raw with the exception that referenced item schemes, also including returned inherited codelists, should only include items used by the artefact to be returned, similar to the value `referencepartial`. 
       required: false
       schema:
         type: string
@@ -386,18 +294,6 @@ components:
     references:
       in: query
       name: references
-      description: |
-        Instructs the web service to return (or not) the artefacts referenced by the artefact to be returned.
-        
-        Possible values are: 
-        
-        * `none`: No references will be returned
-        * `parents`: Returns the artefacts that use the artefact matching the query
-        * `parentsandsiblings`: Returns the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts
-        * `children`: Returns the artefacts referenced by the artefact to be returned
-        * `descendants`: References of references, up to any level, will be returned
-        * `all`: The combination of parentsandsiblings and descendants
-        * In addition, a concrete type of resource may also be used (for example, references=codelist).
       required: false
       schema:
         type: string
@@ -406,8 +302,6 @@ components:
     mode:
       in: query
       name: mode
-      description: |
-        Instructs the web service to return a Constraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters.
       required: false
       schema:
         type: string
@@ -416,8 +310,6 @@ components:
     acreferences:
       in: query
       name: references
-      description: |
-        Instructs the web service to return (or not) the artefacts referenced by the Constraint to be returned.
       required: false
       schema:
         type: string
@@ -426,10 +318,6 @@ components:
     accept-encoding:
       in: header
       name: Accept-Encoding
-      description: |
-        Specifies whether the response should be compressed and how. 
-        
-        `identity` (the default) indicates that no compression will be performed.
       schema:
         type: string
         enum: [br, compress, deflate, exi, gzip, identity, pack200-gzip, zstd]
@@ -437,15 +325,11 @@ components:
     accept-language:
       in: header
       name: Accept-Language
-      description: |
-        Specifies the client's preferred language. 
       schema:
         type: string
     if-modified-since:
       in: header
       name: If-Modified-Since
-      description: |
-        Instructs to return the content matching the query only if it has changed since the supplied timestamp. 
       schema:
         type: string
         format: date-time
