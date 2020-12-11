@@ -148,7 +148,7 @@ components:
       required: true
       schema:
         type: string
-        pattern: '^([\*\.A-Za-z\d_@$-]+(\+[A-Za-z\d_@$-]+)*)*$'
+        pattern: '^\*|([\.A-Za-z\d_@$-]+(\+[A-Za-z\d_@$-]+)*)*$'
     structureType:
       in: path
       name: structureType
@@ -199,7 +199,7 @@ components:
         type: array
         items:
           type: string
-          pattern: '^[A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*$'
+          pattern: '^\*|[A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*$'
       style: simple
     resourceIDs:
       in: path
@@ -209,7 +209,7 @@ components:
         type: array
         items:
           type: string
-          pattern: '^[A-Za-z\d_@$-]+$'
+          pattern: '^\*|[A-Za-z\d_@$-]+$'
       style: simple
     versions:
       in: path
@@ -219,7 +219,7 @@ components:
         type: array
         items:
           type: string
-          pattern: '^(\+|~|\*|(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.?(0|[1-9]\d*[\+\*~]?|[\+\*~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
+          pattern: '^(\*\+|~|\*|(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.?(0|[1-9]\d*[\+\*~]?|[\+\*~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
       style: simple
     items:
       in: path
@@ -229,7 +229,7 @@ components:
         type: array
         items:
           type: string
-          pattern: '^[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*$'
+          pattern: '^\*|[A-Za-z\d_@$-]+(\.[A-Za-z\d_@$-]+)*$'
       style: simple
     componentID:
       in: path
