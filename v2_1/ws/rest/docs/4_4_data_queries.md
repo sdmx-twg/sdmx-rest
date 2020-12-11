@@ -1,91 +1,104 @@
-## Data and Metadata Queries
+## Data Queries
 
 ### Resources
 
-The following resources should be supported:
+The following resource is supported:
 
-- data
-- metadata
+- `data`
 
 ### Parameters
 
-#### Parameters used for identifying a resource
+#### Path parameters
 
-The following parameters are used for identifying resources in data queries:
+The following path parameters are supported:
 
 Parameter | Type | Description
 --- | --- | ---
-flowRef | A string identifying the dataflow. The syntax is agency id, artefact id, version, separated by a ",". For example: AGENCY_ID,FLOW_ID,VERSION. In case the string only contains one out of these 3 elements, it is considered to be the flow id, i.e. *,FLOW_ID,+. In case the string only contains two out of these 3 elements, they are considered to be the agency id and the flow id, i.e. AGENCY_ID,FLOW_ID,+. | The data (or metadata) flow of the data (or metadata) to be returned. Its a common use case in SDMX-based web services that the flow id is sufficient to uniquely identify a dataflow. Should this not be the case, the agency id and the dataflow version, can be used, in conjunction with the flow id, in order to uniquely identify a dataflow.
-key | A string compliant with the KeyType defined in the SDMX WADL. | The key of the artefact to be returned. Wildcarding is supported by omitting the dimension code for the dimension to be wildcarded. For example, if the following series key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following series key can be used to retrieve the data for all currencies against the euro: D..EUR.SP00.A.The OR operator is supported using the + character. For example, the following series key can be used to retrieve the exchange rates against the euro for both the US dollar and the Japanese Yen: D.USD+JPY.EUR.SP00.A.
-providerRef | A string identifying the provider. The syntax is agency id, provider id, separated by a ",". For example: AGENCY_ID,PROVIDER_ID. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. all,PROVIDER_ID. | The provider of the data (or metadata) to be retrieved. If not supplied, the returned message will contain data (or metadata) provided by any provider. Its a common use case in SDMX-based web services that the provider id is sufficient to uniquely identify a data provider. Should this not be the case, the agency can be used, in conjunction with the provider id, in order to uniquely identify a data provider. The OR operator is supported using the + character. For example, the following value can be used to indicate that the data should be provided by the Swiss National Bank (CH2) or Central Bank of Norway (NO2): CH2+NO2.
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval.
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. 
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported.
+version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported.
+key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.*.EUR.SP00.A.
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol://ws-entry-point/resource/flowRef/key/providerRef
-    
-Furthermore, some keywords may be used:
-
-Keywords | Scope | Description
---- | --- | ---
-all | key | Returns all data belonging to the specified dataflow and provided by the specified provider.
-all | providerRef | Returns all data matching the supplied key and belonging to the specified dataflow that has been provided by any data provider. As `all` is a reserved keyword in the SDMX RESTful API, it is recommended not to use it as an identifier for providers.
+    protocol://ws-entry-point/resource/context/agencyID/resourceID/version/key
 
 The following rules apply:
 
-- If no key is specified, all data (or metadata) belonging to the dataflow (or metadataflow) identified by the flowRef should be supplied. It is therefore equivalent to using the keyword `all`.
-- If no providerRef is specified, the matching data (or metadata) provided by any data provider should be returned. It is therefore equivalent to using the keyword `all`.
+- All path parameters support multiple values, using comma (`,`) as separator.
+- All path parameters offer the option to retrieve all existing values, using the `*` operator.
+- Two additional operators are supported for the version parameter: the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. stable). 
+- For all path parameters, the default value is `*`.
+- Default values do not need to be supplied if they are the last element in the path.
 
-#### Parameters used to further filter the desired results
+#### Query parameters
 
-The following parameters are used to further describe (or filter) the desired results, once the resource has been identified. As mentioned in 3.2, these parameters go in the query string part of the URL.
+The following query parameters are supported:
 
 Parameter | Type | Description
 --- | --- | ---
-startPeriod | common:StandardTimePeriodType, as defined in the SDMXCommon.xsd schema. Can be expressed using *dateTime* (all data that falls between the calendar dates will be matched), *Gregorian Period* (all data that falls between the calendar dates will be matched) or *Reporting Period* (all data reported as periods that fall between the specified periods will be returned. When comparing reporting weeks and days to higher order periods (e.g. quarters) one must account for the actual time frames covered by the periods to determine whether the data should be included. Data reported as Gregorian periods or distinct ranges will be returned if it falls between the specified reporting periods, based on a reporting year start day of January 1). In case the `:` or `+` characters are used, the parameter must be [percent-encoded](http://en.wikipedia.org/wiki/URL_encoding#Percent-encoding_reserved_characters) by the client. Note that this value is assumed to be inclusive to the range of data being sought. For additional information about the formats, see section 4.2.14 of Section 06 (SDMX Technical Notes). | The start period for which results should be supplied (inclusive).
-endPeriod | Same as above | The end period for which results should be supplied (inclusive).
+c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`).
 updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this attribute is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level).
 firstNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, starting from the first observation
 lastNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, counting back from the most recent observation
-dimensionAtObservation<sup> | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to: Default to TimeDimension, if the data structure definition has one; If not, default to MeasureDimension, if the data structure definition has one; If none of the above is true, default to AllDimensions.
+dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to TimeDimension, if the data structure definition has one, or else, to default to AllDimensions.
 detail | String | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return data only (i.e. no attributes). Possible options are: `full` (all data and documentation, including annotations - This is the default), `dataonly` (attributes  and therefore groups will be excluded from the returned message), `serieskeysonly` (returns only the series elements and the dimensions that make up the series keys. This is useful for performance reasons, to return the series that match a certain query, without returning the actual data) and `nodata` (returns the groups and series, including attributes and annotations, without observations).
 includeHistory | Boolean | This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned SDMX-ML data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. Default to `false`.
+    
+#### Operators
 
-The table below defines the meaning of parameters combinations:
+Operators can be used to refine the applicability of the `c` query parameter.  
 
-Combination | Meaning
---- | ---
-startPeriod with no endPeriod | Until the most recent
-endPeriod and no startPeriod | From the beginning
-startPeriod and endPeriod | Within the supplied time range
-lastNObservations + startPeriod/endPeriod | The specified number of observations, starting from the end, within the supplied time range
-firstNObservations + startPeriod/endPeriod + updatedAfter | The specified number of observations, starting from the beginning, that have changed since the supplied timestamp, within the supplied time range
-updatedAfter + startPeriod/endPeriod | The observations, within the supplied time range, that have changed since the supplied timestamp.
+Operator | Meaning | Note
+-- | -- | --
+eq | Equals | Default if no operator is specified and there is only one value (e.g. `c[FREQ]=M`)
+ne | Not equal to |
+lt | Less than |
+le | Less than or equal to |
+gt | Greater than |
+ge | Greater than or equal to |
+co | Contains |
+nc | Does not contain |
+sw | Starts with |
+ew | Ends with |
+nd | And |
+or | Or | Default if no operator is specified and there are multiple values (e.g. `c[FREQ]=M,A`)
 
-### Examples
+Operators appear immediately after the `=` and are separated from the component value(s) by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01`).
 
-* To retrieve the data for the series M.USD.EUR.SP00.A supplied by the ECB for the ECB_EXR1_WEB dataflow:
+### Examples of queries
 
-        http://ws-entry-point/data/ECB_EXR1_WEB/M.USD.EUR.SP00.A/ECB
+* Retrieve the data matching the supplied path parameters:
 
-    In this example, the assumption is made that the dataflow id (ECB_EXR1_WEB) is sufficient to uniquely identify the dataflow, and the data provider id (ECB) is sufficient to uniquely identify the data provider.
+        http://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A
 
-* To retrieve the data, provided by the ECB for the ECB_EXR1_WEB dataflow, for the supplied series keys, using wildcarding for the second dimension:
+* Retrieve the data matching the supplied path parameters, including multiple versions and a wildcard for the second dimension:
 
-        http://ws-entry-point/data/ECB,ECB_EXR1_WEB,latest/M..EUR.SP00.A/ECB
+        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0.0,2.0.0/M.*.EUR.SP00.A
 
-    In this example, the full reference to the dataflow is supplied (ECB as maintenance agency, ECB_EXR1_WEB as dataflow id and latest for the version)
+* Retrieve the data matching the supplied path parameters (including multiple keys and the latest stable version), that have been updated after the supplied timestamp:
 
-* To retrieve the updates and revisions for the data matching the supplied series keys, using the OR operator for the second dimension, and using percent encoding for the updatedAfter:
+        http://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A,A.CHF.EUR.SP00.A?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
-        http://ws-entry-point/Data/ECB_EXR1_WEB/M.USD+GBP+JPY.EUR.SP00.A?
-        updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
+* Retrieve the _public_ data matching the supplied path parameters (all data reported for the latest version of the ECB EXR dataflow), and falling between the supplied the start and end periods:
 
-* To retrieve the data matching the supplied series key and restricting the start and end dates:
+        http://ws-entry-point/data/dataflow/ECB/EXR/?c[TIME_PERIOD]=ge:2009-05-01&c[TIME_PERIOD]=le:2009-05-31&c[CONF_STATUS]=F
+        
+* Retrieve the list of indicators about Switzerland (CH) available in the source:
 
-        http://ws-entry-point/data/ECB_EXR1_WEB/D.USD.EUR.SP00.A?
-        startPeriod=2009-05-01&endPeriod=2009-05-31
+        http://ws-entry-point/data/?c[REF_AREA]=CH&detail=serieskeysonly
+        
+* Retrieve the list of observations matching the supplied path parameters, that are above a certain threshold:
 
-### Example: How to handle the `includeHistory` parameter
+        http://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?c[OBS_VALUE]=ge:10.0&dimensionAtObservation=AllDimensions
+        
+* Retrieve the list of indicators containing euro in their title:
+
+        http://ws-entry-point/data/?c[TITLE]=co:euro&detail=serieskeysonly
+
+
+### How to handle the `includeHistory` parameter
 
 For example, for a particular series, there were, so far, 3 disseminations:
 * In February 2012, there was the initial dissemination, with 2 periods: 2011-12 and 2012-01.
