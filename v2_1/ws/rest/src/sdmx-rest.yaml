@@ -252,11 +252,13 @@ components:
       description: |
         The version of the artefact used to generate the schema to be returned.
         
-        The keyword `latest` can be used to return the latest production version of the matching resource.
+        The operator `~` can be used to return the latest version (whether stable, draft or non-versioned) of the matching resource.
+        
+        The operator `+` can be used to return the latest stable version of the matching resource.
       required: true
       schema:
         type: string
-        pattern: '^(latest|[\d]+(\.[\d]+)*)$'
+        pattern: '^\+|~|(0|[1-9]\d*[\+~]?|[\+~]?)\.(0|[1-9]\d*[\+~]?|[\+~]?)\.?(0|[1-9]\d*[\+~]?|[\+~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
     agencies:
       in: path
       name: agencyID
@@ -291,13 +293,15 @@ components:
         
         It is possible to set more than one version, using `+` as separator (e.g. 1.0+2.1).
         
-        The keyword `all` can be used to return all versions of the matching resource.
+        The operator `*` can be used to return all versions (whether stable, draft or non-versioned) of the matching resource.
         
-        The keyword `latest` can be used to return the latest production version of the matching resource.
+        The operator `~` can be used to return the latest version (whether stable, draft or non-versioned) of the matching resource.
+        
+        The operator `+` can be used to return the latest stable version of the matching resource.
       required: true
       schema:
         type: string
-        pattern: '^(all|latest|[\d]+(\.[\d]+)*(\+[\d]+(\.[\d]+)*)*)$'
+        pattern: '^(\+|~|\*|(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.?(0|[1-9]\d*[\+\*~]?|[\+\*~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)(,(\+|~|\*|(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.?(0|[1-9]\d*[\+\*~]?|[\+\*~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?))?$'
     items:
       in: path
       name: itemID
