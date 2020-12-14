@@ -1,51 +1,10 @@
 ## Applying the HTTP methods to the SDMX REST API for data maintenance
 
-The business logic of inserting, updating or deleting data in SDMX is specified in the technical specifications (SDMX_2-1_SECTION_3A_PART_IV), under paragraph 4 (SPECIAL DATA FUNCTIONS); see below:
+The business logic of inserting, updating or deleting data in SDMX is specified in the technical specifications (SDMX_2-1_SECTION_3A_PART_IV), under paragraph 4 (SPECIAL DATA FUNCTIONS).
 
-```
-1118 4 SPECIAL DATA FUNCTIONS
-1119 4.1 Updates
+According to those business rules, inserting/creating and updating are handled in the same manner, i.e. by the action `Append`. For deleting data, as well as data attributes, action `Delete` must be used. The actions `Information` and `Replace` are not foreseen by the standard to be used for data maintenance.
 
-1120 Both the generic and the structure-specific data messages allow for incremental updating of data. This
-1121 purpose is noted in the action for the data set, which is either inherited from the header of the data message
-1122 or explicitly stated at the data set level.
-1123
-1124 A dataset with an action of Append is assumed to be an incremental update. This means that one the
-1125 information provided explicitly in the message should be altered. Any data attribute or observation value
-1126 that is to be changed must be provided. However, the absence of an observation value or a data attribute
-1127 at any level does not imply deletion; instead it is simply implied that the value is to remain unchanged.
-1128 Therefore, it is valid and acceptable to send a data message with an action of Append which contains only
-1129 a Series elements with attribute values. In this case, the values for the attributes will be updated. Note that
-1130 it is not permissible to update data attributes using partial keys (outside of those associated with defined
-1131 groups). In order to update an attribute, a full key must always be provided even if the message format
-1132 does not require this.
-
-1133 4.2 Deletes
-
-1134 Both the generic and the structure-specific data messages allow for incremental deletion of data. This
-1135 purpose is noted in the action for the data set, which is either inherited from the header of the data message
-1136 or explicitly stated at the data set level.
-1137
-1138 A dataset with an action of Delete is assumed to be an incremental deletion. The deletion is assumed to
-1139 take place of the lowest level of detail provided in the message. For example, if a delete message is sent
-1140 with only a data set element, the entire data set will be deleted. On the other hand, if that data set contains
-1141 a data attribute, only that data attribute value will be deleted. This same dynamic continues through the
-1142 data set hierarchy. A data set containing only a series with no data attributes or observations will result in
-1143 that entire series (all observations and data attributes) being deleted. If the series contains data attributes,
-1144 only the supplied data attributes for that series will be deleted. Finally, if a series contains observations,
-1145 then only the specified observations will be deleted. If an entire observation is to be deleted (value and data
-1146 attributes), only the observation dimension should be provided. If only the observation value or particular
-1147 data attributes are to be deleted, then these should be specified for the observation. Note that a group can
-1148 only be used to delete the data attributes associated with it. Although the format might not require it, a full
-1149 key must be provided to delete a series or observation. It is not permissible to wild card a key in order to
-1150 delete more than one series or observation. Finally, to delete a data attribute or observation value it is
-1151 recommended that the value to be deleted be supplied; however, it is only required that any valid value be
-1152 provided.
-```
-
-Thus, inserting/creating and updating are handled in the same manner, i.e. by the action `Append`. For deleting data, as well as data attributes, action `Delete` must be used. The actions `Information` and `Replace` are not foreseen by the standard to be used for data maintenance.
-
-From a RESTful point of view, for updating or deleting data, the HTTP verbs `POST` or `DELETE` may be used, respectively. Due to the fact that all the information for what to do with an SDMX Dataset resided within the latter, i.e. the actions to be taken, `POST` could be used to support all data maintenance (updating and deleting). Nevertheless, for the sake of keeping the RESTful semantics close to those of the Dataset actions, it is proposed to allow `POST`ing for Datasets with the SDMX action `Append` and `DELETE`ing for Datasets with the SDMX action `Delete`. Thus, multiple SDMX actions are not foreseen, for now.
+From a RESTful point of view, for updating or deleting data, the HTTP verbs `POST` or `DELETE` may be used, respectively. Due to the fact that all information for handling an SDMX Dataset resides within the latter, i.e. the actions to be taken, `POST` could be used to support all data maintenance (updating and deleting). Nevertheless, for the sake of keeping the RESTful semantics close to those of the Dataset actions, it is proposed to allow `POST`ing for Datasets with the SDMX action `Append` and `DELETE`ing for Datasets with the SDMX action `Delete`. Thus, multiple SDMX actions are not foreseen, for now.
 
 ### CREATE & UPDATE
 
