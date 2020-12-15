@@ -33,7 +33,7 @@ version | A string compliant with the SDMX *semantic versioning* rules | The ver
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol://ws-entry-point/metadata/metadataset/artefactType/providerID/metadatasetID/version
+    protocol://ws-entry-point/metadata/metadataset/providerID/metadatasetID/version
 
 
 The following rules apply:
