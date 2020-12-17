@@ -83,7 +83,7 @@ providerRef | A string identifying the metadata provider. The syntax is agency i
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol://ws-entry-point/metadata/metadataflow/flowRef/providerRef
+    protocol://ws-entry-point/metadata/metadataflowID/flowAgencyID/flowID/flowVersion/providerRef
 
 The following rules apply:
 
