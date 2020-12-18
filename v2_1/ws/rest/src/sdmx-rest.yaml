@@ -155,14 +155,14 @@ components:
       required: true
       schema:
         type: string
-        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, all]
+        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, "*"]
     itemSchemeType:
       in: path
       name: itemSchemeType
       required: true
       schema:
         type: string
-        enum: [conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, all]
+        enum: [conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, "*"]
     context:
       in: path
       name: context
