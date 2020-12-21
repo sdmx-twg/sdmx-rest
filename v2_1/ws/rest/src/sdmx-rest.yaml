@@ -150,6 +150,23 @@ paths:
         '200':
           $ref: '#/components/responses/200-meta'
 
+  /metadata/metadataflow/{agencyID}/{resourceID}/{version}/{providerID}:
+    get:
+      summary: 'Metadata query (by metadataflow)'
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/providers'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
   /metadata/metadataset/{providerID}/{resourceID}/{version}:
     get:
       summary: 'Metadata query (by metadatasets)'
