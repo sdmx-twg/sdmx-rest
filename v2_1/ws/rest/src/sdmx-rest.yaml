@@ -133,6 +133,23 @@ paths:
         '200':
           $ref: '#/components/responses/200-schemas'
 
+  /metadata/structure/{structureType}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Metadata query (for structure)'
+      parameters:
+        - $ref: '#/components/parameters/structureType'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
 components:
   parameters:
     dataContext:
@@ -303,6 +320,14 @@ components:
         type: string
         enum: [allstubs, referencestubs, referencepartial, allcompletestubs, referencecompletestubs, full]
         default: full
+    metaDetail:
+      in: query
+      name: detail
+      required: false
+      schema:
+        type: string
+        enum: [allstubs, full]
+        default: full
     references:
       in: query
       name: references
@@ -387,6 +412,15 @@ components:
           schema:
             type: string
         application/vnd.sdmx.structure+json;version=1.0.0:
+          schema:
+            type: string
+    '200-meta':
+      description: OK
+      content:
+        application/vnd.sdmx.genericmetadata+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structurespecificmetadata+xml;version=2.1:
           schema:
             type: string
     '304':
