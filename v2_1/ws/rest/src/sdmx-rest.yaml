@@ -135,7 +135,7 @@ paths:
 
   /metadata/structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Metadata query (for structure)'
+      summary: 'Metadata query (by structure)'
       parameters:
         - $ref: '#/components/parameters/structureType'
         - $ref: '#/components/parameters/agencies'
@@ -150,6 +150,21 @@ paths:
         '200':
           $ref: '#/components/responses/200-meta'
 
+  /metadata/metadataset/{providerID}/{resourceID}/{version}:
+    get:
+      summary: 'Metadata query (by metadatasets)'
+      parameters:
+        - $ref: '#/components/parameters/providers'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
 components:
   parameters:
     dataContext:
@@ -211,6 +226,16 @@ components:
     agencies:
       in: path
       name: agencyID
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^\*|[A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*$'
+      style: simple
+    providers:
+      in: path
+      name: providerID
       required: true
       schema:
         type: array
