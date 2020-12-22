@@ -16,7 +16,7 @@ The following parameters are used for identifying resources:
 
 Parameter | Type | Description
 --- | --- | ---
-artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, valuelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structuremap, representationmap, conceptschememap,categoryschememap, organisationschememap, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned.
+artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structuremap, representationmap, conceptschememap,categoryschememap, organisationschememap, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned.
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `,` as separator (e.g. BIS,ECB).
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `,` as separator (e.g. CL_FREQ,CL_CONF_STATUS).
 version | A string compliant with the SDMX *semantic versioning* rules | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1.7).
@@ -109,7 +109,7 @@ AgencyScheme | All
 Categorisation | All
 CategoryScheme | *Categorisations*, *Process*, *CategorySchemeMap*, AgencyScheme
 CategorySchemeMap | *Categorisation*, *Process*, CategoryScheme, ReportingTaxonomy, AgencyScheme
-Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, AgencyScheme, *VtlMappingScheme*
+Codelist | *Categorisation*, *Process*, *Hierarchy*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, AgencyScheme, *VtlMappingScheme*
 ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *ConceptSchemeMap*, AgencyScheme, *VtlMappingScheme*
 ConceptSchemeMap | *Categorisation*, *Process*, ConceptScheme, AgencyScheme
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement, AgencyScheme
@@ -117,7 +117,8 @@ DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*,
 Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, AgencyScheme, *VtlMappingScheme*
 DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
 DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureMap*, Valuelist, AgencyScheme
-HierarchicalCodelist | *Categorisation*, *Process*, Codelist, AgencyScheme
+Hierarchy | *HierarchyAssociation*, *Categorisation*, *Process*, Codelist, AgencyScheme
+HierarchyAssociation | All
 Metadataflow | *Categorisation*, *Process*, *Constraint*, MetadataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, AgencyScheme
 MetadataStructureDefinition | *Categorisation*, *Process*, ConceptScheme, Codelist, Valuelist, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, *Constraint*, *Metadataflow*, AgencyScheme
 OrganisationSchemeMap | *Categorisation*, *Process*, DataProviderScheme, DataConsumerScheme, OrganisationUnitScheme, AgencyScheme
