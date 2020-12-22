@@ -57,7 +57,7 @@ detail | *String* | This attribute specifies the desired amount of information t
 
 * To retrieve version 1.0.0 of the Metadataset with id QUALITY_REPORT maintained by the ECB
 
-        http://ws-entry-point/metadata/metadataset/ECB/*/QUALITY_REPORT/1.0.0
+        http://ws-entry-point/metadata/metadataset/ECB/QUALITY_REPORT/1.0.0
 
 * To retrieve all the Metadatasets maintained by the ECB, without the reported metadata attributes
 
@@ -83,7 +83,7 @@ providerRef | A string identifying the metadata provider. The syntax is agency i
 
 The parameters mentioned above are specified using the following syntax:
 
-    protocol://ws-entry-point/metadata/metadataflowID/flowAgencyID/flowID/flowVersion/providerRef
+    protocol://ws-entry-point/metadata/metadataflow/flowAgencyID/flowID/flowVersion/providerRef
 
 The following rules apply:
 
@@ -111,7 +111,7 @@ detail | *String* | This attribute specifies the desired amount of information t
 
 * To retrieve Metadatasets from all metadata providers, for the latest stable version of the METHODOLOGY metadataflow, without the reported metadata attributes
 
-        http://ws-entry-point/metadata/metadataflow/METHODOLOGY/+/?detail=allstubs
+        http://ws-entry-point/metadata/metadataflow/*/METHODOLOGY/+/?detail=allstubs
 
 ## metadata/structure 
 ### Purpose
