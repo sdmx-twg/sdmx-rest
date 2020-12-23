@@ -204,14 +204,14 @@ components:
       required: true
       schema:
         type: string
-        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, "*"]
+        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, conceptscheme, codelist, categoryscheme, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, "*"]
     itemSchemeType:
       in: path
       name: itemSchemeType
       required: true
       schema:
         type: string
-        enum: [conceptscheme, codelist, categoryscheme, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, valuelist, "*"]
+        enum: [conceptscheme, codelist, categoryscheme, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, valuelist, "*"]
     context:
       in: path
       name: context
@@ -376,7 +376,7 @@ components:
       required: false
       schema:
         type: string
-        enum: [none, parents, parentsandsiblings, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap]
+        enum: [none, parents, parentsandsiblings, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap]
         default: none
     mode:
       in: query
