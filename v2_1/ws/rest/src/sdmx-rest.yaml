@@ -197,7 +197,7 @@ components:
       required: true
       schema:
         type: string
-        pattern: '^([\*\.A-Za-z\d_@$-]+(\+[A-Za-z\d_@$-]+)*)*$'
+        pattern: '^\*|[\.\s\S]+$'
     structureType:
       in: path
       name: structureType
