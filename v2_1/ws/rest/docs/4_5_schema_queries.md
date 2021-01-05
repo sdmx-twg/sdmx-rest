@@ -12,7 +12,7 @@ This is typically used for **validation and/or communication purposes**, for exa
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
-**context** | One of `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement` | The value of this parameter determines the constraints that need to be taken into account, when generating the schema. Multiple constraints may need to be considered, depending on the selected value. For example, if dataflow is used, constraints attached to the dataflow and to the DSD used for the dataflow must be considered when generating the schema. |
+**context** | One of `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement` | This parameter determines the constraints that need to be taken into account. Multiple constraints may need to be considered, depending on the selected value. For example, if dataflow is used, constraints attached to the dataflow and the DSD used by the dataflow must be considered when generating the schema. |
 **agencyID** | A string compliant with the *SDMX common:NCNameIDType* | The agency maintaining the artefact that defines the data validity. |
 **resourceID** | A string compliant with the SDMX *common:IDType* | The id of the artefact defining the data validity. |
 version | A string compliant with the SDMX *semantic versioning* rules| The version of the artefact defining the data validity. | `~`
@@ -35,11 +35,7 @@ The following media types can be used with _schema_ queries:
 
 The default format is highlighted in **bold**.
 
-The _schema_ formats are meant to be used for **validation** purposes (i.e. to validate SDMX-ML and SDMX-JSON data files). The _structure_ formats are meant to be used for **communication** purposes. In that case, the response should only include the following types of artefact: (meta)data structures, codelists, concept schemes and agency schemes. The various item schemes must only contain the following:
-
-- For codelists, the codes that are allowed after applying the constraints up to the specified *context*;
-- For concept schemes, the concepts that are used by the data structure;
-- For agency schemes, the agencies maintaining artefacts that are part of the response.
+The _schema_ formats are meant to be used for **validation** purposes (i.e. to validate SDMX-ML and SDMX-JSON data files). The _structure_ formats are meant to be used for **communication** purposes. In that case, the response should only include the following types of artefact: (meta)data structures, codelists, concept schemes and agency schemes. The various item schemes must only contain the relevant items: Codelists may only contain the codes that are allowed after applying the constraints up to the specified *context*; Concept schemes may only contain the concepts that are used by the data structure; Agency schemes may only contain agencies maintaining artefacts that are part of the response.
 
 ### Examples
 
