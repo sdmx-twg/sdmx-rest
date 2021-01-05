@@ -197,7 +197,7 @@ components:
       required: true
       schema:
         type: string
-        pattern: '^\*|[\S]+$'
+        pattern: '^(\*|\S+)$'
     structureType:
       in: path
       name: structureType
