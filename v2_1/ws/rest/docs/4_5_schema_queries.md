@@ -43,8 +43,15 @@ The _schema_ formats are meant to be used for **validation** purposes (i.e. to v
 
 ### Examples
 
-* To retrieve the schema for data supplied within the context of version 1.0.0 of the provision agreement EXR_WEB maintained by the ECB:
-
-        http://ws-entry-point/schema/provisionagreement/ECB/EXR_WEB/1.0.0/
-
-    In this case, the schema returned by the service must take into account the constraints attached to the provision agreement, the dataflow used in the provisionagreement and the data structure definition used in the dataflow.
+- Retrieve the data validity (in SDMX-JSON) for the **latest stable version** of the `EXR_WEB` dataflow maintained by the `ECB`. The constraints attached to the dataflow and the data structure used by the dataflow must be considered. The returned codelists may only contain the codes that are allowed after applying the constraints. The returned concept schemes may only contain the concepts used by the data structure. The returned agency schemes may only contain the agencies maintaining artefacts that are part of the response. Special characters have not been percent-encoded for the sake of simplicity.
+    
+    ```
+    GET /schema/dataflow/ECB/EXR_WEB/+
+    Accept: application/vnd.sdmx.structure+json;version=2.0.0
+    ```
+- Retrieve an XML schema to validate data submissions for the **latest stable version** of the `EXR_WEB` dataflow maintained by the `ECB`. The data are expected to be packaged as time series (i.e. All dimensions are available at the series-level, except for the `TIME_PERIOD` dimension, which is found at the observation-level). The constraints attached to the dataflow and the data structure used by the dataflow must be considered.
+    
+    ```
+    GET /schema/dataflow/ECB/EXR_WEB/+/?dimensionAtObservation=TIME_PERIOD
+    Accept: application/vnd.sdmx.schema+xml;version=3.0.0
+    ```
