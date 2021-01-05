@@ -21,9 +21,21 @@ explicitMeasure | *Boolean* | For cross-sectional data validation, indicates whe
 
 Note: Mandatory parameters are highlighted in **bold**.
 
-### Using an SDMX format for the response
+### Response types
 
-By default, a *schema* query will return an XML schema (i.e. an `xsd` file). However, it is also possible to get the response in one of the SDMX Structure formats. In that case, the response should only include the following types of artefact: data structures, codelists, concept schemes and agency schemes. The various item schemes must only contain the following:
+The following media types can be used with _schema_ queries:
+
+- **application/vnd.sdmx.schema+json;version=3.0.0**
+- application/vnd.sdmx.schema+xml;version=3.0.0
+- application/vnd.sdmx.structure+xml;version=3.0.0
+- application/vnd.sdmx.structure+json;version=2.0.0
+- application/vnd.sdmx.schema+xml;version=2.1
+- application/vnd.sdmx.structure+xml;version=2.1
+- application/vnd.sdmx.structure+json;version=1.0.0
+
+The default format is highlighted in **bold**.
+
+The _schema_ formats are meant to be used for **validation** purposes (i.e. to validate SDMX-ML and SDMX-JSON data files). The _structure_ formats are meant to be used for **communication** purposes. In that case, the response should only include the following types of artefact: (meta)data structures, codelists, concept schemes and agency schemes. The various item schemes must only contain the following:
 
 - For codelists, the codes that are allowed after applying the constraints up to the specified *context*;
 - For concept schemes, the concepts that are used by the data structure;
