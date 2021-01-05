@@ -2,7 +2,7 @@
 
 ### Overview
 
-Schema queries allow retrieving **data validity within a certain context**. The service must take into account the constraints that apply within that context (e.g. dataflow).
+Schema queries allow retrieving **the definition of data validity for a certain context**. The service must take into account the constraints that apply within that context (e.g. dataflow).
 
 This is typically used for **validation and/or communication purposes**, for example as a way to inform providers about the data they are expected to report.
 
