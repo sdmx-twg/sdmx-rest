@@ -6,48 +6,18 @@ Schema queries allow retrieving data validity within a certain context. The serv
 
 This is typically used for validation purposes but it may also be used for communication purposes, e.g. as a way to inform providers about the data they are expected to report.
 
-### Resources
+### Syntax
 
-The following resource is defined:
+    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}&{explicitMeasure}
 
-- schema
-
-### Parameters
-
-#### Parameters used for identifying a resource
-
-The following parameters are used for identifying resources:
-
-Parameter | Type | Description
---- | --- | ---
-context | One of the following: `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement` | The value of this parameter determines the constraints that need to be taken into account, when generating the schema. If datastructure or metadatastructure is used, constraints attached to the DSD or MSD must be applied when generating the schema. If dataflow or metadataflow is used, constraints attached to the dataflow or metadataflow and to the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema. If provisionagreement is used, constraints attached to the provision agreement, as well as to the dataflow or metadafalow used in the agreement and the DSD or MSD used in the dataflow or metadataflow must be applied when generating the schema.
-agencyID | A string compliant with the *SDMX common:NCNameIDType* | The agency maintaining the artefact used to generate the schema to be returned.
-resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact used to generate the schema to be returned.
-version | A string compliant with the SDMX *semantic versioning* rules| The version of the artefact used to generate the schema to be returned.
-
-The parameters mentioned above are specified using the following syntax:
-
-    protocol://ws-entry-point/schema/context/agencyID/resourceID/version
-    
-Furthermore, a reserved operator may be used:
-
-Keyword | Scope | Description 
---- | --- | ---
-`+` | version | Returns the latest stable version of a resource
-`~` | version | Returns the latest, whether stable or draft, version of a resource or non-versioned resource
-
-The following rules apply:
-
-  - If no version attribute is specified, the latest, whether stable or draft, version of a resource or non-versioned resource will be returned. It is therefore equivalent to using the `~` operator.
-
-#### Parameters used to further describe the desired results
-
-The following parameters are used to further describe the desired results, once the resource has been identified:
-
-Parameter | Type | Description
---- | --- | ---
-dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level.
-explicitMeasure | *Boolean* | For cross-sectional data validation, indicates whether observations are strongly typed (defaults to `false`).
+Parameter | Type | Description | Default
+--- | --- | --- | ---
+context | One of `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement` | The value of this parameter determines the constraints that need to be taken into account, when generating the schema. Multiple constraints may need to be considered, depending on the selected value. For example, if dataflow is used, constraints attached to the dataflow and to the DSD used for the dataflow must be applied when generating the schema. |
+agencyID | A string compliant with the *SDMX common:NCNameIDType* | The agency maintaining the artefact that defines the data validity. |
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact defining the data validity. |
+version | A string compliant with the SDMX *semantic versioning* rules| The version of the artefact defining the data validity. | `~`
+dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level. |
+explicitMeasure | *Boolean* | For cross-sectional data validation, indicates whether observations are strongly typed. | `false`
 
 ### Using an SDMX format for the response
 
