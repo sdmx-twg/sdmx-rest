@@ -12,7 +12,7 @@ This is typically used for **validation and/or communication purposes**, for exa
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
-**context** | One of `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement` | The value of this parameter determines the constraints that need to be taken into account, when generating the schema. Multiple constraints may need to be considered, depending on the selected value. For example, if dataflow is used, constraints attached to the dataflow and to the DSD used for the dataflow must be applied when generating the schema. |
+**context** | One of `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement` | The value of this parameter determines the constraints that need to be taken into account, when generating the schema. Multiple constraints may need to be considered, depending on the selected value. For example, if dataflow is used, constraints attached to the dataflow and to the DSD used for the dataflow must be considered when generating the schema. |
 **agencyID** | A string compliant with the *SDMX common:NCNameIDType* | The agency maintaining the artefact that defines the data validity. |
 **resourceID** | A string compliant with the SDMX *common:IDType* | The id of the artefact defining the data validity. |
 version | A string compliant with the SDMX *semantic versioning* rules| The version of the artefact defining the data validity. | `~`
