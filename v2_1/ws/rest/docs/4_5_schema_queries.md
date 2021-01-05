@@ -37,7 +37,7 @@ The default format is highlighted in **bold**.
 
 The _schema_ formats are meant to be used for **validation** purposes (i.e. to validate SDMX-ML and SDMX-JSON data files). 
 
-The _structure_ formats are meant to be used for **communication** purposes. In that case, the response should only include the following types of artefact: (meta)data structures, codelists, concept schemes and agency schemes. The various item schemes must only contain the relevant items: Codelists may only contain the codes that are allowed after applying the constraints up to the specified *context*; Concept schemes may only contain the concepts that are used by the data structure; Agency schemes may only contain agencies maintaining artefacts that are part of the response.
+The _structure_ formats are meant to be used for **communication** purposes. In that case, the response should only include the following types of artefact: (meta)data structures, codelists, concept schemes and agency schemes. The various item schemes may only contain the relevant items: Codelists may only contain the codes that are allowed after applying the constraints up to the specified *context*; Concept schemes may only contain the concepts that are used by the data structure; Agency schemes may only contain agencies maintaining artefacts that are part of the response.
 
 ### Examples
 
