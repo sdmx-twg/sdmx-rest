@@ -1,3 +1,5 @@
+
+
 ## Structural Metadata Queries
 
 ### Resources
@@ -14,7 +16,7 @@ The following parameters are used for identifying resources:
 
 Parameter | Type | Description
 --- | --- | ---
-artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchicalcodelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned.
+artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structuremap, representationmap, conceptschememap,categoryschememap, organisationschememap, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned.
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `,` as separator (e.g. BIS,ECB).
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `,` as separator (e.g. CL_FREQ,CL_CONF_STATUS).
 version | A string compliant with the SDMX *semantic versioning* rules | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1.7).
@@ -63,13 +65,13 @@ SDMX uses the *item scheme* pattern to model SDMX collections of items. These ar
 - namepersonalisationscheme
 - vtlmappingscheme
 
-Although it is not following the *item scheme* pattern, *hierarchicalcodelist* is also a collection, i.e. a collection of hierarchies.
+Although it is not following the *item scheme* pattern, the *valuelist* is also a collection, i.e. a collection of values.
 
-For these collections (those following the *item scheme* pattern or the *hierarchicalcodelist*), it is possible to use a 5th parameter for identifying a resource. The rules for the 4 other parameters, as defined in the section above, remain valid.
+For these collections (those following the *item scheme* pattern or the *valuelist*), it is possible to use a 5th parameter for identifying a resource. The rules for the 4 other parameters, as defined in the section above, remain valid.
 
 Parameter | Type | Description
 --- | --- | ---
-itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, SDMX *common:IDType* for hierarchicalcodelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned. It is possible to set more than one id, using `,` as separator (e.g. A,Q,M).
+itemID | A string compliant with the SDMX *common:NestedNCNameIDType* for conceptscheme and agencyscheme, any type for valuelist or with the SDMX *common:NestedIDType* in all other cases | The id of the item to be returned. It is possible to set more than one id, using `,` as separator (e.g. A,Q,M).
 
 
 This 5th parameter is used as follows:
@@ -95,7 +97,7 @@ The following parameters are used to further describe the desired results, once 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
 detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the maintainable artefact (i.e.: id, agency id, version and name). Most notably, items of item schemes will not be returned (for example, it will not return the codes in a code list query). Possible values are: (1) `full`: all available information for all returned artefacts should be returned. Returned extended codelists are to be resolved, i.e. include all inherited codes, and must not include the ExtendedBy property. As the inherited codelists must be resolved, they should not be returned a second time as separated codelists. (2) `allstubs`: all returned artefacts should be returned as stubs, i.e. only containing identification information and the artefacts' name. (3) `referencestubs`: same as full with the exception that referenced artefacts should be returned only as stubs, i.e. only containing identification information and the artefacts' name. (4) `allcompletestubs`: all returned artefacts should be returned as complete stubs, i.e. only containing identification information, the artefacts' name, description, annotations and isFinal information. (5) `referencecompletestubs`: same as full with the exception that referenced artefacts should be returned as complete stubs, i.e. only containing identification information, the artefacts' name, description, annotations and isFinal information. (6) `referencepartial`: same as full with the exception that referenced item schemes should only include items used by the artefact to be returned. For example, a concept scheme would only contain the concepts used in a DSD, and its isPartial flag would be set to true. Likewise, if a dataflow has been constrained, then the codelists referenced by the DSD referenced by the dataflow should only contain the codes allowed by the content constraint. (7) `raw`: same as full with the exception that the returned extended codelists are not resolved and must include the ExtendedBy property, and if referenced codelists or descendants are to be returned then they include also all inherited codelists. (8) `partialraw`: same as raw with the exception that referenced item schemes, also including returned inherited codelists, should only include items used by the artefact to be returned, similar to the value 'referencepartial' | **full**
-references | *String* | This attribute instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). Possible values are: `none` (no references will be returned), `parents` (the artefacts that use the artefact matching the query), `parentsandsiblings` (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), `children` (artefacts referenced by the artefact to be returned), `descendants` (references of references, up to any level, will also be returned), `all` (the combination of parentsandsiblings and descendants). In addition, a `concrete type of resource` may also be used (for example, references=codelist). | **none**
+references | *String* | This attribute instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query). Possible values are: `none` (no references will be returned), `parents` (the artefacts that use the artefact matching the query), `parentsandsiblings` (the artefacts that use the artefact matching the query, as well as the artefacts referenced by these artefacts), `ancestors` (the artefacts that use the artefact matching the query, up to any level), `children` (artefacts referenced by the artefact to be returned), `descendants` (references of references, up to any level, will also be returned), `all` (the combination of parentsandsiblings and descendants). In addition, a `concrete type of resource` may also be used (for example, references=codelist). | **none**
 
 #### Applicability and meaning of references attribute
 
@@ -105,28 +107,34 @@ Maintainable artefact | Artefacts returned
 --- | ---
 AgencyScheme | All
 Categorisation | All
-CategoryScheme | *Categorisations*, *Process*, *StructureSet*, AgencyScheme
-Codelist | *Categorisation*, *Process*, *HierarchicalCodelist*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme, *VtlMappingScheme*
-ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme, *VtlMappingScheme*
+CategoryScheme | *Categorisations*, *Process*, *CategorySchemeMap*, AgencyScheme
+CategorySchemeMap | *Categorisation*, *Process*, CategoryScheme, ReportingTaxonomy, AgencyScheme
+Codelist | *Categorisation*, *Process*, *Hierarchy*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, AgencyScheme, *VtlMappingScheme*
+ConceptScheme | *Categorisation*, *Process*, Codelist, *DataStructureDefinition*, *MetadataStructureDefinition*, *ConceptSchemeMap*, AgencyScheme, *VtlMappingScheme*
+ConceptSchemeMap | *Categorisation*, *Process*, ConceptScheme, AgencyScheme
 Constraint | *Categorisation*, *Process*, DataProviderScheme, DataStructureDefinition, Dataflow, MetadataStructureDefinition, Metadataflow, ProvisionAgreement, AgencyScheme
-DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme
-Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, AgencyScheme, *VtlMappingScheme*
-DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme
-DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureSet*, AgencyScheme
-HierarchicalCodelist | *Categorisation*, *Process*, Codelist, *StructureSet*, AgencyScheme
-Metadataflow | *Categorisation*, *Process*, *Constraint*, MetadataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureSet*, AgencyScheme
-MetadataStructureDefinition | *Categorisation*, *Process*, ConceptScheme, Codelist, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, *Constraint*, *Metadataflow*, *StructureSet*, AgencyScheme
-OrganisationUnitScheme | *Categorisation*, *Process*, *Constraint*, *MetadataStructureDefinition*, *StructureSet*, AgencyScheme
+DataConsumerScheme | *Categorisation*, *Process*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
+Dataflow | *Categorisation*, *Process*, *Constraint*, DataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, AgencyScheme, *VtlMappingScheme*
+DataProviderScheme | *Categorisation*, *Process*, *Constraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
+DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *Constraint*, *Dataflow*, *StructureMap*, Valuelist, AgencyScheme
+Hierarchy | *HierarchyAssociation*, *Categorisation*, *Process*, Codelist, AgencyScheme
+HierarchyAssociation | All
+Metadataflow | *Categorisation*, *Process*, *Constraint*, MetadataStructureDefinition, *ProvisionAgreement*, *ReportingTaxonomy*, AgencyScheme
+MetadataStructureDefinition | *Categorisation*, *Process*, ConceptScheme, Codelist, Valuelist, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, *Constraint*, *Metadataflow*, AgencyScheme
+OrganisationSchemeMap | *Categorisation*, *Process*, DataProviderScheme, DataConsumerScheme, OrganisationUnitScheme, AgencyScheme
+OrganisationUnitScheme | *Categorisation*, *Process*, *Constraint*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
 Process | All
 ProvisionAgreement | *Categorisation*, *Process*, DataProviderScheme, Dataflow, Metadataflow, *Constraint*, AgencyScheme
-ReportingTaxonomy | *Categorisation*, *Process*, Dataflow, Metadataflow, *StructureSet*, AgencyScheme
-StructureSet | *Categorisation*, *Process*, DataStructureDefinition, MetadataStructureDefinition, CategoryScheme, DataProviderScheme, DataConsumerScheme, AgencyScheme, OrganisationUnitScheme, ConceptScheme, Codelist, ReportingTaxonomy, HierarchicalCodelist, Dataflow, Metadataflow, AgencyScheme
+ReportingTaxonomy | *Categorisation*, *CategorySchemeMap*, *Process*, Dataflow, Metadataflow, AgencyScheme
+RepresentationMap | *Categorisation*, *Process*, Codelist, Valuelist, AgencyScheme
+StructureMap | *Categorisation*, *Process*, DataStructureDefinition, Dataflow, AgencyScheme
 CustomTypeScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, AgencyScheme
 NamePersonalisationScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, AgencyScheme
 RulesetScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme, AgencyScheme, AgencyScheme
 TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePersonalisationScheme, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme, AgencyScheme
 UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme, AgencyScheme
-VtlMappingScheme | AgencyScheme, _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_, AgencyScheme
+Valuelist | *Categorisation*, *Process*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, *VtlMappingScheme*, AgencyScheme
+VtlMappingScheme | _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_, Valuelist, AgencyScheme
 
 ### Examples
 

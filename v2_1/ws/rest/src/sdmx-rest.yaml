@@ -376,7 +376,7 @@ components:
       required: false
       schema:
         type: string
-        enum: [none, parents, parentsandsiblings, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap]
+        enum: [none, parents, parentsandsiblings, ancestors, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap]
         default: none
     mode:
       in: query

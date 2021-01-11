@@ -8,34 +8,37 @@ Using the HTTP Content Negotiation mechanism, the client specifies the desired f
 
 Along with official mime types (e.g.: text/html, application/xml, etc), the HTTP standard also defines a syntax, which the SDMX RESTful API leverages, allowing a service to define its own types:
 
-    application/vnd.sdmx.[format]+xml;version=[version]
+    application/vnd.sdmx.[type]+[format];version=[version]
 
-where [format] should be replaced with the desired format (i.e. : genericdata, structurespecificdata, structure, etc) and [version] should be replaced with one of the versions of the SDMX standard, starting with SDMX 2.1.
+A few examples are listed below:
 
-A few examples are listed below
+- SDMX-JSON Structure Format, version 2.0.0: application/vnd.sdmx.structure+json;version=2.0.0
+- SDMX-JSON Data Format, version 2.0.0: application/vnd.sdmx.data+json;version=2.0.0
+- SDMX-ML Structure Format, version 3.0.0: application/vnd.sdmx.structure+xml;version=3.0.0
 
-- SDMX-ML Generic Data Format, version 2.1: application/vnd.sdmx.genericdata+xml;version=2.1
-- SDMX-ML Structure Specific Data Format, version 2.1: application/vnd.sdmx.structurespecificdata+xml;version=2.1
-- SDMX-ML Structure Format, version 2.1: application/vnd.sdmx.structure+xml;version=2.1
+In case the client does not specify the media type, or only specifies the generic application/json one, the SDMX RESTful web service should return:
 
-In case the client does not specify the desired format and version of the response message, or only specifies the generic application/xml format, the SDMX RESTful web service should return:
-
-- The most recent version, that the service supports, of the SDMX-ML Structure format for **structural metadata** queries;
-- The most recent version, that the service supports, of the SDMX-ML Generic Data format for **data** queries;
-- The most recent version, that the service supports, of the SDMX-ML Generic Metadata format for **reference metadata** queries;
+- The most recent version, that the service supports, of the SDMX-JSON Structure format for **structural metadata** queries;
+- The most recent version, that the service supports, of the SDMX-JSON Data format for **data** queries;
+- The most recent version, that the service supports, of the SDMX-JSON Metadata format for **reference metadata** queries;
 - An XML schema (i.e. an `xsd` file) for **schema** queries.
-- The most recent version, that the service supports, of the SDMX-ML Structure format for **data availability** queries;
+- The most recent version, that the service supports, of the SDMX-JSON Structure format for **data availability** queries;
 
-The list below indicates the valid formats for SDMX RESTful web services, compliant with version 2.1 of the SDMX standard, organized by type of queries. The default media type is highlighted in bold.
+The list below indicates the valid formats for SDMX RESTful web services, organized by type of queries. The default media type is highlighted in bold.
 
 #### Structural metadata queries
 
-- **application/vnd.sdmx.structure+xml;version=2.1**
+- **application/vnd.sdmx.structure+json;version=2.0.0**
 - application/vnd.sdmx.structure+json;version=1.0.0
+- application/vnd.sdmx.structure+xml;version=3.0.0
+- application/vnd.sdmx.structure+xml;version=2.1
 
 #### Data queries
 
-- **application/vnd.sdmx.genericdata+xml;version=2.1**
+- **application/vnd.sdmx.data+json;version=2.0.0**
+- application/vnd.sdmx.data+xml;version=3.0.0
+- application/vnd.sdmx.data+csv;version=2.0.0;labels=[*id*|both|name];timeFormat=[*original*|normalized]
+- application/vnd.sdmx.genericdata+xml;version=2.1
 - application/vnd.sdmx.structurespecificdata+xml;version=2.1
 - application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
 - application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
@@ -43,19 +46,27 @@ The list below indicates the valid formats for SDMX RESTful web services, compli
 - application/vnd.sdmx.data+csv;version=1.0.0;labels=[*id*|both];timeFormat=[*original*|normalized]
     
 #### Reference metadata queries    
-  
-- **application/vnd.sdmx.genericmetadata+xml;version=2.1**
+
+- **application/vnd.sdmx.metadata+json;version=2.0.0**
+- application/vnd.sdmx.metadata+xml;version=3.0.0
+- application/vnd.sdmx.metadata+csv;version=1.0.0
+- application/vnd.sdmx.genericmetadata+xml;version=2.1
 - application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
     
 #### Schema queries    
 
-- **application/vnd.sdmx.schema+xml;version=2.1**
+- **application/vnd.sdmx.schema+xml;version=3.0.0**
+- application/vnd.sdmx.structure+xml;version=3.0.0
+- application/vnd.sdmx.structure+json;version=2.0.0
+- application/vnd.sdmx.schema+xml;version=2.1
 - application/vnd.sdmx.structure+xml;version=2.1
 - application/vnd.sdmx.structure+json;version=1.0.0
 
 #### Data availability queries
 
-- **application/vnd.sdmx.structure+xml;version=2.1**
+- **application/vnd.sdmx.structure+json;version=2.0.0**
+- application/vnd.sdmx.structure+xml;version=3.0.0
+- application/vnd.sdmx.structure+xml;version=2.1
 - application/vnd.sdmx.structure+json;version=1.0.0
     
 ### Selection of the Appropriate language
