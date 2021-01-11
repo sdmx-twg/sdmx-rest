@@ -138,30 +138,30 @@ VtlMappingScheme | _Categorisation_, Codelist, ConceptScheme, Dataflow, _Ruleset
 
 ### Examples
 
-* To retrieve version 1.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
+* To retrieve version 1.0.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
 
         http://ws-entry-point/structure/datastructure/ECB/ECB_EXR1/1.0.0?references=children&detail=referencepartial
 
-* To retrieve the latest version in production of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
+* To retrieve the latest stable version of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
 
-        http://ws-entry-point/structure/datastructure/ECB/ECB_EXR1
+        http://ws-entry-point/structure/datastructure/ECB/ECB_EXR1/+
 
-* To retrieve all DSDs maintained by the ECB, as well as the dataflows using these DSDs:
+* To retrieve the latest version, whether stable or draft, of all DSDs maintained by the ECB, as well as the dataflows using these DSDs:
 
         http://ws-entry-point/structure/datastructure/ECB?references=dataflow
 
-* To retrieve the latest version in production of all code lists maintained by all maintenance agencies, but without the codes:
+* To retrieve the latest version, whether stable or draft, of all code lists maintained by all maintenance agencies, but without the codes:
 
         http://ws-entry-point/structure/codelist?detail=allstubs
 
-* To retrieve, as stubs, the latest version in production of all maintainable artefacts maintained by the ECB:
+* To retrieve, as stubs, the latest version, whether stable or draft, of all maintainable artefacts maintained by the ECB:
 
         http://ws-entry-point/structure/all/ECB?detail=allstubs
         
 * To retrieve the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as the categorisations referencing that category:
 
-        http://ws-entry-point/structure/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
+        http://ws-entry-point/structure/categoryscheme/ECB/DOMAINS/+/PRICES?references=categorisation
 
-* To retrieve the latest version of the CL_FREQ codelists maintained by the BIS or the ECB:
+* To retrieve the latest version, whether stable or draft, of the CL_FREQ codelists maintained by the BIS or the ECB:
         
         http://ws-entry-point/structure/codelist/BIS,ECB/CL_FREQ
