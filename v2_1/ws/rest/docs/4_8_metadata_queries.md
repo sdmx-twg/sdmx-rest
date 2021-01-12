@@ -134,17 +134,17 @@ detail | *String* | This attribute specifies the desired amount of information t
 
 To retrieve metadatasets against version 1.0.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
     
-    http://ws-entry-point/metadata/datastructure/ECB/ECB_EXR1/1.0.0references=children&detail=referencepartial
+    http://ws-entry-point/metadata/structure/datastructure/ECB/ECB_EXR1/1.0.0references=children&detail=referencepartial
     
 To retrieve metadatasets reported against the latest version of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
     
-    http://ws-entry-point/metadata/datastructure/ECB/ECB_EXR1
+    http://ws-entry-point/metadata/structure/datastructure/ECB/ECB_EXR1
         
-To retrieve metadatasets  against any DSD maintained by the ECB (latest version), as well as the dataflows using these DSDs:
+To retrieve metadatasets against any DSD maintained by the ECB (latest version), as well as the dataflows using these DSDs:
     
-    http://ws-entry-point/metadata/datastructure/ECB?references=dataflow
+    http://ws-entry-point/metadata/structure/datastructure/ECB?references=dataflow
     
 To retrieve metadatasets (as stubs) against any Dataflow 
     
-    http://ws-entry-point/metadata/dataflow/?detail=allStubs
+    http://ws-entry-point/metadata/structure/dataflow/?detail=allStubs
 
