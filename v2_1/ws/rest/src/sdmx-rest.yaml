@@ -3,9 +3,14 @@ info:
   version: '2.0.0'
   title: 'SDMX RESTful API, v2.0.0'
   description: |
-    The SDMX RESTful API, released in XXX 2021.
+    The RESTful API for SDMX 3.0.
+    
+    For additional information, check the [documentation](https://github.com/sdmx-twg/sdmx-rest/tree/develop/v2_1/ws/rest/docs) .
 
-    For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
+servers:
+  - description: Mock implementation (just for demo purposes!)
+    url: https://localhost/
+
 x-commons:
   common_responses: &common_responses
     '304':
@@ -34,7 +39,9 @@ x-commons:
 paths:
   /data/{context}/{agencyID}/{resourceID}/{version}/{key}:
     get:
-      summary: 'Data query'
+      summary: 'Data queries'
+      tags: 
+        - Data queries
       parameters:
         - $ref: '#/components/parameters/dataContext'
         - $ref: '#/components/parameters/agencies'
@@ -56,10 +63,11 @@ paths:
         '200':
           $ref: '#/components/responses/200'
 
-
   /availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentID}:
     get:
-      summary: 'Data availability query'
+      summary: 'Data availability queries'
+      tags: 
+        - Data queries
       parameters:
         - $ref: '#/components/parameters/dataContext'
         - $ref: '#/components/parameters/agencies'
@@ -78,10 +86,31 @@ paths:
         <<: *common_responses
         '200':
           $ref: '#/components/responses/200-struct'
+          
+  /schema/{context}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Data validity queries'
+      tags: 
+        - Data queries
+      parameters:
+        - $ref: '#/components/parameters/context'
+        - $ref: '#/components/parameters/agencyID'
+        - $ref: '#/components/parameters/resourceID'
+        - $ref: '#/components/parameters/version'
+        - $ref: '#/components/parameters/dimensionAtObservation'
+        - $ref: '#/components/parameters/explicitMeasure'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-schemas'
 
   /structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Structure query'
+      summary: 'Structure queries'
+      tags: 
+        - Structure queries
       parameters:
         - $ref: '#/components/parameters/structureType'
         - $ref: '#/components/parameters/agencies'
@@ -99,7 +128,9 @@ paths:
 
   /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
     get:
-      summary: 'Item Scheme query'
+      summary: 'Item Scheme queries'
+      tags: 
+        - Structure queries
       parameters:
         - $ref: '#/components/parameters/itemSchemeType'
         - $ref: '#/components/parameters/agencies'
@@ -116,26 +147,11 @@ paths:
         '200':
           $ref: '#/components/responses/200-struct'
 
-  /schema/{context}/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: 'Schema query'
-      parameters:
-        - $ref: '#/components/parameters/context'
-        - $ref: '#/components/parameters/agencyID'
-        - $ref: '#/components/parameters/resourceID'
-        - $ref: '#/components/parameters/version'
-        - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/explicitMeasure'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/if-modified-since'
-      responses:
-        <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-schemas'
-
   /metadata/structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Metadata query (by structure)'
+      summary: 'Metadata queries (by structure)'
+      tags: 
+        - Reference metadata queries
       parameters:
         - $ref: '#/components/parameters/structureType'
         - $ref: '#/components/parameters/agencies'
@@ -152,7 +168,9 @@ paths:
 
   /metadata/metadataflow/{agencyID}/{resourceID}/{version}/{providerID}:
     get:
-      summary: 'Metadata query (by metadataflow)'
+      summary: 'Metadata queries (by metadataflow)'
+      tags: 
+        - Reference metadata queries
       parameters:
         - $ref: '#/components/parameters/agencies'
         - $ref: '#/components/parameters/resourceIDs'
@@ -169,7 +187,9 @@ paths:
 
   /metadata/metadataset/{providerID}/{resourceID}/{version}:
     get:
-      summary: 'Metadata query (by metadatasets)'
+      summary: 'Metadata queries (by metadatasets)'
+      tags: 
+        - Reference metadata queries
       parameters:
         - $ref: '#/components/parameters/providers'
         - $ref: '#/components/parameters/resourceIDs'
