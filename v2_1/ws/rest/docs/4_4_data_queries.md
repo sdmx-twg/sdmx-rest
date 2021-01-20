@@ -6,47 +6,30 @@ Data queries allow **retrieving statistical data**. Entire datasets can be retri
 
 ### Syntax
 
-#### Path parameters
+    protocol://ws-entry-point/data/{context}/{agencyID}/{resourceID}/{version}/{key}?
+    {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}&{detail}&{includeHistory}
 
-The following path parameters are supported:
-
-Parameter | Type | Description
---- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval.
-agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. 
-resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported.
-version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported.
-key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.*.EUR.SP00.A.
-
-The parameters mentioned above are specified using the following syntax:
-
-    protocol://ws-entry-point/resource/context/agencyID/resourceID/version/key
+Parameter | Type | Description | Default | Multiple values?
+--- | --- | --- | --- | ---
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | * | Yes
+agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
+resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
+version | A string compliant with the SDMX semantic versioning rules | The version of the artefact for which data have been reported. | * | Yes
+key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.`*`.EUR.SP00.A. | * | Yes
+c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`). | | Yes
+updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this attribute is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level). | | No
+firstNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, starting from the first observation | | No
+lastNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, counting back from the most recent observation ||Yes
+dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* / *table* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to TimeDimension, if the data structure definition has one, or else, to default to AllDimensions.|Depends on DSD|No 
+detail | String | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return data only (i.e. no attributes). Possible options are: `full` (all data and documentation, including annotations - This is the default), `dataonly` (attributes  and therefore groups will be excluded from the returned message), `serieskeysonly` (returns only the series elements and the dimensions that make up the series keys. This is useful for performance reasons, to return the series that match a certain query, without returning the actual data) and `nodata` (returns the groups and series, including attributes and annotations, without observations). |`full`| No
+includeHistory | Boolean | This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned SDMX-ML data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. | `false` | No 
 
 The following rules apply:
 
-- All path parameters support multiple values, using comma (`,`) as separator.
-- All path parameters offer the option to retrieve all existing values, using the `*` operator.
-- Two additional operators are supported for the version parameter: the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. stable). 
-- For all path parameters, the default value is `*`.
+- Multiple values for a parameter must be separated using a comma (`,`).
+- Two additional operators are supported for the _version_ parameter: the `+`, to indicate the latest stable version of an artefact, and `~`, to indicate the latest version of an artefact regardless of its status (draft vs. stable). 
 - Default values do not need to be supplied if they are the last element in the path.
-
-#### Query parameters
-
-The following query parameters are supported:
-
-Parameter | Type | Description
---- | --- | ---
-c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`).
-updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this attribute is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level).
-firstNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, starting from the first observation
-lastNObservations | Positive integer | Integer specifying the maximum number of observations to be returned for each of the matching series, counting back from the most recent observation
-dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to TimeDimension, if the data structure definition has one, or else, to default to AllDimensions.
-detail | String | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return data only (i.e. no attributes). Possible options are: `full` (all data and documentation, including annotations - This is the default), `dataonly` (attributes  and therefore groups will be excluded from the returned message), `serieskeysonly` (returns only the series elements and the dimensions that make up the series keys. This is useful for performance reasons, to return the series that match a certain query, without returning the actual data) and `nodata` (returns the groups and series, including attributes and annotations, without observations).
-includeHistory | Boolean | This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned SDMX-ML data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. Default to `false`.
-    
-#### Operators
-
-Operators can be used to refine the applicability of the `c` query parameter.  
+- Operators can be used to refine the applicability of the `c` query parameter:  
 
 Operator | Meaning | Note
 -- | -- | --
@@ -64,6 +47,8 @@ nd | And |
 or | Or | Default if no operator is specified and there are multiple values (e.g. `c[FREQ]=M,A`)
 
 Operators appear immediately after the `=` and are separated from the component value(s) by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01`).
+
+### Response types
 
 ### Examples of queries
 
