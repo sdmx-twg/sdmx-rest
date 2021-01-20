@@ -93,21 +93,84 @@ The default format is highlighted in **bold**.
 * Retrieve the list of indicators containing euro in their title:
 
         https://ws-entry-point/data/?c[TITLE]=co:euro&detail=serieskeysonly
+        
+### Use cases
 
+#### Retrieving deltas using `updatedAfter`
 
-### How to handle the `includeHistory` parameter
+By supplying a percent-encoded timestamp to the `updatedAfter` parameter, it is possible to **only retrieve the latest version of changed values** in the database since a certain point in time (so-called *updates and revisions* or *deltas*).
 
-For example, for a particular series, there were, so far, 3 disseminations:
-* In February 2012, there was the initial dissemination, with 2 periods: 2011-12 and 2012-01.
-* In March, the decision was taken to delete all observations before 2012 (so, 2011-12). In addition, a new observation has been published for 2012-02.
-* In April, the value for February has been revised, and the value for March has been published.
+The response to such a query could include one or more dataset(s) representing:
 
-If the value of the includeHistory is set to true, the web service should return 4 datasets:
-* The first dataset contains the data disseminated in February, so 2 observations (2011-12 and 2012-01). The dataset action flag is `Replace`.
-* The second dataset contains the new data disseminated in March. It will contain one observation (2012-02). The dataset action flag is also `Replace`.
-* The third dataset contains the deleted data, removed with the March dissemination. It will contain one observation (2011-12). The dataset action flag is `Delete`.
-* The fourth dataset contains the data disseminated in April. It will contain the revised observation (2012-02) and the new one (2012-03). The dataset action flag is `Replace`.
+1. The observations that have been **added** since the last time the query was performed.
+1. The observations that have been **revised** since the last time the query was performed.
+1. The observations that have been **deleted** since the last time the query was performed.
 
-The `validFrom` and `validTo` flags should be used as follows:
-* For datasets whose action flag is `Replace`, the `validFromDate` is used to indicate from which point in time the values are considered valid.
-* For datasets whose action flag is `Delete`, the `validToDate` is used to indicate until which point in time the values were considered valid.
+An example of the above can be seen when querying the ECB's web services and asking for the *deltas* using the following parameters:
+- `updatedAfter=2014-11-01T00%3A00%3A00%2B01%3A00`
+the percent-encoded representation of `2014-11-01T00:00:00+01:00` as the point in time of our last retrieval of data
+
+In this example, cases 1 & 3 can be observed in the following response message:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
+    <message:Header>
+        <message:ID>388d1c9a-d187-4f6a-8792-e117cf34047f</message:ID>
+        <message:Test>false</message:Test>
+        <message:Prepared>2016-12-20T16:19:56.398+01:00</message:Prepared>
+        <message:Sender id="ECB"/>
+        <message:Structure structureID="ECB_RTD1" dimensionAtObservation="TIME_PERIOD">
+            <common:Structure>
+                <URN>urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=ECB:ECB_RTD1(1.0)</URN>
+            </common:Structure>
+        </message:Structure>
+    </message:Header>
+    <message:DataSet action="Replace" validFromDate="2016-12-20T16:19:56.398+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
+    <message:DataSet action="Delete" validToDate="2016-12-20T16:19:56.440+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
+</message:GenericData>
+```
+
+In the response the `action` attribute of the `Dataset` element is of importance whereas the `validFromDate` is just there for information purposes.
+
+Developers who update their local databases should make use of the `updatedAfter` parameter as it is likely to significantly **improve performance**. Instead of systematically downloading data that may not have changed, you would only receive the *consolidated* changes to be made in your database since the last time your client performed the same query.
+
+An alternative, less efficient than the solution described above, but more efficient than downloading everything all the time, would be to use HTTP Conditional GET requests (i.e. the `If-Modified-Since` or `If-None-Match` HTTP Request headers). Using this mechanism, everything will be returned but only if something has changed since the previous query.
+
+#### Returning a limited amount of observations using `firstNObservations` and `lastNObservations`
+
+Using the `firstNObservations` and/or `lastNObservations` parameters, it is possible to specify the **maximum number of observations** to be returned for each of the matching series, starting from the first observation (`firstNObservations`) or counting back from the most recent observation (`lastNObservations`). This can be useful for building an overview page, for example, where, for each indicator, you only display 2 values (the current one and the previous one).
+
+#### Retrieving how a time series evolved over time using the `includeHistory` parameter: 
+
+Using the `includeHistory` parameter, you can instruct the web service to return **previous versions of the matching data**. This is useful to see how the data have evolved over time, i.e. when new data have been released or when data have been revised or deleted. Possible options are:
+
+- `false`: Only the version currently in production will be returned. This is the default.
+- `true`: The version currently in production, as well as all previous versions, will be returned.
+
+Such a query would give you the *history* between that point in time and today.
+
+Here is an example response message:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
+    <message:Header>
+        <message:ID>a2c99026-00c8-4f9a-a3d4-1891f89bd2b0</message:ID>
+        <message:Test>false</message:Test>
+        <message:Prepared>2016-12-20T17:16:51.578+01:00</message:Prepared>
+        <message:Sender id="ECB"/>
+        <message:Structure structureID="ECB_RTD1" dimensionAtObservation="TIME_PERIOD">
+            <common:Structure>
+                <URN>urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=ECB:ECB_RTD1(1.0)</URN>
+            </common:Structure>
+        </message:Structure>
+    </message:Header>
+    <message:DataSet action="Replace" validFromDate="2014-12-03T15:30:00.000+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
+    <message:DataSet action="Replace" validFromDate="2015-06-02T15:30:00.000+02:00" structureRef="ECB_RTD1">[...]</message:DataSet>
+    <message:DataSet action="Replace" validFromDate="2015-10-21T15:30:00.000+02:00" structureRef="ECB_RTD1">[...]</message:DataSet>
+    <message:DataSet action="Replace" validFromDate="2016-06-01T15:30:00.000+02:00" structureRef="ECB_RTD1">[...]</message:DataSet>
+    <message:DataSet action="Delete" validToDate="2014-11-05T15:30:00.000+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
+</message:GenericData>
+```
+
+In the response the `action` & the `validFromDate` attributes of the `Dataset` element are both equally important. While the `action` attribute indicates what needs to be done, the `validFromDate` attribute allows defining the validity periods of the reported data.
