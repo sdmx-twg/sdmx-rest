@@ -74,7 +74,7 @@ The default format is highlighted in **bold**.
 
         https://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0.0,2.0.0/M.*.EUR.SP00.A
 
-* Retrieve the data matching the supplied path parameters (including multiple keys and the latest stable version), that have been updated after the supplied timestamp:
+* Retrieve the data matching the supplied path parameters (including multiple keys and the latest stable version):
 
         https://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A,A.CHF.EUR.SP00.A?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
@@ -94,23 +94,23 @@ The default format is highlighted in **bold**.
 
         https://ws-entry-point/data/?c[TITLE]=co:euro&detail=serieskeysonly
         
-### Use cases
+* Retrieving deltas using `updatedAfter`: 
 
-#### Retrieving deltas using `updatedAfter`
+        https://ws-entry-point/data/dataflow/ECB/EXR?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
-By supplying a percent-encoded timestamp to the `updatedAfter` parameter, it is possible to **only retrieve the latest version of changed values** in the database since a certain point in time (so-called *updates and revisions* or *deltas*).
+  By supplying a percent-encoded timestamp to the `updatedAfter` parameter, it is possible to **only retrieve the latest version of changed values** in the database since a certain point in time (so-called *updates and revisions* or *deltas*).
 
-The response to such a query could include one or more dataset(s) representing:
+  The response to such a query could include one or more dataset(s) representing:
 
-1. The observations that have been **added** since the last time the query was performed.
-1. The observations that have been **revised** since the last time the query was performed.
-1. The observations that have been **deleted** since the last time the query was performed.
+  - The observations that have been **added** since the last time the query was performed.
+  - The observations that have been **revised** since the last time the query was performed.
+  - The observations that have been **deleted** since the last time the query was performed.
+  
+  Developers who update their local databases should make use of the `updatedAfter` parameter as it is likely to significantly **improve performance**. Instead of systematically downloading data that may not have changed, you would only receive the *consolidated* changes to be made in your database since the last time your client performed the same query.
 
-An example of the above can be seen when querying the ECB's web services and asking for the *deltas* using the following parameters:
-- `updatedAfter=2014-11-01T00%3A00%3A00%2B01%3A00`
-the percent-encoded representation of `2014-11-01T00:00:00+01:00` as the point in time of our last retrieval of data
+  An alternative, less efficient than the solution described above, but more efficient than downloading everything all the time, would be to use HTTP Conditional GET requests (i.e. the `If-Modified-Since` or `If-None-Match` HTTP Request headers). Using this mechanism, everything will be returned but only if something has changed since the previous query.
 
-In this example, cases 1 & 3 can be observed in the following response message:
+  A sample response message is provided below. In the response the `action` attribute of the `Dataset` element is of importance whereas the `validFromDate` is just there for information purposes.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -131,26 +131,25 @@ In this example, cases 1 & 3 can be observed in the following response message:
 </message:GenericData>
 ```
 
-In the response the `action` attribute of the `Dataset` element is of importance whereas the `validFromDate` is just there for information purposes.
+* Returning a limited amount of observations using `firstNObservations` and `lastNObservations`:
 
-Developers who update their local databases should make use of the `updatedAfter` parameter as it is likely to significantly **improve performance**. Instead of systematically downloading data that may not have changed, you would only receive the *consolidated* changes to be made in your database since the last time your client performed the same query.
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?lastNObservations=2
 
-An alternative, less efficient than the solution described above, but more efficient than downloading everything all the time, would be to use HTTP Conditional GET requests (i.e. the `If-Modified-Since` or `If-None-Match` HTTP Request headers). Using this mechanism, everything will be returned but only if something has changed since the previous query.
+  Using the `firstNObservations` and/or `lastNObservations` parameters, it is possible to specify the **maximum number of observations** to be returned for each of the matching series, starting from the first observation (`firstNObservations`) or counting back from the most recent observation (`lastNObservations`). This can be useful for building an overview page, for example, where, for each indicator, you only display 2 values (the current one and the previous one).
 
-#### Returning a limited amount of observations using `firstNObservations` and `lastNObservations`
+* Retrieving how a time series evolved over time using the `includeHistory` parameter: 
 
-Using the `firstNObservations` and/or `lastNObservations` parameters, it is possible to specify the **maximum number of observations** to be returned for each of the matching series, starting from the first observation (`firstNObservations`) or counting back from the most recent observation (`lastNObservations`). This can be useful for building an overview page, for example, where, for each indicator, you only display 2 values (the current one and the previous one).
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?includeHistory=true
 
-#### Retrieving how a time series evolved over time using the `includeHistory` parameter: 
+  Using the `includeHistory` parameter, you can instruct the web service to return **previous versions of the matching data**. This is useful to see how the data have evolved over time, i.e. when new data have been released or when data have been revised or deleted. Possible options are:
 
-Using the `includeHistory` parameter, you can instruct the web service to return **previous versions of the matching data**. This is useful to see how the data have evolved over time, i.e. when new data have been released or when data have been revised or deleted. Possible options are:
+  - `false`: Only the version currently in production will be returned. This is the default.
+  - `true`: The version currently in production, as well as all previous versions, will be returned.
 
-- `false`: Only the version currently in production will be returned. This is the default.
-- `true`: The version currently in production, as well as all previous versions, will be returned.
+  Such a query would give you the *history* between that point in time and today.
 
-Such a query would give you the *history* between that point in time and today.
-
-Here is an example response message:
+  A sample response message is provided below. In the response the `action` & the `validFromDate` attributes of the `Dataset` element are both equally important. While the `action` attribute indicates what needs to be done, the `validFromDate` attribute allows defining the validity periods of the reported data.
+  
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
@@ -173,4 +172,4 @@ Here is an example response message:
 </message:GenericData>
 ```
 
-In the response the `action` & the `validFromDate` attributes of the `Dataset` element are both equally important. While the `action` attribute indicates what needs to be done, the `validFromDate` attribute allows defining the validity periods of the reported data.
+
