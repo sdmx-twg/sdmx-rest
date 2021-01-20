@@ -50,6 +50,20 @@ Operators appear immediately after the `=` and are separated from the component 
 
 ### Response types
 
+The following media types can be used with _data_ queries:
+
+- **application/vnd.sdmx.data+json;version=2.0.0**
+- application/vnd.sdmx.data+xml;version=3.0.0
+- application/vnd.sdmx.data+csv;version=2.0.0;labels=[id|both|name];timeFormat=[original|normalized]
+- application/vnd.sdmx.genericdata+xml;version=2.1
+- application/vnd.sdmx.structurespecificdata+xml;version=2.1
+- application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
+- application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
+- application/vnd.sdmx.data+json;version=1.0.0
+- application/vnd.sdmx.data+csv;version=1.0.0;labels=[id|both];timeFormat=[original|normalized]
+
+The default format is highlighted in **bold**.
+
 ### Examples of queries
 
 * Retrieve the data matching the supplied path parameters:
