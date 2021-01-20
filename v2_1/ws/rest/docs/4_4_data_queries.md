@@ -68,31 +68,31 @@ The default format is highlighted in **bold**.
 
 * Retrieve the data matching the supplied path parameters:
 
-        http://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A
 
 * Retrieve the data matching the supplied path parameters, including multiple versions and a wildcard for the second dimension:
 
-        http://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0.0,2.0.0/M.*.EUR.SP00.A
+        https://ws-entry-point/data/datastructure/ECB/ECB_EXR1/1.0.0,2.0.0/M.*.EUR.SP00.A
 
 * Retrieve the data matching the supplied path parameters (including multiple keys and the latest stable version), that have been updated after the supplied timestamp:
 
-        http://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A,A.CHF.EUR.SP00.A?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
+        https://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A,A.CHF.EUR.SP00.A?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
 * Retrieve the _public_ data matching the supplied path parameters (all data reported for the latest version of the ECB EXR dataflow), and falling between the supplied the start and end periods:
 
-        http://ws-entry-point/data/dataflow/ECB/EXR/?c[TIME_PERIOD]=ge:2009-05-01&c[TIME_PERIOD]=le:2009-05-31&c[CONF_STATUS]=F
+        https://ws-entry-point/data/dataflow/ECB/EXR/?c[TIME_PERIOD]=ge:2009-05-01&c[TIME_PERIOD]=le:2009-05-31&c[CONF_STATUS]=F
         
 * Retrieve the list of indicators about Switzerland (CH) available in the source:
 
-        http://ws-entry-point/data/?c[REF_AREA]=CH&detail=serieskeysonly
+        https://ws-entry-point/data/?c[REF_AREA]=CH&detail=serieskeysonly
         
 * Retrieve the list of observations matching the supplied path parameters, that are above a certain threshold:
 
-        http://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?c[OBS_VALUE]=ge:10.0&dimensionAtObservation=AllDimensions
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?c[OBS_VALUE]=ge:10.0&dimensionAtObservation=AllDimensions
         
 * Retrieve the list of indicators containing euro in their title:
 
-        http://ws-entry-point/data/?c[TITLE]=co:euro&detail=serieskeysonly
+        https://ws-entry-point/data/?c[TITLE]=co:euro&detail=serieskeysonly
 
 
 ### How to handle the `includeHistory` parameter
