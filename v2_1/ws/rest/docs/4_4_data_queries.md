@@ -131,7 +131,7 @@ The default format is highlighted in **bold**.
 </message:GenericData>
 ```
 
-* Returning a limited amount of observations using `firstNObservations` and `lastNObservations`:
+* Retrieving a limited amount of observations using `firstNObservations` and `lastNObservations`:
 
         https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?lastNObservations=2
 
