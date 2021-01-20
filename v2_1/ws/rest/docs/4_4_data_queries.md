@@ -2,7 +2,7 @@
 
 ### Overview
 
-Data queries allow **retrieving statistical data**. Entire datasets can be retrieved or individual observations, or anything in between, using filters on dimensions, including time, attributes and/or measures. All data matching a query can be retrieved or only the data that has changed since the last time the same query was performed. Using the _withHistory_ parameter, it is also possible to retrieve previous versions of the data. Last but not least, the data retrieved can be packaged in different ways (as time series, cross-sections or as a table), in a variety of formats (JSON, XML, CSV, etc.).
+Data queries allow **retrieving statistical data**. Entire datasets can be retrieved or individual observations, or anything in between, using filters on dimensions (including time), attributes and/or measures. All data matching a query can be retrieved or only the data that has changed since the last time the same query was performed. Using the _withHistory_ parameter, it is also possible to retrieve previous versions of the data. Last but not least, the data retrieved can be packaged in different ways (as time series, cross-sections or as a table), in a variety of formats (JSON, XML, CSV, etc.).
 
 ### Syntax
 
