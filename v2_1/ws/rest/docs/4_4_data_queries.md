@@ -46,7 +46,7 @@ ew | Ends with |
 nd | And |
 or | Or | Default if no operator is specified and there are multiple values (e.g. `c[FREQ]=M,A`)
 
-Operators appear immediately after the `=` and are separated from the component value(s) by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01`).
+Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01,le:2020-12`).
 
 ### Response types
 
