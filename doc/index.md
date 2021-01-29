@@ -43,10 +43,10 @@ As can be seen, the `+` is used twice, but in different contexts, thereby removi
 
 The documentation is organized in the following sections:
 
-- [Data queries](doc.data.md)
+- [Data queries](data.md)
 - Structure queries
 - Metadata queries
-- [Schema queries](doc/schema.md)
+- [Schema queries](schema.md)
 - Availability queries
 - Content-Negotiation
 - Error codes
