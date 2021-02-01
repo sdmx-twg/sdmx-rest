@@ -44,7 +44,7 @@ As can be seen, the `+` is used twice, but in different contexts, thereby removi
 The documentation is organized in the following sections:
 
 - [Data queries](data.md)
-- Structure queries
+- [Structure queries](structures.md)
 - Metadata queries
 - [Schema queries](schema.md)
 - Availability queries
