@@ -50,4 +50,4 @@ The documentation is organized in the following sections:
 - Availability queries
 - Content-Negotiation
 - [Status codes](status.md)
-- Tips for providers and consumers
+- [Tips for providers and consumers](tips.md)
