@@ -51,3 +51,4 @@ The documentation is organized in the following sections:
 - Content-Negotiation
 - [Status codes](status.md)
 - [Tips for providers and consumers](tips.md)
+- [Extending the API](extend.md)
