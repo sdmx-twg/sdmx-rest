@@ -49,5 +49,5 @@ The documentation is organized in the following sections:
 - [Schema queries](schema.md)
 - Availability queries
 - Content-Negotiation
-- Error codes
+- [Status codes](status.md)
 - Tips for providers and consumers
