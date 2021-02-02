@@ -344,6 +344,10 @@ components:
     providers:
       in: path
       name: providerID
+      description: | 
+        The provider of metadata.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available providers.
       required: true
       schema:
         type: array
@@ -528,6 +532,7 @@ components:
     metaDetail:
       in: query
       name: detail
+      description: The amount of information to be returned.
       required: false
       schema:
         type: string
