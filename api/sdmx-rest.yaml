@@ -216,6 +216,7 @@ components:
     structureType:
       in: path
       name: structureType
+      description: The type of structural metadata (e.g. codelist, dataflow, etc.)
       required: true
       schema:
         type: string
@@ -258,6 +259,7 @@ components:
     itemSchemeType:
       in: path
       name: itemSchemeType
+      description: The type of item scheme (e.g. codelist, agencyscheme, etc.)
       required: true
       schema:
         type: string
@@ -384,6 +386,10 @@ components:
     items:
       in: path
       name: itemID
+      description: |
+        The id of the item to be returned. 
+
+        Multiple values are possible and `*` can be used as shortcut to select all items.
       required: true
       schema:
         type: array
@@ -505,6 +511,7 @@ components:
     structDetail:
       in: query
       name: detail
+      description: The desired amount of information to be returned. 
       required: false
       schema:
         type: string
@@ -529,6 +536,9 @@ components:
     references:
       in: query
       name: references
+      description: |
+        Instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), 
+        as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query).
       required: false
       schema:
         type: array
