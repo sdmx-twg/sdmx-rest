@@ -2,7 +2,7 @@
 
 ## Overview
 
-Availability queries allow to see what data are available for a structure (data structure, dataflow or provision agreement), based on a data query. It returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but the query itself is more akin to a data query. 
+Availability queries allow to see what data are available for a structure (data structure, dataflow or provision agreement), based on a data query. It returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but the query itself is more akin to a data query.
 
 ## Syntax
 
@@ -43,6 +43,97 @@ or | Or | Default if no operator is specified and there are multiple values (e.g
 
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01,le:2020-12`).
 
+As already mentioned, the response from the Data Availability API is an SDMX Content Constraint containing a CubeRegion which defines the distinct Values for each Dimension of the data.  These distinct values contained in the CubeRegion are determined by the server based on the Data Query presented to this API.  The meaning of the distinct values depends on the response mode.
+
+### Response Mode
+
+The API response to the data query depends on the **mode** the API is called with.  `mode` is a query parameter to the API, and if not provided defaults to `exact`. Depending on the mode, the returned values represent either:
+
+- The **distinct values** which will be contained in the resultant dataset, should the data query be run against the Data API (**mode=exact**);
+- The **valid future selections** that could be passed to the Data API based on the current data query selections (**mode=available**).
+
+To highlight the difference between the response mode, consider the following dataset.
+
+| Reference Area| Employment Status | Sex  |
+| ------------- |:-----------------:| ----:|
+| UK            | EMP               | M    |
+| FR            | EMP               | M    |
+| FR            | UEMP              | F    |
+
+The client calls the availability API with the query **Reference Area=FR** and **Sex=F**.  
+
+With `mode=exact`, the response is:
+
+|Dimension         |Values    |
+| -----------------| --------:|
+|Reference Area    | FR       |
+|Employment Status | UEMP     |
+|SEX               | F        |
+
+Mode exact has found only one series matches this query, and returned to the client the distinct values per dimension.  In this case there is only one distinct value per dimension.
+
+With `mode=available`, the response is:
+
+|Dimension         |Values    |
+| -----------------| --------:|
+|Reference Area    | FR       |
+|Employment Status | UEMP     |
+|SEX               | **M**, F |
+
+Mode available has determined that the UK is no longer a valid selection.  If the UK were chosen, no data would be returned for that Reference Area.  If the user were to include Employment Status=EMP this would result in no data being returned at all.  The difference in this mode is that the service has determined that SEX=M is a valid selection, if this was to be added to the data query it would result in more series being returned.
+
+If the user was to add to their query **Sex=M**, the query becomes **Reference Area=FR** and **Sex=M + F** and the response would change as follows.
+
+With `mode=exact`:
+
+|Dimension         |Values    |
+| -----------------| --------:|
+|Reference Area    | FR       |
+|Employment Status | EMP, UEMP|
+|SEX               | M, F     |
+
+The service has detected two series that match the query criteria, and responded with the distinct code values for each dimension for those matches.
+
+With `mode=available`:
+
+|Dimension         |Values      |
+| -----------------| ----------:|
+|Reference Area    | **UK**, FR |
+|Employment Status | EMP, UEMP  |
+|SEX               | M, F       |
+
+Reference Area UK has now become available, this is because if the user were to now select Reference Area=UK they would add additional series to the query response.  In addition both Employment Status values are available.  The Employment Status dimension currently has no query selections on it, this means the dimension has no filters imposed.  The service has determined that the user can impose a filter for either EMP or UEMP and the inclusion of these filters will not result in an empty dataset being returned.
+
+### Temporal coverage
+
+For DSDs that have a time dimension, temporal coverage can be included in the ContentConstraint's `ReferencePeriod` element. The `ReferencePeriod` is used to indicate the earliest and latest observation dates available for the sub-cube of data based on the current data query.  
+
+This information may not be included in the response if the service does not have access to this information.
+
+### Metrics
+
+The `ContentConstraint` may define up to two additional Annotations used to capture the metrics for the **number of series** and the **number of observations** which will be returned if the data query presented to this API were run against the data API.  
+
+The `Metrics` annotations are attached to the `ContentConstraint`, and have `AnnotationType` of `sdmx_metrics` an Id of `series_count` or `obs_count` depending on the metric being reported, and the annotation title is used to report the count, which is a positive integer value.
+
+Metrics are only included if the service has the information available to provide the count. A request for metrics may include only series counts, or no metrics at all depending on the service.
+
+### Availability for a single dimension
+
+If a client application is only interested in the data available for a single dimension of the dataset, for example if the client is building a code picker form for only the 'Reporting Country' dimension, then the client is able to specify that this using the `componentId` path parameter. If this is the case, the CubeRegion will only include information of the distinct values for the specified dimension.
+
+### Referenced structures
+
+The client is able to include referenced structures used by the constraint by using the `references` parameter, for example if a dimension is coded, and references are returned, the dimension's codelist will be included in the response. Importantly the codelist will only include codes which are part of the constraint.  
+
+Included references are:
+
+- `Dataflow` - referenced directly by the constraint
+- `Data Structure Definition` - referenced by the dataflow
+- `Codelist` - which contain only the codes identified in the constraint, with any parent codes also included even if they are not included in the constraint
+- `Concept Scheme` - which contain only the concepts used by the constraint
+- `Data Provider Scheme` - which contain only the data providers who have provided data for the dataflow
+
 ## Response types
 
 The following media types can be used with _availability_ queries:
@@ -71,3 +162,50 @@ The default format is highlighted in **bold**.
 - As `exact` is the default value for mode, the query above can also be written as follows:
 
         https://ws-entry-point/availability/dataflow/ECB/ECB_EXR1_WEB/*/M.*.EUR.SP00.A
+
+## A typical use case: Executing queries via data query forms
+
+### Step 1: Building the data query form
+
+A data query form enables users of the UI to build a data query against a dataflow by selecting dimensions, and choosing filters for the dimension. For example the user is able to click 'Reporting Country' and then select the codes 'United Kingdom', 'France', 'Germany'. The code labels are presented in the users chosen locale where possible.
+
+The use case can be supported as follows:
+
+1. Query Data Availability API with a query for all data for the dataflow, and include all references:
+
+        http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/?references=all
+
+2. The response includes the Content Constraint and the Data Structure Definition. We can iterate the dimensions to build the Dimension picker. For each dimension, we can get the concept, as this provides the human readable label (ideally in the chosen locale, if available). The Cube Region Constraint provides the available values for the dimension. If the dimension is coded, then the codelist can be used to get the human readable label in the chosen locale. The code will additionally provide any hierarchy information. An HTML checkbox is created for each available dimension value.
+
+### Step 2: Update the data query form based on code selection state
+
+The use case is to disable or enable values for dimension from being selected based on the current query state. The choice to disable a value from selection is based on the answer to the question: If this value is selected will it; a) return no data: b) not add any more data?
+
+Let's consider the following dataset:
+
+| Reference Area| Employment Status | Sex  |
+| ------------- |:-----------------:| ----:|
+| UK            | EMP               | M    |
+| FR            | EMP               | M    |
+| FR            | UEMP              | F    |
+
+1. The user selects `Reference Area=UK`.  Employment Status=UEMP and Sex=F are no longer valid selections. Selecting either of these two codes and then running the data query will fail to return any data.
+2. The user is however able to add to their query the `Reference Area=FR`.  Re-running the availability query results in `Employment Status=UEMP` and `Sex=F` becoming valid selections again, as the inclusion of either of these values will result in data being returned.
+3. If the user now adds the selection `Sex=F`, then the Reference `Area=UK` is no longer a valid selection.
+
+The use case can be supported as follows:
+
+1. When the user adds or removes a data query filter by checking or unchecking a checkbox, call the Data Availability API with current data query state and `mode=available`.
+
+        http://ws-entry-point/availableconstraint/EMPLOYMENT/UK+FR..M?mode=available
+
+2. The response will include only the values which remain valid selections. Use this information to enable or disable the dimension values.
+
+### Bonus: Prevent the client from executing a data query which exceeds server limit
+
+Let’s imagine a situation where the service has imposed a limit on 2000 series per query. If the service receives a data query which results in more series being returned, then the client will receive an error response. The idea is then to prevent a user inadvertently running a query from the web User Interface which exceeds the limit imposed by this service.
+
+The use case can be supported as follows:
+
+1. When the user adds or removes a data query filter by checking or unchecking a checkbox, call the Data Availability API with the current data query state.
+2. The response will include the Cube Region constraint. If the Cube Region constraint has an Annotation with type `sdmx_metrics` and an Id of `series_count` then obtain the count via the Annotation's title. Use this count to either enable or disable the 'Run Query' button.
