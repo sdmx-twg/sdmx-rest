@@ -439,6 +439,7 @@ components:
     firstNObservations:
       in: query
       name: firstNObservations
+      description: The maximum number of observations to be returned for each of the matching series, starting from the first observation.
       required: false
       schema:
         type: integer
@@ -446,6 +447,7 @@ components:
     lastNObservations:
       in: query
       name: lastNObservations
+      description: The maximum number of observations to be returned for each of the matching series, counting back from the most recent observation.
       required: false
       schema:
         type: integer
@@ -453,6 +455,10 @@ components:
     dimensionAtObservation:
       in: query
       name: dimensionAtObservation
+      description: |
+        The ID of the dimension to be attached at the observation level. 
+        
+        This parameter allows the client to indicate how the data should be packaged by the service.
       required: false
       schema:
         type: string
@@ -460,6 +466,10 @@ components:
     detail:
       in: query
       name: detail
+      description: |
+        The desired amount of information to be returned. 
+        
+        For example, it is possible to instruct the web service to return data only (i.e. no attributes).
       required: false
       schema:
         type: string
@@ -468,6 +478,8 @@ components:
     includeHistory:
       in: query
       name: includeHistory
+      description: |
+        This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality).
       required: false
       schema:
         type: boolean
