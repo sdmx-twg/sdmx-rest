@@ -45,7 +45,7 @@ The documentation is organized in the following sections:
 
 - [Data queries](data.md)
 - [Structure queries](structures.md)
-- Metadata queries
+- [Reference metadata queries](metadata.md)
 - [Schema queries](schema.md)
 - Availability queries
 - Content-Negotiation
