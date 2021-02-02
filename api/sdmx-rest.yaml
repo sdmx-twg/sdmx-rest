@@ -375,9 +375,13 @@ components:
       name: references
       required: false
       schema:
-        type: string
-        enum: [none, parents, parentsandsiblings, ancestors, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap]
-        default: none
+        type: array
+        items:
+          type: string
+          enum: [none, parents, parentsandsiblings, ancestors, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap]
+          default: none
+      style: form
+      explode: false
     mode:
       in: query
       name: mode
@@ -391,9 +395,13 @@ components:
       name: references
       required: false
       schema:
-        type: string
-        enum: [none, all, datastructure, conceptscheme, codelist, dataproviderscheme, dataflow]
-        default: none
+        type: array
+        items:
+          type: string
+          enum: [none, all, datastructure, conceptscheme, codelist, dataproviderscheme, dataflow]
+          default: none
+      style: form
+      explode: false
     accept-encoding:
       in: header
       name: Accept-Encoding
