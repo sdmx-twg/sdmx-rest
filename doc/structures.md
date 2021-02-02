@@ -116,7 +116,7 @@ The default format is highlighted in **bold**.
 
         https://ws-entry-point/structure/datastructure/ECB/ECB_EXR1/+
 
-- To retrieve all DSDs maintained by the ECB, as well as the dataflows using these DSDs:
+- To retrieve the latest version of all DSDs maintained by the ECB, as well as the dataflows using these DSDs:
 
         https://ws-entry-point/structure/datastructure/ECB?references=dataflow
 
