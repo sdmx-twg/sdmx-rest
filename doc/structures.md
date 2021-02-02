@@ -58,7 +58,32 @@ If `itemID` is set and is a *top-level* id (e.g.: Code A (Annual) in the Frequen
 
 If `itemID` is set and is a *nested* id (e.g.: Category A.1.1, belonging to Category A.1, belonging to Category A in a Category Scheme), and such an item exists in the matching item scheme, the item scheme returned should contain the matching item and its ancestors, and its `isPartial` parameter should be set to `true`.
 
-### Applicability and meaning of references attribute
+The `detail` parameter allows specifying the amount of details to be retrieved. When `itemID` is used, the full details of the items requested are the following:
+
+- Identification
+- Names
+- Descriptions
+- Annotations
+- Other details except Items
+
+Since details are not exactly the same for all Item Schemes, the following table provides these details per Artefact type (`@` is used for XML attributes and `/` for XML elements).
+
+| Item | flat/nested | Details in Item Query |
+| ---- | ----------- | --------------------- |
+| Code | flat | @id, @urn, @uri, /Annotations, /Name, /Description, /Parent |
+| Concept | flat | @id, @urn, @uri, /Annotations, /Name, /Description, /Parent, /CoreRepresentation, /ISOConceptReference |
+| Agency | flat | @id, @urn, @uri, /Annotations, /Name, /Description, /Contact |
+| DataProvider | flat | @id, @urn, @uri, /Annotations, /Name, /Description, /Contact |
+| DataConsumer | flat | @id, @urn, @uri, /Annotations, /Name, /Description, /Contact |
+| OrganisationUnit | flat | @id, @urn, @uri, /Annotations, /Name, /Description, /Parent, /Contact |
+| Category | nested | @id, @urn, @uri, /Annotations, /Name, /Description |
+| ReportingCategory | nested | @id, @urn, @uri, /Annotations, /Name, /Description, /StructuralMetadata, /ProvisioningMetadata |
+
+While most Item Schemes are flat, hence the above table is easy to interpret, for Category Schemes and Reporting Taxonomies (which have a nested structure) the above table indicates that any child Item(s) of the Item(s) requested must not be included in an Item Query request.
+
+Further to the above, the reference resolution mechanism will be applied to all items returned. For example, querying for a category which has two ancestors in the hierarchy of the category scheme, will result into returning three categories (the requested one and its ancestors), as well as all references of those three categories.
+
+### Applicability and meaning of references (including referencepartial)
 
 The table below lists the 1st level artefacts (one level up, one level down) that will be returned if the references parameter is set to `all`. Artefacts referenced by the matching artefact are displayed in regular style, while the artefacts that reference the matching artefact are displayed in *Italic*.
 
@@ -94,6 +119,27 @@ TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePers
 UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme, AgencyScheme
 Valuelist | *Categorisation*, *Process*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, *VtlMappingScheme*, AgencyScheme
 VtlMappingScheme | _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_, Valuelist, AgencyScheme
+
+Also, when returning only partial references (via `referencepartial`), the filtering applies to any dependency, regardless of its level. The table below describes the impact of using `referencepartial` on the referenced item schemes.
+
+| Maintainable artefact	| Meaning of detail=referencepartial |
+| --------------------- | ---------------------------------- |
+| AgencyScheme | Only the agencies maintaining the returned structures should be included in the returned agency scheme(s) |
+| CategoryScheme | Only the categories referenced by the returned categorisations or structure sets should be included in the returned category scheme(s) |
+| Codelist | Only the codes referenced by the returned categorisations, constraints, hierarchies or structure sets should be included in the returned codelist(s) |
+| ConceptScheme | Only the concepts referenced by the returned categorisations, data structure definitions, metadata structure definitions or structure sets should be included in the returned concept scheme(s) |
+| DataConsumerScheme | Only the data consumers referenced by the returned categorisations, metadata structure definitions or structure sets should be included in the returned data consumer scheme(s) |
+| DataProviderScheme | Only the data providers referenced by the returned categorisations, constraints, provision agreements, metadata structure definitions or structure sets should be included in the returned data provider scheme(s) |
+| HierarchicalCodelist | Only the hierarchies referenced by the returned categorisations or structure sets should be included in the returned hierarchical codelist(s) |
+| OrganisationUnitScheme | Only the organisation units referenced by the returned categorisations, constraints, metadata structure definitions or structure sets in the returned organisation unit scheme(s) |
+| ReportingTaxonomy | Only the reporting categories referenced by the returned categorisations or structure sets should be included in the reporting taxonomy |
+
+For example, a dataflow only references a data structure definition and, in addition, it may be referenced by one or more constraints. In case `references` is set to `all` and `detail` is set to `referencepartial`, the following should apply to the returned item schemes:
+
+- The concept scheme(s) should only include the concepts referenced by the data structure referenced by target dataflow;
+- The codelist(s) should only include the codes referenced by the constraint(s) referencing the target dataflow;
+- The data provider schemes(s) should only include the data provider(s) that are linked to the target dataflow via a provision agreement
+- The agency scheme(s) should only include the agencies maintaining the structural metadata to be returned (dataflow, constraints, data structures, etc.)
 
 ## Response types
 
