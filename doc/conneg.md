@@ -1,92 +1,41 @@
-## HTTP Content-Negotiation
+# HTTP Content-Negotiation
 
 [HTTP Content Negotiation](http://www.w3.org/Protocols/rfc2616/rfc2616-sec12.html) is a mechanism offered by HTTP that allows clients to indicate their preferred representation, language, encoding, etc. for a resource.
 
-### Selection of the Appropriate Representation
+## Format selection
 
-Using the HTTP Content Negotiation mechanism, the client specifies the desired format and version of the resource using the [Accept header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+Using the HTTP Content Negotiation mechanism, the client specifies the desired format for the resource using the [Accept header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 
-Along with official mime types (e.g.: text/html, application/xml, etc), the HTTP standard also defines a syntax, which the SDMX RESTful API leverages, allowing a service to define its own types:
+Along with official media types (e.g.: text/html, application/xml, etc), the HTTP standard also defines a syntax, which the SDMX RESTful API leverages, allowing a service to define its own types:
 
     application/vnd.sdmx.[type]+[format];version=[version]
 
 A few examples are listed below:
 
-- SDMX-JSON Structure Format, version 2.0.0: application/vnd.sdmx.structure+json;version=2.0.0
-- SDMX-JSON Data Format, version 2.0.0: application/vnd.sdmx.data+json;version=2.0.0
-- SDMX-ML Structure Format, version 3.0.0: application/vnd.sdmx.structure+xml;version=3.0.0
-
-In case the client does not specify the media type, or only specifies the generic application/json one, the SDMX RESTful web service should return:
-
-- The most recent version, that the service supports, of the SDMX-JSON Structure format for **structural metadata** queries;
-- The most recent version, that the service supports, of the SDMX-JSON Data format for **data** queries;
-- The most recent version, that the service supports, of the SDMX-JSON Metadata format for **reference metadata** queries;
-- An XML schema (i.e. an `xsd` file) for **schema** queries.
-- The most recent version, that the service supports, of the SDMX-JSON Structure format for **data availability** queries;
-
-The list below indicates the valid formats for SDMX RESTful web services, organized by type of queries. The default media type is highlighted in bold.
-
-#### Structural metadata queries
-
-- **application/vnd.sdmx.structure+json;version=2.0.0**
-- application/vnd.sdmx.structure+json;version=1.0.0
-- application/vnd.sdmx.structure+xml;version=3.0.0
-- application/vnd.sdmx.structure+xml;version=2.1
-
-#### Data queries
-
-- **application/vnd.sdmx.data+json;version=2.0.0**
-- application/vnd.sdmx.data+xml;version=3.0.0
-- application/vnd.sdmx.data+csv;version=2.0.0;labels=[*id*|both|name];timeFormat=[*original*|normalized]
-- application/vnd.sdmx.genericdata+xml;version=2.1
-- application/vnd.sdmx.structurespecificdata+xml;version=2.1
-- application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
-- application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
-- application/vnd.sdmx.data+json;version=1.0.0
-- application/vnd.sdmx.data+csv;version=1.0.0;labels=[*id*|both];timeFormat=[*original*|normalized]
-    
-#### Reference metadata queries    
-
-- **application/vnd.sdmx.metadata+json;version=2.0.0**
-- application/vnd.sdmx.metadata+xml;version=3.0.0
-- application/vnd.sdmx.metadata+csv;version=1.0.0
-- application/vnd.sdmx.genericmetadata+xml;version=2.1
-- application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
-    
-#### Schema queries    
-
-- **application/vnd.sdmx.schema+xml;version=3.0.0**
-- application/vnd.sdmx.structure+xml;version=3.0.0
 - application/vnd.sdmx.structure+json;version=2.0.0
-- application/vnd.sdmx.schema+xml;version=2.1
-- application/vnd.sdmx.structure+xml;version=2.1
-- application/vnd.sdmx.structure+json;version=1.0.0
-
-#### Data availability queries
-
-- **application/vnd.sdmx.structure+json;version=2.0.0**
+- application/vnd.sdmx.data+json;version=2.0.0
 - application/vnd.sdmx.structure+xml;version=3.0.0
-- application/vnd.sdmx.structure+xml;version=2.1
-- application/vnd.sdmx.structure+json;version=1.0.0
-    
-### Selection of the Appropriate language
+
+The full list of media types is available in the _Response types_ section of the various query pages:
+
+- [Data queries](data.md#response-types)
+- [Structure queries](structures.md#response-types)
+- [Reference metadata queries](metadata.md#response-types)
+- [Schema queries](schema.md#response-types)
+- [Data availability queries](availability.md#response-types)
+
+## Selection of the appropriate language
 
 The [Accept-Language header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the language preferences of the client. Multiple values, along with their respective weights, are possible. For example:
 
-```
-Accept-Language: ru, en-gb;q=0.8, en;q=0.7
-```
+    Accept-Language: ru, en-gb;q=0.8, en;q=0.7
 
-### Enabling data compression
+## Enabling data compression
 
-Compression could be enabled using the appropriate [Accept-Encoding header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+Compression can be enabled using the appropriate [Accept-Encoding header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 
-### Helping web caches and Content Delivery Networks (CDN)
+## Helping web caches and Content Delivery Networks (CDN)
 
 The [Vary header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the list of headers that are relevant for a particular service.
 
 For example, services that offer data in multiple formats will rely on the HTTP Accept header, but this header will likely be irrelevant for services that support only one format. Using the `Vary` header to indicate which headers are effectively used by the server helps web caches and Content Delivery Networks to build appropriate cache keys.
-
-### A note about SDMX-CSV
-
-SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).

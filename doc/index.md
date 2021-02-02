@@ -48,7 +48,7 @@ The documentation is organized in the following sections:
 - [Reference metadata queries](metadata.md)
 - [Schema queries](schema.md)
 - [Availability queries](availability.md)
-- Content-Negotiation
+- [Content-Negotiation](conneg.md)
 - [Status codes](status.md)
 - [Tips for providers and consumers](tips.md)
 - [Extending the API](extend.md)
