@@ -283,6 +283,7 @@ components:
     context:
       in: path
       name: context
+      description: The context for data validity retrieval.
       required: true
       schema:
         type: string
@@ -297,6 +298,7 @@ components:
     agencyID:
       in: path
       name: agencyID
+      description: The maintainer of the artefact.
       required: true
       schema:
         type: string
@@ -304,6 +306,7 @@ components:
     resourceID:
       in: path
       name: resourceID
+      description: The artefact ID.
       required: true
       schema:
         type: string
@@ -311,6 +314,13 @@ components:
     version:
       in: path
       name: version
+      description: |
+        The version of the artefact.
+
+        `+` can be used to retrieve the latest stable version.
+
+        `~` can be used to retrieve the latest version, regardless of its status (stable, draft, etc.).
+      
       required: true
       schema:
         type: string
@@ -487,6 +497,7 @@ components:
     explicitMeasure:
       in: query
       name: explicitMeasure
+      description: For cross-sectional data validation, indicates whether observations are strongly typed.
       required: false
       schema:
         type: boolean
