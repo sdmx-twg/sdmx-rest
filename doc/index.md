@@ -47,7 +47,7 @@ The documentation is organized in the following sections:
 - [Structure queries](structures.md)
 - [Reference metadata queries](metadata.md)
 - [Schema queries](schema.md)
-- Availability queries
+- [Availability queries](availability.md)
 - Content-Negotiation
 - [Status codes](status.md)
 - [Tips for providers and consumers](tips.md)
