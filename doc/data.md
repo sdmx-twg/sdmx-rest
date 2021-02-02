@@ -64,6 +64,8 @@ The following media types can be used with _data_ queries:
 
 The default format is highlighted in **bold**.
 
+SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
+
 ## Examples of queries
 
 - Retrieve the data matching the supplied path parameters:
