@@ -1,224 +1,299 @@
 openapi: 3.0.0
 info:
-  version: '2.0.0'
-  title: 'SDMX RESTful API, v2.0.0'
+  version: "2.0.0"
+  title: "SDMX RESTful API, v2.0.0"
   description: |
     The SDMX RESTful API, released in XXX 2021.
 
     For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
 x-commons:
   common_responses: &common_responses
-    '304':
-      $ref: '#/components/responses/304'
-    '400':
-      $ref: '#/components/responses/400'
-    '401':
-      $ref: '#/components/responses/401'
-    '403':
-      $ref: '#/components/responses/403'
-    '404':
-      $ref: '#/components/responses/404'
-    '406':
-      $ref: '#/components/responses/406'
-    '413':
-      $ref: '#/components/responses/413'
-    '414':
-      $ref: '#/components/responses/414'
-    '500':
-      $ref: '#/components/responses/500'
-    '501':
-      $ref: '#/components/responses/501'
-    '503':
-      $ref: '#/components/responses/503'
+    "304":
+      $ref: "#/components/responses/304"
+    "400":
+      $ref: "#/components/responses/400"
+    "401":
+      $ref: "#/components/responses/401"
+    "403":
+      $ref: "#/components/responses/403"
+    "404":
+      $ref: "#/components/responses/404"
+    "406":
+      $ref: "#/components/responses/406"
+    "413":
+      $ref: "#/components/responses/413"
+    "414":
+      $ref: "#/components/responses/414"
+    "500":
+      $ref: "#/components/responses/500"
+    "501":
+      $ref: "#/components/responses/501"
+    "503":
+      $ref: "#/components/responses/503"
 
 paths:
   /data/{context}/{agencyID}/{resourceID}/{version}/{key}:
     get:
-      summary: 'Data query'
+      summary: "Data query"
       parameters:
-        - $ref: '#/components/parameters/dataContext'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/key'
-        - $ref: '#/components/parameters/c'
-        - $ref: '#/components/parameters/updatedAfter'
-        - $ref: '#/components/parameters/firstNObservations'
-        - $ref: '#/components/parameters/lastNObservations'
-        - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/detail'
-        - $ref: '#/components/parameters/includeHistory'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/dataContext"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/key"
+        - $ref: "#/components/parameters/c"
+        - $ref: "#/components/parameters/updatedAfter"
+        - $ref: "#/components/parameters/firstNObservations"
+        - $ref: "#/components/parameters/lastNObservations"
+        - $ref: "#/components/parameters/dimensionAtObservation"
+        - $ref: "#/components/parameters/detail"
+        - $ref: "#/components/parameters/includeHistory"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200'
-
+        "200":
+          $ref: "#/components/responses/200"
 
   /availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentID}:
     get:
-      summary: 'Data availability query'
+      summary: "Data availability query"
+      description: |
+        See which data would match a query, without actually retrieving these data.
+
+        This can be used, for example, to build a data query form that enables users of the UI to create a data query by selecting dimension values. 
+        For example the user is able to click 'Reporting Country' and then select the codes 'United Kingdom', 'Greece', and 'Switzerland'.
+
+        The query returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
+        the query itself is more akin to a data query.
       parameters:
-        - $ref: '#/components/parameters/dataContext'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/key'
-        - $ref: '#/components/parameters/componentID'
-        - $ref: '#/components/parameters/c'
-        - $ref: '#/components/parameters/mode'
-        - $ref: '#/components/parameters/acreferences'
-        - $ref: '#/components/parameters/updatedAfter'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/dataContext"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/key"
+        - $ref: "#/components/parameters/componentID"
+        - $ref: "#/components/parameters/c"
+        - $ref: "#/components/parameters/mode"
+        - $ref: "#/components/parameters/acreferences"
+        - $ref: "#/components/parameters/updatedAfter"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-struct'
+        "200":
+          $ref: "#/components/responses/200-struct"
 
   /structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Structure query'
+      summary: "Structure query"
       parameters:
-        - $ref: '#/components/parameters/structureType'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/structureType"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/references"
+        - $ref: "#/components/parameters/structDetail"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-struct'
+        "200":
+          $ref: "#/components/responses/200-struct"
 
   /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
     get:
-      summary: 'Item Scheme query'
+      summary: "Item Scheme query"
       parameters:
-        - $ref: '#/components/parameters/itemSchemeType'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/itemSchemeType"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/items"
+        - $ref: "#/components/parameters/references"
+        - $ref: "#/components/parameters/structDetail"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-struct'
+        "200":
+          $ref: "#/components/responses/200-struct"
 
   /schema/{context}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Schema query'
+      summary: "Schema query"
       parameters:
-        - $ref: '#/components/parameters/context'
-        - $ref: '#/components/parameters/agencyID'
-        - $ref: '#/components/parameters/resourceID'
-        - $ref: '#/components/parameters/version'
-        - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/explicitMeasure'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/context"
+        - $ref: "#/components/parameters/agencyID"
+        - $ref: "#/components/parameters/resourceID"
+        - $ref: "#/components/parameters/version"
+        - $ref: "#/components/parameters/dimensionAtObservation"
+        - $ref: "#/components/parameters/explicitMeasure"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-schemas'
+        "200":
+          $ref: "#/components/responses/200-schemas"
 
   /metadata/structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Metadata query (by structure)'
+      summary: "Metadata query (by structure)"
       parameters:
-        - $ref: '#/components/parameters/structureType'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/metaDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/structureType"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-meta'
+        "200":
+          $ref: "#/components/responses/200-meta"
 
   /metadata/metadataflow/{agencyID}/{resourceID}/{version}/{providerID}:
     get:
-      summary: 'Metadata query (by metadataflow)'
+      summary: "Metadata query (by metadataflow)"
       parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/providers'
-        - $ref: '#/components/parameters/metaDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/providers"
+        - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-meta'
+        "200":
+          $ref: "#/components/responses/200-meta"
 
   /metadata/metadataset/{providerID}/{resourceID}/{version}:
     get:
-      summary: 'Metadata query (by metadatasets)'
+      summary: "Metadata query (by metadatasets)"
       parameters:
-        - $ref: '#/components/parameters/providers'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/metaDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/providers"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-meta'
+        "200":
+          $ref: "#/components/responses/200-meta"
 components:
   parameters:
     dataContext:
       in: path
       name: context
+      description: The context for data retrieval. All possible contexts can be selected using `*`.
       required: true
       schema:
         type: string
-        enum: [datastructure, dataflow, provisionagreement]
+        enum: [datastructure, dataflow, provisionagreement, "*"]
     key:
       in: path
       name: key
+      description: |
+        The combination of dimension values identifying series or slices of the cube (for example `D.USD.EUR.SP00.A`).
+
+        Multiple values are possible. Wildcards are supported using `*` (`D.*.EUR.SP00.A`).
       required: true
       schema:
-        type: string
-        pattern: '^(\*|\S+)$'
+        type: array
+        items:
+          type: string
+          pattern: '^(\*|\S+)$'
+      style: simple
     structureType:
       in: path
       name: structureType
       required: true
       schema:
         type: string
-        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, conceptscheme, codelist, categoryscheme, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, "*"]
+        enum:
+          [
+            datastructure,
+            metadatastructure,
+            dataflow,
+            metadataflow,
+            provisionagreement,
+            structureset,
+            process,
+            categorisation,
+            dataconstraint,
+            metadataconstraint,
+            conceptscheme,
+            codelist,
+            categoryscheme,
+            hierarchy,
+            hierarchyassociation,
+            organisationscheme,
+            agencyscheme,
+            dataproviderscheme,
+            dataconsumerscheme,
+            organisationunitscheme,
+            transformationscheme,
+            rulesetscheme,
+            userdefinedoperatorscheme,
+            customtypescheme,
+            namepersonalisationscheme,
+            vtlmappingscheme,
+            valuelist,
+            structuremap,
+            representationmap,
+            conceptschememap,
+            categoryschememap,
+            organisationschememap,
+            "*",
+          ]
     itemSchemeType:
       in: path
       name: itemSchemeType
       required: true
       schema:
         type: string
-        enum: [conceptscheme, codelist, categoryscheme, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, valuelist, "*"]
+        enum:
+          [
+            conceptscheme,
+            codelist,
+            categoryscheme,
+            organisationscheme,
+            agencyscheme,
+            dataproviderscheme,
+            dataconsumerscheme,
+            organisationunitscheme,
+            transformationscheme,
+            rulesetscheme,
+            userdefinedoperatorscheme,
+            customtypescheme,
+            namepersonalisationscheme,
+            vtlmappingscheme,
+            valuelist,
+            "*",
+          ]
     context:
       in: path
       name: context
       required: true
       schema:
         type: string
-        enum: [datastructure, metadatastructure, dataflow, metadataflow, provisionagreement]
+        enum:
+          [
+            datastructure,
+            metadatastructure,
+            dataflow,
+            metadataflow,
+            provisionagreement,
+          ]
     agencyID:
       in: path
       name: agencyID
@@ -243,6 +318,10 @@ components:
     agencies:
       in: path
       name: agencyID
+      description: |
+        The maintainer(s) of the artefacts.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available maintainers.
       required: true
       schema:
         type: array
@@ -263,6 +342,10 @@ components:
     resourceIDs:
       in: path
       name: resourceID
+      description: |
+        The artefact ID(s).
+
+        Multiple values are possible and `*` can be used as shortcut to select all available artefacts.
       required: true
       schema:
         type: array
@@ -273,6 +356,14 @@ components:
     versions:
       in: path
       name: version
+      description: |
+        The version(s) of the artefact.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available artefacts.
+
+        `+` can be used to retrieve the latest stable version.
+
+        `~` can be used to retrieve the latest version, regardless of its status (stable, draft, etc.).
       required: true
       schema:
         type: array
@@ -292,13 +383,43 @@ components:
     componentID:
       in: path
       name: componentID
+      description: |
+        The ID of the dimension for which to obtain availability information.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available dimensions.
       required: true
       schema:
-        type: string
-        pattern: '^[A-Za-z][A-Za-z\d_-]*$'
+        type: array
+        items:
+          type: string
+          pattern: '^\*|[A-Za-z][A-Za-z\d_-]*$'
+      style: simple
     c:
       in: query
       name: c
+      description: |
+        Filter data by component value (e.g. c[FREQ]=A).
+
+        Multiple values are supported.
+
+        In addition, operators may be used:
+
+        Operator | Meaning | Note
+        -- | -- | --
+        eq | Equals | Default if no operator is specified and there is only one value (e.g. `c[FREQ]=M`)
+        ne | Not equal to |
+        lt | Less than |
+        le | Less than or equal to |
+        gt | Greater than |
+        ge | Greater than or equal to |
+        co | Contains |
+        nc | Does not contain |
+        sw | Starts with |
+        ew | Ends with |
+        nd | And |
+        or | Or | Default if no operator is specified and there are multiple values (e.g. `c[FREQ]=M,A`)
+
+        Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01,le:2020-12`).
       required: false
       schema:
         type: object
@@ -307,11 +428,15 @@ components:
     updatedAfter:
       in: query
       name: updatedAfter
+      description: |
+        The last time the query was performed by the client. 
+        
+        If this parameter is used, the returned message should only include the dimension values for the data that have changed since that point in time (updates and revisions).
       required: false
       schema:
         type: string
         format: date-time
-    firstNObservations:  
+    firstNObservations:
       in: query
       name: firstNObservations
       required: false
@@ -360,7 +485,15 @@ components:
       required: false
       schema:
         type: string
-        enum: [allstubs, referencestubs, referencepartial, allcompletestubs, referencecompletestubs, full]
+        enum:
+          [
+            allstubs,
+            referencestubs,
+            referencepartial,
+            allcompletestubs,
+            referencecompletestubs,
+            full,
+          ]
         default: full
     metaDetail:
       in: query
@@ -378,13 +511,57 @@ components:
         type: array
         items:
           type: string
-          enum: [none, parents, parentsandsiblings, ancestors, children, descendants, all, datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, organisationscheme, agencyscheme, dataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, structureset, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, namealiasscheme, valuelist, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap]
+          enum:
+            [
+              none,
+              parents,
+              parentsandsiblings,
+              ancestors,
+              children,
+              descendants,
+              all,
+              datastructure,
+              metadatastructure,
+              categoryscheme,
+              conceptscheme,
+              codelist,
+              hierarchy,
+              hierarchyassociation,
+              organisationscheme,
+              agencyscheme,
+              dataproviderscheme,
+              dataconsumerscheme,
+              organisationunitscheme,
+              dataflow,
+              metadataflow,
+              reportingtaxonomy,
+              provisionagreement,
+              structureset,
+              process,
+              categorisation,
+              dataconstraint,
+              metadataconstraint,
+              transformationscheme,
+              rulesetscheme,
+              userdefinedoperatorscheme,
+              customtypescheme,
+              namepersonalisationscheme,
+              namealiasscheme,
+              valuelist,
+              structuremap,
+              representationmap,
+              conceptschememap,
+              categoryschememap,
+              organisationschememap,
+            ]
           default: none
       style: form
       explode: false
     mode:
       in: query
       name: mode
+      description: |
+        Instructs the web service to return a ContentConstraint which defines a Cube Region containing values which will be returned by executing the query (`exact`) vs a Cube Region showing what values remain valid selections that could be added to the data query (`available`).
       required: false
       schema:
         type: string
@@ -393,12 +570,25 @@ components:
     acreferences:
       in: query
       name: references
+      description: |
+        Instructs the web service to return (or not) the artefacts referenced by the ContentConstraint to be returned.
+
+        Multiple values are supported.
       required: false
       schema:
         type: array
         items:
           type: string
-          enum: [none, all, datastructure, conceptscheme, codelist, dataproviderscheme, dataflow]
+          enum:
+            [
+              none,
+              all,
+              datastructure,
+              conceptscheme,
+              codelist,
+              dataproviderscheme,
+              dataflow,
+            ]
           default: none
       style: form
       explode: false
@@ -420,9 +610,9 @@ components:
       schema:
         type: string
         format: date-time
-        
+
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/vnd.sdmx.data+json;version=2.0.0:
@@ -452,7 +642,7 @@ components:
         application/vnd.sdmx.data+json;version=1.0.0:
           schema:
             type: string
-    '200-schemas':
+    "200-schemas":
       description: OK
       content:
         application/vnd.sdmx.schema+xml;version=3.0.0:
@@ -473,7 +663,7 @@ components:
         application/vnd.sdmx.structure+json;version=1.0.0:
           schema:
             type: string
-    '200-struct':
+    "200-struct":
       description: OK
       content:
         application/vnd.sdmx.structure+xml;version=3.0.0:
@@ -488,7 +678,7 @@ components:
         application/vnd.sdmx.structure+json;version=1.0.0:
           schema:
             type: string
-    '200-meta':
+    "200-meta":
       description: OK
       content:
         application/vnd.sdmx.metadata+json;version=2.0.0:
@@ -506,25 +696,25 @@ components:
         application/vnd.sdmx.structurespecificmetadata+xml;version=2.1:
           schema:
             type: string
-    '304':
+    "304":
       description: No changes
-    '400': 
+    "400":
       description: Bad syntax
-    '401': 
+    "401":
       description: Unauthorized
-    '403': 
+    "403":
       description: Forbidden
-    '404': 
+    "404":
       description: Not found
-    '406':
+    "406":
       description: Not acceptable
-    '413': 
+    "413":
       description: Request entity too large
-    '414':
+    "414":
       description: URI too long
-    '500': 
+    "500":
       description: Internal server error
-    '501': 
+    "501":
       description: Not implemented
-    '503': 
+    "503":
       description: Service unavailable
