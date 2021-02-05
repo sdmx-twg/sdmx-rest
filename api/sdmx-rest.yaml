@@ -41,6 +41,16 @@ paths:
       summary: 'Data queries'
       tags: 
         - Data queries
+      description: |
+        Data queries allow **retrieving statistical data**. 
+        
+        Entire datasets can be retrieved or individual observations, or anything in between, using filters on dimensions (including time), attributes and/or measures. 
+        
+        All data matching a query can be retrieved or only the data that has changed since the last time the same query was performed. 
+        
+        Using the _withHistory_ parameter, it is also possible to retrieve previous versions of the data. 
+        
+        Last but not least, the data retrieved can be packaged in different ways (as time series, cross-sections or as a table), in a variety of formats (JSON, XML, CSV, etc.).
       parameters:
         - $ref: '#/components/parameters/dataContext'
         - $ref: '#/components/parameters/agencies'
@@ -97,6 +107,12 @@ paths:
   /schema/{context}/{agencyID}/{resourceID}/{version}:
     get:
       summary: 'Data validity queries'
+      description: |
+        Data validity queries (aka schema queries) allow retrieving **the definition of data validity for a certain context**. 
+        
+        The service must take into account the constraints that apply within that context (e.g. dataflow).
+        
+        This is typically used for **validation and/or communication purposes**, for example as a way to inform providers about the data they are expected to report.
       tags: 
         - Data queries
       parameters:
