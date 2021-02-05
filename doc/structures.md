@@ -2,7 +2,7 @@
 
 ## Overview
 
-Structure queries allo **retrieving structural metadata**.
+Structure queries allow **retrieving structural metadata**.
 
 Below is a list of popular types of structural metadata, that you will typically find in SDMX web services.
 
@@ -12,7 +12,7 @@ Below is a list of popular types of structural metadata, that you will typically
 - `Dataflows`: Dataflows represent the data that cover a particular domain (such as, for example, balance of payments). A *dataflow* provides a reference to the data structure definition that applies for a particular domain, thereby indicating how the data for that domain will look like.
 - `Organisation schemes`: Organisations that play a role in a particular statistical context are defined in *organisation schemes*. The type of organisation scheme will depend on the role played by a particular organisation (*data consumer*, *data provider*, *maintenance agency*). Organisations that define the metadata used in a particular context are known as maintenance agencies and are grouped together in an agency scheme.
 
-Structure queries in SDMX allow you to retrive structural metadata at various levels of granularity, from all structural metadata available in the source to a single code from a particular version of a particular codelist maintained by a particular agency.
+Structure queries in SDMX allow you to retrieve structural metadata at various levels of granularity, from all structural metadata available in the source to a single code from a particular version of a particular codelist maintained by a particular agency.
 
 ## Syntax
 
