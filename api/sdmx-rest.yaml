@@ -1,64 +1,72 @@
 openapi: 3.0.0
 info:
-  version: "2.0.0"
-  title: "SDMX RESTful API, v2.0.0"
+  version: '2.0.0'
+  title: 'SDMX RESTful API, v2.0.0'
   description: |
-    The SDMX RESTful API, released in XXX 2021.
+    The RESTful API for SDMX 3.0.
+    
+    For additional information, check the [documentation](https://github.com/sdmx-twg/sdmx-rest/tree/develop/v2_1/ws/rest/docs).
+servers:
+  - description: Mock implementation (just for demo purposes!)
+    url: https://localhost/
 
-    For additional information, check the [official sdmx-rest specification](https://github.com/sdmx-twg/sdmx-rest/tree/master/v2_1/ws/rest/docs) or the [dedicated Wiki](https://github.com/sdmx-twg/sdmx-rest/wiki).
 x-commons:
   common_responses: &common_responses
-    "304":
-      $ref: "#/components/responses/304"
-    "400":
-      $ref: "#/components/responses/400"
-    "401":
-      $ref: "#/components/responses/401"
-    "403":
-      $ref: "#/components/responses/403"
-    "404":
-      $ref: "#/components/responses/404"
-    "406":
-      $ref: "#/components/responses/406"
-    "413":
-      $ref: "#/components/responses/413"
-    "414":
-      $ref: "#/components/responses/414"
-    "500":
-      $ref: "#/components/responses/500"
-    "501":
-      $ref: "#/components/responses/501"
-    "503":
-      $ref: "#/components/responses/503"
+    '304':
+      $ref: '#/components/responses/304'
+    '400':
+      $ref: '#/components/responses/400'
+    '401':
+      $ref: '#/components/responses/401'
+    '403':
+      $ref: '#/components/responses/403'
+    '404':
+      $ref: '#/components/responses/404'
+    '406':
+      $ref: '#/components/responses/406'
+    '413':
+      $ref: '#/components/responses/413'
+    '414':
+      $ref: '#/components/responses/414'
+    '500':
+      $ref: '#/components/responses/500'
+    '501':
+      $ref: '#/components/responses/501'
+    '503':
+      $ref: '#/components/responses/503'
 
 paths:
   /data/{context}/{agencyID}/{resourceID}/{version}/{key}:
     get:
-      summary: "Data query"
+      summary: 'Data queries'
+      tags: 
+        - Data queries
       parameters:
-        - $ref: "#/components/parameters/dataContext"
-        - $ref: "#/components/parameters/agencies"
-        - $ref: "#/components/parameters/resourceIDs"
-        - $ref: "#/components/parameters/versions"
-        - $ref: "#/components/parameters/key"
-        - $ref: "#/components/parameters/c"
-        - $ref: "#/components/parameters/updatedAfter"
-        - $ref: "#/components/parameters/firstNObservations"
-        - $ref: "#/components/parameters/lastNObservations"
-        - $ref: "#/components/parameters/dimensionAtObservation"
-        - $ref: "#/components/parameters/detail"
-        - $ref: "#/components/parameters/includeHistory"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/accept-language"
-        - $ref: "#/components/parameters/if-modified-since"
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/key'
+        - $ref: '#/components/parameters/c'
+        - $ref: '#/components/parameters/updatedAfter'
+        - $ref: '#/components/parameters/firstNObservations'
+        - $ref: '#/components/parameters/lastNObservations'
+        - $ref: '#/components/parameters/dimensionAtObservation'
+        - $ref: '#/components/parameters/detail'
+        - $ref: '#/components/parameters/includeHistory'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
       responses:
         <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200"
+        '200':
+          $ref: '#/components/responses/200'
 
   /availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentID}:
     get:
-      summary: "Data availability query"
+      summary: 'Data availability queries'
+      tags: 
+        - Data queries
       description: |
         See which data would match a query, without actually retrieving these data.
 
@@ -68,127 +76,139 @@ paths:
         The query returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
         the query itself is more akin to a data query.
       parameters:
-        - $ref: "#/components/parameters/dataContext"
-        - $ref: "#/components/parameters/agencies"
-        - $ref: "#/components/parameters/resourceIDs"
-        - $ref: "#/components/parameters/versions"
-        - $ref: "#/components/parameters/key"
-        - $ref: "#/components/parameters/componentID"
-        - $ref: "#/components/parameters/c"
-        - $ref: "#/components/parameters/mode"
-        - $ref: "#/components/parameters/acreferences"
-        - $ref: "#/components/parameters/updatedAfter"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/accept-language"
-        - $ref: "#/components/parameters/if-modified-since"
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/key'
+        - $ref: '#/components/parameters/componentID'
+        - $ref: '#/components/parameters/c'
+        - $ref: '#/components/parameters/mode'
+        - $ref: '#/components/parameters/acreferences'
+        - $ref: '#/components/parameters/updatedAfter'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
       responses:
         <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200-struct"
-
-  /structure/{structureType}/{agencyID}/{resourceID}/{version}:
-    get:
-      summary: "Structure query"
-      parameters:
-        - $ref: "#/components/parameters/structureType"
-        - $ref: "#/components/parameters/agencies"
-        - $ref: "#/components/parameters/resourceIDs"
-        - $ref: "#/components/parameters/versions"
-        - $ref: "#/components/parameters/references"
-        - $ref: "#/components/parameters/structDetail"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/accept-language"
-        - $ref: "#/components/parameters/if-modified-since"
-      responses:
-        <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200-struct"
-
-  /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
-    get:
-      summary: "Item Scheme query"
-      parameters:
-        - $ref: "#/components/parameters/itemSchemeType"
-        - $ref: "#/components/parameters/agencies"
-        - $ref: "#/components/parameters/resourceIDs"
-        - $ref: "#/components/parameters/versions"
-        - $ref: "#/components/parameters/items"
-        - $ref: "#/components/parameters/references"
-        - $ref: "#/components/parameters/structDetail"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/accept-language"
-        - $ref: "#/components/parameters/if-modified-since"
-      responses:
-        <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200-struct"
+        '200':
+          $ref: '#/components/responses/200-struct'
 
   /schema/{context}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: "Schema query"
+      summary: 'Data validity queries'
+      tags: 
+        - Data queries
       parameters:
-        - $ref: "#/components/parameters/context"
-        - $ref: "#/components/parameters/agencyID"
-        - $ref: "#/components/parameters/resourceID"
-        - $ref: "#/components/parameters/version"
-        - $ref: "#/components/parameters/dimensionAtObservation"
-        - $ref: "#/components/parameters/explicitMeasure"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/if-modified-since"
+        - $ref: '#/components/parameters/context'
+        - $ref: '#/components/parameters/agencyID'
+        - $ref: '#/components/parameters/resourceID'
+        - $ref: '#/components/parameters/version'
+        - $ref: '#/components/parameters/dimensionAtObservation'
+        - $ref: '#/components/parameters/explicitMeasure'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/if-modified-since'
       responses:
         <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200-schemas"
+        '200':
+          $ref: '#/components/responses/200-schemas'
+
+  /structure/{structureType}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Structure queries'
+      tags: 
+        - Structure queries
+      parameters:
+        - $ref: '#/components/parameters/structureType'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-struct'
+
+  /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
+    get:
+      summary: 'Item Scheme queries'
+      tags: 
+        - Structure queries
+      parameters:
+        - $ref: '#/components/parameters/itemSchemeType'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/items'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-struct'
 
   /metadata/structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: "Metadata query (by structure)"
+      summary: 'Metadata queries (by structure)'
+      tags: 
+        - Reference metadata queries
       parameters:
-        - $ref: "#/components/parameters/structureType"
-        - $ref: "#/components/parameters/agencies"
-        - $ref: "#/components/parameters/resourceIDs"
-        - $ref: "#/components/parameters/versions"
-        - $ref: "#/components/parameters/metaDetail"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/accept-language"
-        - $ref: "#/components/parameters/if-modified-since"
+        - $ref: '#/components/parameters/structureType'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
       responses:
         <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200-meta"
+        '200':
+          $ref: '#/components/responses/200-meta'
 
   /metadata/metadataflow/{agencyID}/{resourceID}/{version}/{providerID}:
     get:
-      summary: "Metadata query (by metadataflow)"
+      summary: 'Metadata queries (by metadataflow)'
+      tags: 
+        - Reference metadata queries
       parameters:
-        - $ref: "#/components/parameters/agencies"
-        - $ref: "#/components/parameters/resourceIDs"
-        - $ref: "#/components/parameters/versions"
-        - $ref: "#/components/parameters/providers"
-        - $ref: "#/components/parameters/metaDetail"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/accept-language"
-        - $ref: "#/components/parameters/if-modified-since"
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/providers'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
       responses:
         <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200-meta"
+        '200':
+          $ref: '#/components/responses/200-meta'
 
   /metadata/metadataset/{providerID}/{resourceID}/{version}:
     get:
-      summary: "Metadata query (by metadatasets)"
+      summary: 'Metadata queries (by metadatasets)'
+      tags: 
+        - Reference metadata queries
       parameters:
-        - $ref: "#/components/parameters/providers"
-        - $ref: "#/components/parameters/resourceIDs"
-        - $ref: "#/components/parameters/versions"
-        - $ref: "#/components/parameters/metaDetail"
-        - $ref: "#/components/parameters/accept-encoding"
-        - $ref: "#/components/parameters/accept-language"
-        - $ref: "#/components/parameters/if-modified-since"
+        - $ref: '#/components/parameters/providers'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
       responses:
         <<: *common_responses
-        "200":
-          $ref: "#/components/responses/200-meta"
+        '200':
+          $ref: '#/components/responses/200-meta'
 components:
   parameters:
     dataContext:
