@@ -134,6 +134,10 @@ paths:
       summary: 'Structure queries'
       tags: 
         - Structure queries
+      description: |
+        Structure queries allow **retrieving structural metadata**.
+
+        Structure queries in SDMX allow you to retrieve structural metadata at various levels of granularity, from all structural metadata available in the source to a single code from a particular version of a particular codelist maintained by a particular agency.
       parameters:
         - $ref: '#/components/parameters/structureType'
         - $ref: '#/components/parameters/agencies'
@@ -154,6 +158,8 @@ paths:
       summary: 'Item Scheme queries'
       tags: 
         - Structure queries
+      description: |
+        Item queries extend structure queries by allowing to retrieve items in item schemes such as particular codes in a codelist.
       parameters:
         - $ref: '#/components/parameters/itemSchemeType'
         - $ref: '#/components/parameters/agencies'
@@ -175,6 +181,10 @@ paths:
       summary: 'Metadata queries (by structure)'
       tags: 
         - Reference metadata queries
+      description: |
+        These queries enable clients to request all metadata sets which are reported against one or more structures.
+        
+        As such the syntax for defining which structures to find metadata for follows the same syntax as the structure queries.
       parameters:
         - $ref: '#/components/parameters/structureType'
         - $ref: '#/components/parameters/agencies'
@@ -194,6 +204,8 @@ paths:
       summary: 'Metadata queries (by metadataflow)'
       tags: 
         - Reference metadata queries
+      description: |
+        These queries enable clients to find metadatasets by the collection (metadataflow), optionally filtered by the metadata provider.
       parameters:
         - $ref: '#/components/parameters/agencies'
         - $ref: '#/components/parameters/resourceIDs'
@@ -213,6 +225,8 @@ paths:
       summary: 'Metadata queries (by metadatasets)'
       tags: 
         - Reference metadata queries
+      description: |
+        These queries enable clients to find metadatasets by the identification of the metadataset, enabling clients to checkout specific reports.
       parameters:
         - $ref: '#/components/parameters/providers'
         - $ref: '#/components/parameters/resourceIDs'
