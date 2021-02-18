@@ -28,7 +28,7 @@ Notes:
 
 Operator | Meaning | Note
 -- | -- | --
-eq | Equals | Default if no operator is specified and there is only one value (e.g. `c[FREQ]=M`)
+eq | Equals | Default if no operator is specified and there is only one value (e.g. `c[FREQ]=M` is equivalent to `c[FREQ]=eq:M`)
 ne | Not equal to |
 lt | Less than |
 le | Less than or equal to |
@@ -39,7 +39,6 @@ nc | Does not contain |
 sw | Starts with |
 ew | Ends with |
 nd | And |
-or | Or | Default if no operator is specified and there are multiple values (e.g. `c[FREQ]=M,A`)
 
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01,le:2020-12`).
 
@@ -197,7 +196,7 @@ The use case can be supported as follows:
 
 1. When the user adds or removes a data query filter by checking or unchecking a checkbox, call the Data Availability API with current data query state and `mode=available`.
 
-        http://ws-entry-point/availableconstraint/EMPLOYMENT/UK+FR..M?mode=available
+        http://ws-entry-point/availableconstraint/EMPLOYMENT/UK..M,FR..M?mode=available
 
 2. The response will include only the values which remain valid selections. Use this information to enable or disable the dimension values.
 
