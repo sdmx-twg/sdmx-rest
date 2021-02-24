@@ -1,13 +1,15 @@
-## Error handling and status information
+# Error handling and status information
 
-RESTful web services use HTTP status codes to indicate errors. In principle, any [code defined by HTTP](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) can therefore be returned by an SDMX RESTful web service but a few of the most common codes are described below.
+RESTful web services use HTTP status codes to indicate errors. In principle, any [code defined by HTTP](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) can therefore be returned by an SDMX RESTful web service but a few of the most common ones are described below.
+
+Codes below 400 are considered normal (i.e. non-problematic). Codes between 400 and 499 are considered client errors. Codes greater or equal to 500 indicate a server error or problem.
 
 HTTP status code | Description
 ---|---
 200 | This is the standard response for successful HTTP requests. With `GET` requests, it is used to indicate that the request was successfully processed and that the data are available in the body of the response.
 204 | If the result from the query is empty, the web service should return this code. `204` is preferred to `404` in this case, as a lack of results matching a query is an “empty but still healthy state”.
-304 | This is used to indicate that there are no changes since the version specified by the request headers `If-Modified-Since` or `If-None-Match`. The response does not include matching data, as the client can still use the previously-downloaded copy.
-400 | This error code is used when the query string doesn’t comply with the SDMX RESTful interface.
+304 | This is used to indicate that there are no changes since the version specified by the request headers `If-Modified-Since` or `If-None-Match`. The response does not include matching data, as the data downloaded previously is still valid.
+400 | This error code is used when the query doesn’t comply with the SDMX REST API.
 401 | For use when authentication is needed but has failed or has not yet been provided.
 403 | For use when authentication has been provided correctly, but user is not authorized to access the query results.
 406 | If a client asks for a resource representation that the web service does not offer, a 406 HTTP status code should be returned.
