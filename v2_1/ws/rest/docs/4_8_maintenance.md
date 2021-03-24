@@ -332,12 +332,12 @@ Let's assume submitting this partial Category Scheme:
 
 ```xml
 <str:CategoryScheme agencyID="SDMX" id="STAT_SUBJECT_MATTER" version="1.0.0" isPartial="true">
-	<com:Name xml:lang="en">SDMX Statistical Subject-Matter Domains</com:Name>
-	<str:Category id="ECO_STAT">
-		<com:Name xml:lang="en">Economic statistics</com:Name>
-		<str:Category id="MACROECO_STAT">
-			<com:Name xml:lang="en">Macroeconomic statistics</com:Name>
-		</str:Category>
+  <com:Name xml:lang="en">SDMX Statistical Subject-Matter Domains</com:Name>
+  <str:Category id="ECO_STAT">
+    <com:Name xml:lang="en">Economic statistics</com:Name>
+    <str:Category id="MACROECO_STAT">
+      <com:Name xml:lang="en">Macroeconomic statistics</com:Name>
+    </str:Category>
   </str:Category>
 </str:CategoryScheme>
 ```
@@ -346,19 +346,19 @@ When applied to the initial Category Scheme, this update would mean that Categor
 
 ```xml
 <str:CategoryScheme agencyID="SDMX" id="STAT_SUBJECT_MATTER" version="1.0.0">
-	<com:Name xml:lang="en">SDMX Statistical Subject-Matter Domains</com:Name>
-	<str:Category id="DEMO_SOCIAL_STAT">
-		<com:Name xml:lang="en">Demographic and social statistics</com:Name>
-	</str:Category>
-	<str:Category id="ECO_STAT">
-		<com:Name xml:lang="en">Economic statistics</com:Name>
-		<str:Category id="MACROECO_STAT">
-			<com:Name xml:lang="en">Macroeconomic statistics</com:Name>
-		</str:Category>
-	</str:Category>
-	<str:Category id="ENVIRONMENT_MULTIDOMAIN_STAT">
-		<com:Name xml:lang="en">Environment and multi-domain statistics</com:Name>
-	</str:Category>
+  <com:Name xml:lang="en">SDMX Statistical Subject-Matter Domains</com:Name>
+  <str:Category id="DEMO_SOCIAL_STAT">
+    <com:Name xml:lang="en">Demographic and social statistics</com:Name>
+  </str:Category>
+  <str:Category id="ECO_STAT">
+    <com:Name xml:lang="en">Economic statistics</com:Name>
+    <str:Category id="MACROECO_STAT">
+      <com:Name xml:lang="en">Macroeconomic statistics</com:Name>
+    </str:Category>
+  </str:Category>
+  <str:Category id="ENVIRONMENT_MULTIDOMAIN_STAT">
+    <com:Name xml:lang="en">Environment and multi-domain statistics</com:Name>
+  </str:Category>
 </str:CategoryScheme>
 ```
 
@@ -366,29 +366,28 @@ Moreover, in order to add a new Category under `SECTORAL_STAT` in the initial Ca
 
 ```xml
 <str:CategoryScheme agencyID="SDMX" id="STAT_SUBJECT_MATTER" version="1.0.0">
-	<com:Name xml:lang="en">SDMX Statistical Subject-Matter Domains</com:Name>
-	<str:Category id="ECO_STAT">
-		<com:Name xml:lang="en">Economic statistics</com:Name>
-		<str:Category id="MACROECO_STAT">
-			<com:Name xml:lang="en">Macroeconomic statistics</com:Name>
-		</str:Category>
-		<str:Category id="SECTORAL_STAT">
-			<com:Name xml:lang="en">Sectoral statistics</com:Name>
-			<str:Category id="AGRI_FOREST_FISH">
-				<com:Name xml:lang="en">Agriculture, forestry, fisheries</com:Name>
-			</str:Category>
+  <com:Name xml:lang="en">SDMX Statistical Subject-Matter Domains</com:Name>
+  <str:Category id="ECO_STAT">
+    <com:Name xml:lang="en">Economic statistics</com:Name>
+    <str:Category id="MACROECO_STAT">
+      <com:Name xml:lang="en">Macroeconomic statistics</com:Name>
+    </str:Category>
+    <str:Category id="SECTORAL_STAT">
+      <com:Name xml:lang="en">Sectoral statistics</com:Name>
+      <str:Category id="AGRI_FOREST_FISH">
+        <com:Name xml:lang="en">Agriculture, forestry, fisheries</com:Name>
+      </str:Category>
       <str:Category id="NEW_SECTORAL_CATEGORY">
         <com:Name xml:lang="en">New</com:Name>
       </str:Category>
-			<str:Category id="ENERGY">
-				<com:Name xml:lang="en">Energy</com:Name>
-			</str:Category>
-		</str:Category>
-		<str:Category id="GOV_FINANCE_PUBLIC_SECTOR">
-			<com:Name xml:lang="en">Government finance, fiscal and public sector 
-        statistics</com:Name>
-		</str:Category>
-	</str:Category>
+      <str:Category id="ENERGY">
+        <com:Name xml:lang="en">Energy</com:Name>
+      </str:Category>
+    </str:Category>
+    <str:Category id="GOV_FINANCE_PUBLIC_SECTOR">
+      <com:Name xml:lang="en">Government finance, fiscal and public sector statistics</com:Name>
+    </str:Category>
+  </str:Category>
 </str:CategoryScheme>
 ```
 
