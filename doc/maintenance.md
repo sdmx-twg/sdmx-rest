@@ -2,6 +2,7 @@
 
 The following sections describe the foreseen HTTP methods for the maintenance of SDMX Structural Metadata via the REST API.
 
+
 ### CREATE
 
 Inserting or creating new SDMX Structural Metadata is detailed in this secion.
@@ -216,7 +217,54 @@ The following matrix summarises the returned `HTTP` response codes.
 <sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
 
 
-### Structure response message
+### ANNEX I - RegistryInterface messages for Subscription and Registration
+
+Support for Subscriptions and Registrations are not yet part of the SDMX RESTful API.
+Thus, an intermediate solution for supporting them in SDMX 3.0 (after the deprecation of the SOAP API) is needed.
+This section describes how to use the RegistryInterface messages for submitting and retrieving Subscriptions and Registrations via the RESTful API.
+
+#### Introduction
+
+The usage of the RegistryInterface messages is foreseen via the POST verb, under resources:
+- ```/rest/subscription``` for Subscriptions
+- ```/rest/registration``` for Registrations
+- ```/rest``` for any RegistryInterface message
+
+The available ```RegistryInterface``` messages are the following:
+- ```SubmitRegistrationsRequest```
+- ```SubmitRegistrationsResponse```
+- ```SubmitSubscriptionsRequest```
+- ```SubmitRegistrationsResponse```
+- ```QueryRegistrationRequest```
+- ```QueryRegistrationResponse```
+- ```QuerySubscriptionRequest```
+- ```QuerySubscriptionResponse```
+
+In addition, the above shall remain as part of the generic ```RegistryInterface``` message.
+
+
+#### Retrieving Subscriptions and Registrations
+
+For Subscriptions:
+- The client may POST a ```QuerySubscriptionRequest``` or a ```RegistryInterface/QuerySubscriptionRequest``` message under resource ```/rest/subscription``` for retrieving Subscriptions. 
+- As a result, a ```QuerySubscriptionResponse``` or a ```RegistryInterface/QuerySubscriptionResponse``` message will be returned as a response to describe the requested Subscriptions.
+
+Similarly, for Registrations:
+- The client may POST a ```QueryRegistrationRequest``` or a ```RegistryInterface/QueryRegistrationRequest``` message under resource ```/rest/registration``` for retrieving Registrations.
+- As a result, a ```QueryRegistrationResponse``` or a ```RegistryInterface/QueryRegistrationResponse``` message will be returned as a response to describe the requested Registrations.
+
+#### Maintaining Subscriptions and Registrations
+
+For Subscriptions:
+- The client may POST a ```SubmitSubscriptionsRequest``` or a ```RegistryInterface/SubmitSubscriptionsRequest``` message under resource ```/rest/subscription``` for inserting/updating/deleting Subscriptions. 
+- As a result, a ```SubmitSubscriptionsResponse``` or a ```RegistryInterface/SubmitSubscriptionsResponse``` message will be returned as a response to describe the outcome of the insertion/update/deletion of Subscriptions.
+
+Similarly, for Registrations:
+- The client may POST a ```SubmitRegistrationsRequest``` or a ```RegistryInterface/SubmitRegistrationsRequest``` message under resource ```/rest/registration``` for inserting/updating/deleting Registrations. 
+- As a result, a ```SubmitRegistrationsResponse``` or a ```RegistryInterface/SubmitRegistrationsResponse``` message will be returned as a response to describe the outcome of the insertion/update/deletion of Registrations.
+
+
+### ANNEX II - Structure response message
 
 The `SubmitStructureResponse` message must be returned in any case (success, partial success, failure).
 This is defined as part of the `RegistryInterface` messages.
@@ -283,7 +331,7 @@ In the case of a multi-status response, the `SubmitStructureResponse` message wi
 ```
 
 
-### Nested Items
+### ANNEX III - Nested Items
 
 This section aims at explaining the particularities of nested Items for a subset of the available Item Schemes, namely:
 - CategoryScheme (Category)
@@ -391,7 +439,7 @@ Moreover, in order to add a new Category under `SECTORAL_STAT` in the initial Ca
 </str:CategoryScheme>
 ```
 
-### Summary of HTTP response codes
+### ANNEX IV - Summary of HTTP response codes
 
 | Method | Exists | Versioning respected | Is Referenced | References exist/provided | Response Code |
 |---|---|---|---|---|---|
@@ -412,7 +460,7 @@ Moreover, in order to add a new Category under `SECTORAL_STAT` in the initial Ca
 <sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
 
 
-### Examples
+### ANNEX V - Examples
 
 #### Difference between replace and partially update
 
