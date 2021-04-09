@@ -8,7 +8,7 @@ This is typically used for **validation and/or communication purposes**, for exa
 
 ## Syntax
 
-    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}&{explicitMeasure}
+    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
@@ -17,7 +17,6 @@ Parameter | Type | Description | Default
 **resourceID** | A string compliant with the SDMX *common:IDType* | The id of the artefact defining the data validity. |
 version | A string compliant with the SDMX *semantic versioning* rules| The version of the artefact defining the data validity. | `~`
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level. |
-explicitMeasure | *Boolean* | For cross-sectional data validation, indicates whether observations are strongly typed. | `false`
 
 Note: Mandatory parameters are highlighted in **bold**.
 
