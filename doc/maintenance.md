@@ -51,6 +51,7 @@ Especially when different results occur on the Artefacts (e.g. partial success),
 
 <sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
 
+<sup>NOTE: The rules for versioning in SDMX 3.0 are based on Semantic Versioning. In addition, Artefacts with no version are supported. SDMX 3.0 does not specify rules for legacy versioning - i.e. versioning prior to SDMX 3.0. The versioning rules in that case are up to the organisation using them.</sup>
 
 ### UPDATE
 
@@ -117,7 +118,7 @@ The following matrix summarises the returned `HTTP` response codes.
 #### Partially update Item Schemes
 
 In the case of Item Schemes, it is possible to submit a partial Item Scheme, including the Items that must be updated.
-The usage of `POST` and `PUT` is the same as in the case of full replacement. The only difference is that the submitted Items Schemes to be partially updated (i.e. not completely replaced) must inlcude the flag `isPartial="true"`.
+The usage of `POST` and `PUT` is the same as in the case of full replacement. The only difference is that the submitted Items Schemes to be partially updated (i.e. not completely replaced) must include the flag `isPartial="true"`.
 
 In this case, any Item included in the submitted partial Item Scheme:
 - fully replaces the Item, if it existed in the stored Item Scheme; the Item stays in the same position;
@@ -464,7 +465,7 @@ Moreover, in order to add a new Category under `SECTORAL_STAT` in the initial Ca
 
 #### Difference between replace and partially update
 
-To explain the updating semantics, the difference between using replacing and partially updating the same SDMX Artefact shall be illustrated in the following example. 
+To explain the updating semantics, the difference between replacing and partially updating the same SDMX Artefact shall be illustrated in the following example. 
 For the sake of simplicity, a Codelist will be utilised, i.e. let's assume:
 
 ```xml
