@@ -50,5 +50,6 @@ The documentation is organized in the following sections:
 - [Availability queries](availability.md)
 - [Content-Negotiation](conneg.md)
 - [Status codes](status.md)
+- [Structure maintenance](maintenance.md)
 - [Tips for providers and consumers](tips.md)
 - [Extending the API](extend.md)
