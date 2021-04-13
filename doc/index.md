@@ -7,7 +7,7 @@ The SDMX REST API allows implementers to offer programmatic access to statistica
 It offers a variety of features such as:
 
 - To retrieve structural metadata, using a combination of id, agencyID and version number.
-- To retrieve statistical data or reference metadata using keys (with options for wildcarding and support for the OR operator), data or metadata flows and data or metadata providers.
+- To retrieve statistical data or reference metadata using keys (with options for wildcarding and support for the OR operator, as well as operators on Component values), data or metadata flows and data or metadata providers.
 - To further refine queries for statistical data or reference metadata using time information (start period and end period).
 - To retrieve what has changed since your last query (i.e. new or updated data).
 - To return the results of a query in various formats.
