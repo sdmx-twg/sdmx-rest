@@ -68,12 +68,12 @@ The default behaviour of this extension is as follows:
 
 To retrieve an SDMX-ML 2.1 Structure Specific dataset, using the representation query parameters:
 
-    https://ws-entry-point/data/EXR/M.USD.EUR.SP00.A?format=structurespecificdata&formatVersion=2.1
+    https://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A?format=structurespecificdata&formatVersion=2.1
 
 To retrieve an SDMX-ML 2.1 Codelist, using the representation query parameters:
 
-    https://ws-entry-point/codelist/ECB/CL_FREQ?format=structure&formatVersion=2.1
+    https://ws-entry-point/structure/codelist/ECB/CL_FREQ?format=structure&formatVersion=2.1
 
 To retrieve a json dataset, using the representation query parameters:
 
-    https://ws-entry-point/data/EXR/M.USD.EUR.SP00.A?format=jsondata&formatVersion=1.0.0
+    https://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A?format=jsondata&formatVersion=1.0.0
