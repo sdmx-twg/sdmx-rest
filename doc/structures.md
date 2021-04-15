@@ -90,7 +90,7 @@ The table below lists the 1st level artefacts (one level up, one level down) tha
 
 Maintainable artefact | Artefacts returned
 --- | ---
-AgencyScheme | *All* (except MetadataSet)
+AgencyScheme | *All*
 Categorisation | All, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 CategoryScheme | AgencyScheme, *Categorisation*, *CategorySchemeMap*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 CategorySchemeMap | AgencyScheme, *Categorisation*, CategoryScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ReportingTaxonomy
@@ -106,10 +106,9 @@ DataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptSchem
 Hierarchy | AgencyScheme, *Categorisation*, Codelist, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 HierarchyAssociation | All, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 MetadataConstraint | AgencyScheme, *Categorisation*, *HierarchyAssociation*, __*Metadataflow*__, MetadataProviderScheme, __*MetadataProvisionAgreement*__, MetadataStructureDefinition, *Process*
-Metadataflow | All, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataSet*, *Process*, *ReportingTaxonomy*
-MetadataProviderScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataSet*, *OrganisationSchemeMap*, *Process* 
-MetadataProvisionAgreement | All, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataSet*, *MetadataConstraint*, *Process*
-MetadataSet | *Categorisation*, *HierarchyAssociation*, __*Metadataflow*__, MetadataProviderScheme, __*MetadataProvisionAgreement*__, *Process*
+Metadataflow | All, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ReportingTaxonomy*
+MetadataProviderScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process* 
+MetadataProvisionAgreement | All, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataConstraint*, *Process*
 MetadataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, *DataStructureDefinition*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ValueList
 NamePersonalisationScheme | AgencyScheme, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*
 OrganisationSchemeMap | AgencyScheme, *Categorisation*, DataConsumerScheme, DataProviderScheme, *HierarchyAssociation*, *Metadataflow*, MetadataProviderScheme, *MetadataProvisionAgreement*, OrganisationUnitScheme, *Process*
@@ -183,7 +182,7 @@ The default format is highlighted in **bold**.
 
 - To retrieve the category PRICES of the DOMAINS category scheme maintained by the ECB, as well as the categorisations referencing that category:
 
-        https://ws-entry-point/structure/categoryscheme/ECB/DOMAINS/latest/PRICES?references=categorisation
+        https://ws-entry-point/structure/categoryscheme/ECB/DOMAINS/+/PRICES?references=categorisation
 
 - To retrieve the latest version of the CL_FREQ codelists maintained by the BIS or the ECB:
 
