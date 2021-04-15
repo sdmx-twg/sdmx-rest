@@ -86,45 +86,45 @@ Further to the above, the reference resolution mechanism will be applied to all 
 
 ### Applicability and meaning of references (including referencepartial)
 
-The table below lists the 1st level artefacts (one level up, one level down) that will be returned if the references parameter is set to `all`. Artefacts referenced by the matching artefact are displayed in regular style, while the artefacts that reference the matching artefact are displayed in *Italic*.
+The table below lists the 1st level artefacts (one level up, one level down) that will be returned if the references parameter is set to `all`. Artefacts referenced by the matching artefact are displayed in regular style, artefacts that reference the matching artefact are displayed in *Italic* and artefacts that can both reference and be referenced by the matching artefact are displayed in __*bold italic*__.
 
 Maintainable artefact | Artefacts returned
 --- | ---
 AgencyScheme | *All* (except MetadataSet)
-Categorisation | All
-CategoryScheme | AgencyScheme, *Categorisation*, *CategorySchemeMap*, *Process*
-CategorySchemeMap | AgencyScheme, *Categorisation*, CategoryScheme, *Process*, ReportingTaxonomy
-Codelist | AgencyScheme, *Categorisation*, *ConceptScheme*, *DataStructureDefinition*, *Hierarchy*, *MetadataStructureDefinition*, *Process*, *RepresentationMap*, *VtlMappingScheme*
-ConceptScheme | AgencyScheme, *Categorisation*, Codelist, *ConceptSchemeMap*, *DataStructureDefinition*, *MetadataStructureDefinition*, *Process*, *VtlMappingScheme*
-ConceptSchemeMap | AgencyScheme, *Categorisation*, ConceptScheme, *Process*
-CustomTypeScheme | AgencyScheme, *Categorisation*, *Process*, *TranformationScheme*
-DataConstraint | AgencyScheme, *Categorisation*, Dataflow, DataProviderScheme, DataStructureDefinition, *Process*, ProvisionAgreement
-DataConsumerScheme | AgencyScheme, *Categorisation*, *OrganisationSchemeMap*, *Process*
-Dataflow | AgencyScheme, *Categorisation*, *DataConstraint*, DataStructureDefinition, *Process*, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, *VtlMappingScheme*
-DataProviderScheme | *Categorisation*, *Process*, *DataConstraint*, *ProvisionAgreement*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
-DataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *DataConstraint*, *Dataflow*, MetadataStructureDefinition, *StructureMap*, Valuelist, AgencyScheme
-Hierarchy | *HierarchyAssociation*, *Categorisation*, *Process*, Codelist, AgencyScheme
-HierarchyAssociation | All
-MetadataConstraint | AgencyScheme, *Categorisation*, Metadataflow, MetadataProviderScheme, MetadataProvisionAgreement, MetadataStructureDefinition, *Process*
-Metadataflow | AgencyScheme, *Categorisation*, *MetadataConstraint*, *MetadataSet*, MetadataStructureDefinition, *MetadataProvisionAgreement*, *Process*, *ReportingTaxonomy*
-MetadataProviderScheme | *Categorisation*, *Process*, *MetadataConstraint*, *MetadataProvisionAgreement*, *MetadataSet*, *MetadataStructureDefinition*, *OrganisationSchemeMap*, AgencyScheme
-MetadataProvisionAgreement | *Categorisation*, *Process*, MetadataProviderScheme, *MetadataSet*, Metadataflow, *MetadataConstraint*, AgencyScheme
-MetadataSet | Metadataflow, MetadataProviderScheme, MetadataProvisionAgreement
-MetadataStructureDefinition | *Categorisation*, *Process*, Codelist, ConceptScheme, *DataStructureDefinition*, *MetadataConstraint*, *Metadataflow*, Valuelist, AgencyScheme
-NamePersonalisationScheme | AgencyScheme, _Categorisation_, _TranformationScheme_
-OrganisationSchemeMap | *Categorisation*, *Process*, DataConsumerScheme, DataProviderScheme, MetadataProviderScheme, OrganisationUnitScheme, AgencyScheme
-OrganisationUnitScheme | *Categorisation*, *Process*, *OrganisationSchemeMap*, AgencyScheme
-Process | All
-ProvisionAgreement | *Categorisation*, *Process*, *DataConstraint*, Dataflow, DataProviderScheme, AgencyScheme
-ReportingTaxonomy | *Categorisation*, *CategorySchemeMap*, *Process*, Dataflow, Metadataflow, *ReportingTaxonomyMap*, AgencyScheme
-ReportingTaxonomyMap | ReportingTaxonomy, AgencyScheme
-RepresentationMap | *Categorisation*, *Process*, Codelist, Valuelist, AgencyScheme
-RulesetScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
-StructureMap | *Categorisation*, *Process*, Dataflow, DataStructureDefinition, AgencyScheme
-TranformationScheme | AgencyScheme, _Categorisation_, CustomTypeScheme, NamePersonalisationScheme, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme
-UserDefinedOperatorScheme | AgencyScheme, _Categorisation_, _TranformationScheme_, VtlMappingScheme
-Valuelist | *Categorisation*, *Process*, *ConceptScheme*, *DataStructureDefinition*, *MetadataStructureDefinition*, *RepresentationMap*, *VtlMappingScheme*, AgencyScheme
-VtlMappingScheme | _Categorisation_, Codelist, ConceptScheme, Dataflow, _RulesetScheme_, _TranformationScheme_, _UserDefinedOperatorScheme_, Valuelist, AgencyScheme
+Categorisation | All, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+CategoryScheme | AgencyScheme, *Categorisation*, *CategorySchemeMap*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+CategorySchemeMap | AgencyScheme, *Categorisation*, CategoryScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ReportingTaxonomy
+Codelist | AgencyScheme, *Categorisation*, __*Codelist*__, *ConceptScheme*, *DataStructureDefinition*, *Hierarchy*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataStructureDefinition*, *Process*, *RepresentationMap*, *VtlMappingScheme*
+ConceptScheme | AgencyScheme, *Categorisation*, Codelist, *ConceptSchemeMap*, *DataStructureDefinition*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataStructureDefinition*, *Process*, *VtlMappingScheme*
+ConceptSchemeMap | AgencyScheme, *Categorisation*, ConceptScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+CustomTypeScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*
+DataConstraint | AgencyScheme, *Categorisation*, Dataflow, DataProviderScheme, DataStructureDefinition, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ProvisionAgreement
+DataConsumerScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*
+Dataflow | AgencyScheme, *Categorisation*, *DataConstraint*, DataStructureDefinition, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, *VtlMappingScheme*
+DataProviderScheme | AgencyScheme, *Categorisation*, *DataConstraint*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*, *ProvisionAgreement*
+DataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, *DataConstraint*, *Dataflow*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, MetadataStructureDefinition, *Process*, *StructureMap*, ValueList
+Hierarchy | AgencyScheme, *Categorisation*, Codelist, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+HierarchyAssociation | All, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+MetadataConstraint | AgencyScheme, *Categorisation*, *HierarchyAssociation*, __*Metadataflow*__, MetadataProviderScheme, __*MetadataProvisionAgreement*__, MetadataStructureDefinition, *Process*
+Metadataflow | All, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataSet*, *Process*, *ReportingTaxonomy*
+MetadataProviderScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataSet*, *OrganisationSchemeMap*, *Process* 
+MetadataProvisionAgreement | All, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataSet*, *MetadataConstraint*, *Process*
+MetadataSet | *Categorisation*, *HierarchyAssociation*, __*Metadataflow*__, MetadataProviderScheme, __*MetadataProvisionAgreement*__, *Process*
+MetadataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, *DataStructureDefinition*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ValueList
+NamePersonalisationScheme | AgencyScheme, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*
+OrganisationSchemeMap | AgencyScheme, *Categorisation*, DataConsumerScheme, DataProviderScheme, *HierarchyAssociation*, *Metadataflow*, MetadataProviderScheme, *MetadataProvisionAgreement*, OrganisationUnitScheme, *Process*
+OrganisationUnitScheme | AgencyScheme, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*
+Process | All, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*
+ProvisionAgreement | AgencyScheme, *Categorisation*, *DataConstraint*, Dataflow, DataProviderScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+ReportingTaxonomy | AgencyScheme, *Categorisation*, *CategorySchemeMap*, *HierarchyAssociation*, Dataflow, __*Metadataflow*__, *MetadataProvisionAgreement*, *Process*, *ReportingTaxonomyMap*
+ReportingTaxonomyMap | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ReportingTaxonomy
+RepresentationMap | AgencyScheme, *Categorisation*, Codelist, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ValueList
+RulesetScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*, VtlMappingScheme
+StructureMap | AgencyScheme, *Categorisation*, Dataflow, DataStructureDefinition, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+TranformationScheme | AgencyScheme, *Categorisation*, CustomTypeScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, NamePersonalisationScheme, *Process*, RulesetScheme, UserDefinedOperatorScheme, VtlMappingScheme
+UserDefinedOperatorScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*, VtlMappingScheme
+ValueList | AgencyScheme, *Categorisation*, *ConceptScheme*, *DataStructureDefinition*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataStructureDefinition*, *Process*, *RepresentationMap*
+VtlMappingScheme | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, Dataflow, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *RulesetScheme*, *TranformationScheme*, *UserDefinedOperatorScheme*
 
 Also, when returning only partial references (via `referencepartial`), the filtering applies to any dependency, regardless of its level. The table below describes the impact of using `referencepartial` on the referenced item schemes.
 
