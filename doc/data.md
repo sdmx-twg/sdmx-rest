@@ -53,7 +53,7 @@ The following media types can be used with _data_ queries:
 
 - **application/vnd.sdmx.data+json;version=2.0.0**
 - application/vnd.sdmx.data+xml;version=3.0.0
-- application/vnd.sdmx.data+csv;version=2.0.0;labels=[id|both|name];timeFormat=[original|normalized]
+- application/vnd.sdmx.data+csv;version=2.0.0;labels=[id|name|both];timeFormat=[original|normalized];keys=[none|obs|series|both]
 - application/vnd.sdmx.genericdata+xml;version=2.1
 - application/vnd.sdmx.structurespecificdata+xml;version=2.1
 - application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
