@@ -2,7 +2,7 @@
 
 ## Overview
 
-Availability queries allow to see what data are available for a structure (data structure, dataflow or provision agreement), based on a data query. It returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but the query itself is more akin to a data query.
+Availability queries allow to see what data are available for a structure (data structure, dataflow or provision agreement), based on a data query. It returns a `DataConstraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but the query itself is more akin to a data query.
 
 ## Syntax
 
@@ -18,8 +18,8 @@ key | A string compliant with the *KeyType* defined in the SDMX Open API specifi
 componentId | A string compliant with the SDMX common: IDType | The id of the Dimension for which to obtain availability information about.  In the case where this information is not provided, data availability will be provided for all Dimensions. | * | Yes
 c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`) | | Yes
 updatedAfter | xs:dateTime | The last time the query was performed by the client. If this attribute is used, the returned message should only include the dimension values for the data that have changed since that point in time (updates and revisions). This should include the dimension values for data that have been added since the last time the query was performed (INSERT), data that have been revised since the last time the query was performed (UPDATE) and data that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. | | No
-references  |  String | This attribute instructs the web service to return (or not) the artefacts referenced by the ContentConstraint to be returned. Possible values are: "codelist", "datastructure", "conceptscheme", "dataflow", "dataproviderscheme", "none", "all". The keyword "all" is used to indicate the inclusion of dataflow, datastructure, conceptschemes, dataproviderschemes and codelists. Note, in the case ItemSchemes are returned (i.e. Codelists, ConceptSchemes and DataProviderSchemes), only the items used by the ContentConstraint will be included (i.e. concepts used by the constrained dimensions; codes for which data are available; data providers that have provided data available according to the CubeRegion). Additionally for Codelists parent codes will be included in the response if the child codes are in the returned codelist, irrespective of whether they are referenced by the ContentConstraint. If this results in a partial list, the isPartial attribute will be set to true. | **none** | Yes
-mode  | String  | This attribute instructs the web service to return a ContentConstraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters. | **exact** | No
+references  |  String | This attribute instructs the web service to return (or not) the artefacts referenced by the DataConstraint to be returned. Possible values are: "codelist", "datastructure", "conceptscheme", "dataflow", "dataproviderscheme", "none", "all". The keyword "all" is used to indicate the inclusion of dataflow, datastructure, conceptschemes, dataproviderschemes and codelists. Note, in the case ItemSchemes are returned (i.e. Codelists, ConceptSchemes and DataProviderSchemes), only the items used by the DataConstraint will be included (i.e. concepts used by the constrained dimensions; codes for which data are available; data providers that have provided data available according to the CubeRegion). Additionally for Codelists parent codes will be included in the response if the child codes are in the returned codelist, irrespective of whether they are referenced by the DataConstraint. If this results in a partial list, the isPartial attribute will be set to true. | **none** | Yes
+mode  | String  | This attribute instructs the web service to return a DataConstraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters. | **exact** | No
 
 Notes:
 
@@ -42,7 +42,7 @@ nd | And |
 
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01,le:2020-12`).
 
-As already mentioned, the response from the Data Availability API is an SDMX Content Constraint containing a CubeRegion which defines the distinct Values for each Dimension of the data.  These distinct values contained in the CubeRegion are determined by the server based on the Data Query presented to this API.  The meaning of the distinct values depends on the response mode.
+As already mentioned, the response from the Data Availability API is an SDMX DataConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data.  These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
 
 ### Response Mode
 
@@ -105,15 +105,15 @@ Reference Area UK has now become available, this is because if the user were to 
 
 ### Temporal coverage
 
-For DSDs that have a time dimension, temporal coverage can be included in the ContentConstraint's `ReferencePeriod` element. The `ReferencePeriod` is used to indicate the earliest and latest observation dates available for the sub-cube of data based on the current data query.  
+For DSDs that have a time dimension, temporal coverage can be included in the DataConstraint's `ReferencePeriod` element. The `ReferencePeriod` is used to indicate the earliest and latest observation dates available for the sub-cube of data based on the current data query.  
 
 This information may not be included in the response if the service does not have access to this information.
 
 ### Metrics
 
-The `ContentConstraint` may define up to two additional Annotations used to capture the metrics for the **number of series** and the **number of observations** which will be returned if the data query presented to this API were run against the data API.  
+The `DataConstraint` may define up to two additional Annotations used to capture the metrics for the **number of series** and the **number of observations** which will be returned if the data query presented to this API were run against the data API.  
 
-The `Metrics` annotations are attached to the `ContentConstraint`, and have `AnnotationType` of `sdmx_metrics` an Id of `series_count` or `obs_count` depending on the metric being reported, and the annotation title is used to report the count, which is a positive integer value.
+The `Metrics` annotations are attached to the `DataConstraint`, and have `AnnotationType` of `sdmx_metrics` an Id of `series_count` or `obs_count` depending on the metric being reported, and the annotation title is used to report the count, which is a positive integer value.
 
 Metrics are only included if the service has the information available to provide the count. A request for metrics may include only series counts, or no metrics at all depending on the service.
 
@@ -172,9 +172,9 @@ The use case can be supported as follows:
 
 1. Query Data Availability API with a query for all data for the dataflow, and include all references:
 
-        http://ws-entry-point/availableconstraint/ECB_EXR1_WEB/?references=all
+        https://ws-entry-point/availability/dataflow/ECB_EXR1_WEB/?references=all
 
-2. The response includes the Content Constraint and the Data Structure Definition. We can iterate the dimensions to build the Dimension picker. For each dimension, we can get the concept, as this provides the human readable label (ideally in the chosen locale, if available). The Cube Region Constraint provides the available values for the dimension. If the dimension is coded, then the codelist can be used to get the human readable label in the chosen locale. The code will additionally provide any hierarchy information. An HTML checkbox is created for each available dimension value.
+2. The response includes the DataConstraint and the Data Structure Definition. We can iterate the dimensions to build the Dimension picker. For each dimension, we can get the concept, as this provides the human readable label (ideally in the chosen locale, if available). The Cube Region constraint provides the available values for the dimension. If the dimension is coded, then the codelist can be used to get the human readable label in the chosen locale. The code will additionally provide any hierarchy information. An HTML checkbox is created for each available dimension value.
 
 ### Step 2: Update the data query form based on code selection state
 
@@ -188,7 +188,7 @@ Let's consider the following dataset:
 | FR            | EMP               | M    |
 | FR            | UEMP              | F    |
 
-1. The user selects `Reference Area=UK`.  Employment Status=UEMP and Sex=F are no longer valid selections. Selecting either of these two codes and then running the data query will fail to return any data.
+1. The user selects `Reference Area=UK`.  `Employment Status=UEMP` and `Sex=F` are no longer valid selections. Selecting either of these two codes and then running the data query will fail to return any data.
 2. The user is however able to add to their query the `Reference Area=FR`.  Re-running the availability query results in `Employment Status=UEMP` and `Sex=F` becoming valid selections again, as the inclusion of either of these values will result in data being returned.
 3. If the user now adds the selection `Sex=F`, then the Reference `Area=UK` is no longer a valid selection.
 
@@ -196,7 +196,7 @@ The use case can be supported as follows:
 
 1. When the user adds or removes a data query filter by checking or unchecking a checkbox, call the Data Availability API with current data query state and `mode=available`.
 
-        http://ws-entry-point/availableconstraint/EMPLOYMENT/UK.*.M,FR.*.M?mode=available
+        https://ws-entry-point/availability/dataflow/EMPLOYMENT/UK.*.M,FR.*.M?mode=available
 
 2. The response will include only the values which remain valid selections. Use this information to enable or disable the dimension values.
 
