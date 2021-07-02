@@ -34,7 +34,7 @@ If you don't specify the format you want (using the `HTTP Accept header`), the b
 
 ### Get only what you need
 
-Let's say you want to get some exchange rates from a web service. And let's say you check regularly to see whether the rates have been updated. Do you want to get everything all the time, included all the data that have not changed, or do you want something more efficient? If it's the latter, make sure to use the `updatedAfter` parameter. In the same vein, if you just want the data and don't need the associated metadata, say so using the `detail` parameter... For additional information, see the section about the [data queries](data.md).
+Let's say you want to get some exchange rates from a web service. And let's say you check regularly to see whether the rates have been updated. Do you want to get everything all the time, included all the data that have not changed, or do you want something more efficient? If it's the latter, make sure to use the `updatedAfter` parameter. In the same vein, if you just want the data and don't need the associated metadata, say so using the `attributes` parameter... For additional information, see the section about the [data queries](data.md).
 
 ### Opt for fat-free messages
 
