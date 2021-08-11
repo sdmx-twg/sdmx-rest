@@ -304,6 +304,7 @@ components:
             conceptschememap,
             categoryschememap,
             organisationschememap,
+            reportingtaxonomymap,
             "*",
           ]
     itemSchemeType:
@@ -651,6 +652,7 @@ components:
               conceptschememap,
               categoryschememap,
               organisationschememap,
+              reportingtaxonomymap
             ]
           default: none
       style: form
