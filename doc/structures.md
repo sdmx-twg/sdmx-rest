@@ -10,7 +10,6 @@ Below is a list of popular types of structural metadata, that you will typically
 - `Codelists`: Some of the concepts can be *free text* (such as a comment about a particular observation value) but others take their values from a *controlled vocabulary list* (such as, for example, a list of countries). These are known as *codelists* in SDMX.
 - `Data structure definitions`: All the concepts that describe a particular domain (such as exchange rates or inflation) are grouped into a *data structure definition (DSD)*. In a DSD, concepts are divided into *dimensions* and *attributes*. Dimensions, when combined, allow to uniquely *identify* statistical data. Attributes on the other hand do not help identifying statistical data, but add useful information (like the unit of measure or the number of decimals). In order to perform granular data queries, one must know the concepts that are used as dimensions, as well as their allowed values (as defined in the codelists).
 - `Dataflows`: Dataflows represent the data that cover a particular domain (such as, for example, balance of payments). A *dataflow* provides a reference to the data structure definition that applies for a particular domain, thereby indicating how the data for that domain will look like.
-- `Organisation schemes`: Organisations that play a role in a particular statistical context are defined in *organisation schemes*. The type of organisation scheme will depend on the role played by a particular organisation (*data consumer*, *data provider*, *maintenance agency*). Organisations that define the metadata used in a particular context are known as maintenance agencies and are grouped together in an agency scheme.
 
 Structure queries in SDMX allow you to retrieve structural metadata at various levels of granularity, from all structural metadata available in the source to a single code from a particular version of a particular codelist maintained by a particular agency.
 
@@ -24,7 +23,7 @@ For item schemes, an additional path parameter (itemID) is permissible.
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
-artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist, organisationscheme, agencyscheme, dataproviderscheme, metadataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, metadataprovisionagreement, structuremap, representationmap, conceptschememap,categoryschememap, organisationschememap, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned. | * | No
+artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist,  agencyscheme, dataproviderscheme, metadataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, metadataprovisionagreement, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned. | * | No
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `,` as separator (e.g. BIS,ECB). | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `,` as separator (e.g. CL_FREQ,CL_CONF_STATUS). | * | Yes
 version | A string compliant with the SDMX *semantic versioning* rules | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1.7). | ~ | Yes
@@ -39,7 +38,6 @@ As mentioned, `itemID` can be used for item scheme queries only! These are:
 - categoryscheme
 - conceptscheme
 - codelist
-- organisationscheme
 - agencyscheme
 - dataproviderscheme
 - metadataproviderscheme
