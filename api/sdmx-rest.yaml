@@ -583,12 +583,13 @@ components:
         type: string
         enum:
           [
+            full,
             allstubs,
             referencestubs,
-            referencepartial,
             allcompletestubs,
             referencecompletestubs,
-            full,
+            referencepartial,
+            raw
           ]
         default: full
     metaDetail:
