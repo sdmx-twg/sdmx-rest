@@ -44,7 +44,6 @@ co | Contains |
 nc | Does not contain |
 sw | Starts with |
 ew | Ends with |
-nd | And |
 
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
 
