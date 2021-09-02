@@ -38,9 +38,8 @@ co | Contains |
 nc | Does not contain |
 sw | Starts with |
 ew | Ends with |
-nd | And |
 
-Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01,le:2020-12`).
+Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
 
 As already mentioned, the response from the Data Availability API is an SDMX DataConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data.  These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
 

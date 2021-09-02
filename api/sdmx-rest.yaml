@@ -62,7 +62,8 @@ paths:
         - $ref: '#/components/parameters/firstNObservations'
         - $ref: '#/components/parameters/lastNObservations'
         - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/detail'
+        - $ref: '#/components/parameters/attributes'
+        - $ref: '#/components/parameters/measures'
         - $ref: '#/components/parameters/includeHistory'
         - $ref: '#/components/parameters/accept-encoding'
         - $ref: '#/components/parameters/accept-language'
@@ -287,7 +288,6 @@ components:
             categoryscheme,
             hierarchy,
             hierarchyassociation,
-            organisationscheme,
             agencyscheme,
             dataproviderscheme,
             dataconsumerscheme,
@@ -304,6 +304,7 @@ components:
             conceptschememap,
             categoryschememap,
             organisationschememap,
+            reportingtaxonomymap,
             "*",
           ]
     itemSchemeType:
@@ -318,7 +319,6 @@ components:
             conceptscheme,
             codelist,
             categoryscheme,
-            organisationscheme,
             agencyscheme,
             dataproviderscheme,
             dataconsumerscheme,
@@ -486,9 +486,8 @@ components:
         nc | Does not contain |
         sw | Starts with |
         ew | Ends with |
-        nd | And |
 
-        Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01,le:2020-12`).
+        Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
       required: false
       schema:
         type: object
@@ -532,18 +531,31 @@ components:
       schema:
         type: string
         pattern: '^[A-Za-z][A-Za-z\d_-]*$'
-    detail:
+    attributes:
       in: query
-      name: detail
+      name: attributes
       description: |
-        The desired amount of information to be returned. 
+        The attributes to be returned. 
         
         For example, it is possible to instruct the web service to return data only (i.e. no attributes).
       required: false
       schema:
-        type: string
-        enum: [full, dataonly, serieskeysonly, nodata]
-        default: full
+        type: array
+        items:
+          type: string
+      style: form
+      explode: false
+    measures:
+      in: query
+      name: measures
+      description: The measures to be returned. 
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      style: form
+      explode: false
     includeHistory:
       in: query
       name: includeHistory
@@ -570,12 +582,13 @@ components:
         type: string
         enum:
           [
+            full,
             allstubs,
             referencestubs,
-            referencepartial,
             allcompletestubs,
             referencecompletestubs,
-            full,
+            referencepartial,
+            raw
           ]
         default: full
     metaDetail:
@@ -614,7 +627,6 @@ components:
               codelist,
               hierarchy,
               hierarchyassociation,
-              organisationscheme,
               agencyscheme,
               dataproviderscheme,
               dataconsumerscheme,
@@ -640,6 +652,7 @@ components:
               conceptschememap,
               categoryschememap,
               organisationschememap,
+              reportingtaxonomymap
             ]
           default: none
       style: form
