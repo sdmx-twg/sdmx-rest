@@ -1,0 +1,820 @@
+openapi: 3.0.0
+info:
+  version: '2.0.0'
+  title: 'SDMX RESTful API, v2.0.0'
+  description: |
+    The RESTful API for SDMX 3.0.
+    
+    For additional information, check the [documentation](https://github.com/sdmx-twg/sdmx-rest/tree/develop/v2_1/ws/rest/docs).
+servers:
+  - description: Mock implementation (just for demo purposes!)
+    url: https://localhost/
+
+x-commons:
+  common_responses: &common_responses
+    '304':
+      $ref: '#/components/responses/304'
+    '400':
+      $ref: '#/components/responses/400'
+    '401':
+      $ref: '#/components/responses/401'
+    '403':
+      $ref: '#/components/responses/403'
+    '404':
+      $ref: '#/components/responses/404'
+    '406':
+      $ref: '#/components/responses/406'
+    '413':
+      $ref: '#/components/responses/413'
+    '414':
+      $ref: '#/components/responses/414'
+    '500':
+      $ref: '#/components/responses/500'
+    '501':
+      $ref: '#/components/responses/501'
+    '503':
+      $ref: '#/components/responses/503'
+
+paths:
+  /data/{context}/{agencyID}/{resourceID}/{version}/{key}:
+    get:
+      summary: 'Data queries'
+      tags: 
+        - Data queries
+      description: |
+        Data queries allow **retrieving statistical data**. 
+        
+        Entire datasets can be retrieved or individual observations, or anything in between, using filters on dimensions (including time), attributes and/or measures. 
+        
+        All data matching a query can be retrieved or only the data that has changed since the last time the same query was performed. 
+        
+        Using the _includeHistory_ parameter, it is also possible to retrieve previous versions of the data. 
+        
+        Last but not least, the data retrieved can be packaged in different ways (as time series, cross-sections or as a table), in a variety of formats (JSON, XML, CSV, etc.).
+      parameters:
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/key'
+        - $ref: '#/components/parameters/c'
+        - $ref: '#/components/parameters/updatedAfter'
+        - $ref: '#/components/parameters/firstNObservations'
+        - $ref: '#/components/parameters/lastNObservations'
+        - $ref: '#/components/parameters/dimensionAtObservation'
+        - $ref: '#/components/parameters/attributes'
+        - $ref: '#/components/parameters/measures'
+        - $ref: '#/components/parameters/includeHistory'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200'
+
+  /availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentID}:
+    get:
+      summary: 'Data availability queries'
+      tags: 
+        - Data queries
+      description: |
+        See which data would match a query, without actually retrieving these data.
+
+        This can be used, for example, to build a data query form that enables users of the UI to create a data query by selecting dimension values. 
+        For example the user is able to click 'Reporting Country' and then select the codes 'United Kingdom', 'Greece', and 'Switzerland'.
+
+        The query returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
+        the query itself is more akin to a data query.
+      parameters:
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/key'
+        - $ref: '#/components/parameters/componentID'
+        - $ref: '#/components/parameters/c'
+        - $ref: '#/components/parameters/mode'
+        - $ref: '#/components/parameters/acreferences'
+        - $ref: '#/components/parameters/updatedAfter'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-struct'
+
+  /schema/{context}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Data validity queries'
+      description: |
+        Data validity queries (aka schema queries) allow retrieving **the definition of data validity for a certain context**. 
+        
+        The service must take into account the constraints that apply within that context (e.g. dataflow).
+        
+        This is typically used for **validation and/or communication purposes**, for example as a way to inform providers about the data they are expected to report.
+      tags: 
+        - Data queries
+      parameters:
+        - $ref: '#/components/parameters/context'
+        - $ref: '#/components/parameters/agencyID'
+        - $ref: '#/components/parameters/resourceID'
+        - $ref: '#/components/parameters/version'
+        - $ref: '#/components/parameters/dimensionAtObservation'
+        - $ref: '#/components/parameters/explicitMeasure'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-schemas'
+
+  /structure/{structureType}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Structure queries'
+      tags: 
+        - Structure queries
+      description: |
+        Structure queries allow **retrieving structural metadata**.
+
+        Structure queries in SDMX allow you to retrieve structural metadata at various levels of granularity, from all structural metadata available in the source to a single code from a particular version of a particular codelist maintained by a particular agency.
+      parameters:
+        - $ref: '#/components/parameters/structureType'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-struct'
+
+  /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
+    get:
+      summary: 'Item Scheme queries'
+      tags: 
+        - Structure queries
+      description: |
+        Item queries extend structure queries by allowing to retrieve items in item schemes such as particular codes in a codelist.
+      parameters:
+        - $ref: '#/components/parameters/itemSchemeType'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/items'
+        - $ref: '#/components/parameters/references'
+        - $ref: '#/components/parameters/structDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-struct'
+
+  /metadata/structure/{structureType}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Metadata queries (by structure)'
+      tags: 
+        - Reference metadata queries
+      description: |
+        These queries enable clients to request all metadata sets which are reported against one or more structures.
+        
+        As such the syntax for defining which structures to find metadata for follows the same syntax as the structure queries.
+      parameters:
+        - $ref: '#/components/parameters/structureType'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
+  /metadata/metadataflow/{agencyID}/{resourceID}/{version}/{providerID}:
+    get:
+      summary: 'Metadata queries (by metadataflow)'
+      tags: 
+        - Reference metadata queries
+      description: |
+        These queries enable clients to find metadatasets by the collection (metadataflow), optionally filtered by the metadata provider.
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/providers'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
+  /metadata/metadataset/{providerID}/{resourceID}/{version}:
+    get:
+      summary: 'Metadata queries (by metadatasets)'
+      tags: 
+        - Reference metadata queries
+      description: |
+        These queries enable clients to find metadatasets by the identification of the metadataset, enabling clients to checkout specific reports.
+      parameters:
+        - $ref: '#/components/parameters/providers'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/metaDetail'
+        - $ref: '#/components/parameters/accept-encoding'
+        - $ref: '#/components/parameters/accept-language'
+        - $ref: '#/components/parameters/if-modified-since'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+components:
+  parameters:
+    dataContext:
+      in: path
+      name: context
+      description: The context for data retrieval. All possible contexts can be selected using `*`.
+      required: true
+      schema:
+        type: string
+        enum: [datastructure, dataflow, provisionagreement, "*"]
+    key:
+      in: path
+      name: key
+      description: |
+        The combination of dimension values identifying series or slices of the cube (for example `D.USD.EUR.SP00.A`).
+
+        Multiple values are possible. Wildcards are supported using `*` (`D.*.EUR.SP00.A`).
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^(\*|\S+)$'
+      style: simple
+    structureType:
+      in: path
+      name: structureType
+      description: The type of structural metadata (e.g. codelist, dataflow, etc.)
+      required: true
+      schema:
+        type: string
+        enum:
+          [
+            datastructure,
+            metadatastructure,
+            dataflow,
+            metadataflow,
+            provisionagreement,
+            structureset,
+            process,
+            categorisation,
+            dataconstraint,
+            metadataconstraint,
+            conceptscheme,
+            codelist,
+            categoryscheme,
+            hierarchy,
+            hierarchyassociation,
+            agencyscheme,
+            dataproviderscheme,
+            dataconsumerscheme,
+            organisationunitscheme,
+            transformationscheme,
+            rulesetscheme,
+            userdefinedoperatorscheme,
+            customtypescheme,
+            namepersonalisationscheme,
+            vtlmappingscheme,
+            valuelist,
+            structuremap,
+            representationmap,
+            conceptschememap,
+            categoryschememap,
+            organisationschememap,
+            reportingtaxonomymap,
+            "*",
+          ]
+    itemSchemeType:
+      in: path
+      name: itemSchemeType
+      description: The type of item scheme (e.g. codelist, agencyscheme, etc.)
+      required: true
+      schema:
+        type: string
+        enum:
+          [
+            conceptscheme,
+            codelist,
+            categoryscheme,
+            agencyscheme,
+            dataproviderscheme,
+            dataconsumerscheme,
+            organisationunitscheme,
+            transformationscheme,
+            rulesetscheme,
+            userdefinedoperatorscheme,
+            customtypescheme,
+            namepersonalisationscheme,
+            vtlmappingscheme,
+            valuelist,
+            "*",
+          ]
+    context:
+      in: path
+      name: context
+      description: The context for data validity retrieval.
+      required: true
+      schema:
+        type: string
+        enum:
+          [
+            datastructure,
+            metadatastructure,
+            dataflow,
+            metadataflow,
+            provisionagreement,
+          ]
+    agencyID:
+      in: path
+      name: agencyID
+      description: The maintainer of the artefact.
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*$'
+    resourceID:
+      in: path
+      name: resourceID
+      description: The artefact ID.
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z\d_@$-]+$'
+    version:
+      in: path
+      name: version
+      description: |
+        The version of the artefact.
+
+        `+` can be used to retrieve the latest stable version.
+
+        `~` can be used to retrieve the latest version, regardless of its status (stable, draft, etc.).
+      
+      required: true
+      schema:
+        type: string
+        pattern: '^\+|~|(0|[1-9]\d*[\+~]?|[\+~]?)\.(0|[1-9]\d*[\+~]?|[\+~]?)\.?(0|[1-9]\d*[\+~]?|[\+~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
+    agencies:
+      in: path
+      name: agencyID
+      description: |
+        The maintainer(s) of the artefacts.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available maintainers.
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^\*|[A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*$'
+      style: simple
+    providers:
+      in: path
+      name: providerID
+      description: | 
+        The provider of metadata.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available providers.
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^\*|[A-Za-z][A-Za-z\d_-]*(\.[A-Za-z][A-Za-z\d_-]*)*$'
+      style: simple
+    resourceIDs:
+      in: path
+      name: resourceID
+      description: |
+        The artefact ID(s).
+
+        Multiple values are possible and `*` can be used as shortcut to select all available artefacts.
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^\*|[A-Za-z\d_@$-]+$'
+      style: simple
+    versions:
+      in: path
+      name: version
+      description: |
+        The version(s) of the artefact.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available artefacts.
+
+        `+` can be used to retrieve the latest stable version.
+
+        `~` can be used to retrieve the latest version, regardless of its status (stable, draft, etc.).
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^(\*\+|~|\*|(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.?(0|[1-9]\d*[\+\*~]?|[\+\*~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
+      style: simple
+    items:
+      in: path
+      name: itemID
+      description: |
+        The id of the item to be returned. 
+
+        Multiple values are possible and `*` can be used as shortcut to select all items.
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+      style: simple
+    componentID:
+      in: path
+      name: componentID
+      description: |
+        The ID of the dimension for which to obtain availability information.
+
+        Multiple values are possible and `*` can be used as shortcut to select all available dimensions.
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: '^\*|[A-Za-z][A-Za-z\d_-]*$'
+      style: simple
+    c:
+      in: query
+      name: c
+      description: |
+        Filter data by component value (e.g. c[FREQ]=A).
+
+        Multiple values are supported.
+
+        In addition, operators may be used:
+
+        Operator | Meaning | Note
+        -- | -- | --
+        eq | Equals | Default if no operator is specified and there is only one value (e.g. `c[FREQ]=M` is equivalent to `c[FREQ]=eq:M`)
+        ne | Not equal to |
+        lt | Less than |
+        le | Less than or equal to |
+        gt | Greater than |
+        ge | Greater than or equal to |
+        co | Contains |
+        nc | Does not contain |
+        sw | Starts with |
+        ew | Ends with |
+
+        Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
+      required: false
+      schema:
+        type: object
+      style: deepObject
+      explode: true
+    updatedAfter:
+      in: query
+      name: updatedAfter
+      description: |
+        The last time the query was performed by the client. 
+        
+        If this parameter is used, the returned message should only include the dimension values for the data that have changed since that point in time (updates and revisions).
+      required: false
+      schema:
+        type: string
+        format: date-time
+    firstNObservations:
+      in: query
+      name: firstNObservations
+      description: The maximum number of observations to be returned for each of the matching series, starting from the first observation.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    lastNObservations:
+      in: query
+      name: lastNObservations
+      description: The maximum number of observations to be returned for each of the matching series, counting back from the most recent observation.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    dimensionAtObservation:
+      in: query
+      name: dimensionAtObservation
+      description: |
+        The ID of the dimension to be attached at the observation level. 
+        
+        This parameter allows the client to indicate how the data should be packaged by the service.
+      required: false
+      schema:
+        type: string
+        pattern: '^[A-Za-z][A-Za-z\d_-]*$'
+    attributes:
+      in: query
+      name: attributes
+      description: |
+        The attributes to be returned. 
+        
+        For example, it is possible to instruct the web service to return data only (i.e. no attributes).
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      style: form
+      explode: false
+    measures:
+      in: query
+      name: measures
+      description: The measures to be returned. 
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      style: form
+      explode: false
+    includeHistory:
+      in: query
+      name: includeHistory
+      description: |
+        This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality).
+      required: false
+      schema:
+        type: boolean
+        default: false
+    explicitMeasure:
+      in: query
+      name: explicitMeasure
+      description: For cross-sectional data validation, indicates whether observations are strongly typed.
+      required: false
+      schema:
+        type: boolean
+        default: false
+    structDetail:
+      in: query
+      name: detail
+      description: The desired amount of information to be returned. 
+      required: false
+      schema:
+        type: string
+        enum:
+          [
+            full,
+            allstubs,
+            referencestubs,
+            allcompletestubs,
+            referencecompletestubs,
+            referencepartial,
+            raw
+          ]
+        default: full
+    metaDetail:
+      in: query
+      name: detail
+      description: The amount of information to be returned.
+      required: false
+      schema:
+        type: string
+        enum: [allstubs, full]
+        default: full
+    references:
+      in: query
+      name: references
+      description: |
+        Instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), 
+        as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query).
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            [
+              none,
+              parents,
+              parentsandsiblings,
+              ancestors,
+              children,
+              descendants,
+              all,
+              datastructure,
+              metadatastructure,
+              categoryscheme,
+              conceptscheme,
+              codelist,
+              hierarchy,
+              hierarchyassociation,
+              agencyscheme,
+              dataproviderscheme,
+              dataconsumerscheme,
+              organisationunitscheme,
+              dataflow,
+              metadataflow,
+              reportingtaxonomy,
+              provisionagreement,
+              structureset,
+              process,
+              categorisation,
+              dataconstraint,
+              metadataconstraint,
+              transformationscheme,
+              rulesetscheme,
+              userdefinedoperatorscheme,
+              customtypescheme,
+              namepersonalisationscheme,
+              namealiasscheme,
+              valuelist,
+              structuremap,
+              representationmap,
+              conceptschememap,
+              categoryschememap,
+              organisationschememap,
+              reportingtaxonomymap
+            ]
+          default: none
+      style: form
+      explode: false
+    mode:
+      in: query
+      name: mode
+      description: |
+        Instructs the web service to return a ContentConstraint which defines a Cube Region containing values which will be returned by executing the query (`exact`) vs a Cube Region showing what values remain valid selections that could be added to the data query (`available`).
+      required: false
+      schema:
+        type: string
+        enum: [exact, available]
+        default: exact
+    acreferences:
+      in: query
+      name: references
+      description: |
+        Instructs the web service to return (or not) the artefacts referenced by the ContentConstraint to be returned.
+
+        Multiple values are supported.
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            [
+              none,
+              all,
+              datastructure,
+              conceptscheme,
+              codelist,
+              dataproviderscheme,
+              dataflow,
+            ]
+          default: none
+      style: form
+      explode: false
+    accept-encoding:
+      in: header
+      name: Accept-Encoding
+      schema:
+        type: string
+        enum: [br, compress, deflate, exi, gzip, identity, pack200-gzip, zstd]
+        default: identity
+    accept-language:
+      in: header
+      name: Accept-Language
+      schema:
+        type: string
+    if-modified-since:
+      in: header
+      name: If-Modified-Since
+      schema:
+        type: string
+        format: date-time
+
+  responses:
+    "200":
+      description: OK
+      content:
+        application/vnd.sdmx.data+json;version=2.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.data+csv;version=2.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.data+xml;version=3.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.genericdata+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structurespecificdata+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.generictimeseriesdata+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.data+csv;version=1.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.data+json;version=1.0.0:
+          schema:
+            type: string
+    "200-schemas":
+      description: OK
+      content:
+        application/vnd.sdmx.schema+xml;version=3.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+xml;version=3.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+json;version=2.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.schema+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+json;version=1.0.0:
+          schema:
+            type: string
+    "200-struct":
+      description: OK
+      content:
+        application/vnd.sdmx.structure+xml;version=3.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+json;version=2.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+json;version=1.0.0:
+          schema:
+            type: string
+    "200-meta":
+      description: OK
+      content:
+        application/vnd.sdmx.metadata+json;version=2.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.metadata+xml;version=3.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.metadata+csv;version=1.0.0:
+          schema:
+            type: string
+        application/vnd.sdmx.genericmetadata+xml;version=2.1:
+          schema:
+            type: string
+        application/vnd.sdmx.structurespecificmetadata+xml;version=2.1:
+          schema:
+            type: string
+    "304":
+      description: No changes
+    "400":
+      description: Bad syntax
+    "401":
+      description: Unauthorized
+    "403":
+      description: Forbidden
+    "404":
+      description: Not found
+    "406":
+      description: Not acceptable
+    "413":
+      description: Request entity too large
+    "414":
+      description: URI too long
+    "500":
+      description: Internal server error
+    "501":
+      description: Not implemented
+    "503":
+      description: Service unavailable
