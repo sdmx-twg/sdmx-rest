@@ -278,7 +278,6 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
-            structureset,
             process,
             categorisation,
             dataconstraint,
@@ -305,6 +304,9 @@ components:
             categoryschememap,
             organisationschememap,
             reportingtaxonomymap,
+            metadataproviderscheme,
+            reportingtaxonomy,
+            metadataprovisionagreement
             "*",
           ]
     itemSchemeType:
