@@ -30,6 +30,12 @@ Usually, clients will indicate the precise version of the format they support (f
 
 However, clients may also use semantic versioning, to indicate that they are capable of handling any version matching the supplied semantic versioning string (e.g. `2.3+.1`).
 
+Examples:
+
+- application/vnd.sdmx.structure+xml;version=3.0.0+
+- application/vnd.sdmx.data+json;version=2.3+.1
+- application/vnd.sdmx.data+csv;version=2+.0.1
+
 For additional information about semantic versioning in SDMX, please refer to [Section 06 (Technical Notes)](https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_6_FINAL-1_0.pdf) of the SDMX 3.0 Documentation package.
 
 ## Selection of the appropriate language
