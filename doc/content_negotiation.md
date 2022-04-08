@@ -24,6 +24,14 @@ The full list of media types is available in the _Response types_ section of the
 - [Schema queries](schema.md#response-types)
 - [Data availability queries](availability.md#response-types)
 
+## Selection of the appropriate version
+
+Usually, clients will indicate the precise version of the format they support (for example, version 2.0.0 of SDMX-JSON). 
+
+However, clients may also use semantic versioning, to indicate that they are capable of handling any version matching the supplied semantic versioning string (e.g. `2.3+.1`).
+
+For additional information about semantic versioning in SDMX, please refer to [Section 06 (Technical Notes)](https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_6_FINAL-1_0.pdf) of the SDMX 3.0 Documentation package.
+
 ## Selection of the appropriate language
 
 The [Accept-Language header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the language preferences of the client. Multiple values, along with their respective weights, are possible. For example:
