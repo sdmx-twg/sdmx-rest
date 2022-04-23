@@ -82,3 +82,26 @@ Capital letters `X`, `Y`, `Z` and `EXT` are used for the queried version parts a
 Any of the version query strings above can be combined with the OR operator (`,`). For example:
 - `1~.2.0,1.2.0+`
 - `+,1.2.1*` 
+
+## Unsupported syntax
+
+The following version query syntax cannot be correctly interpreted and is **not supported**.
+
+Using a positive number in version parts after a part that is fully wildcarded with `+`, `~` or `*`:  
+- `+.2.3` Use `+.0.0` instead. 
+- `1.+.3` Use `1.+.0` instead.
+- `~.2` Use `~.0` instead.
+- `~.2.3` Use `~.0.0` instead.
+- `1.~.3` Use `1.~.0` instead.
+- `*.2` Use `*.0` instead.
+- `*.2.3` Use `*.0.0` instead.
+- `1.*.3` Use `1.*.0` instead.
+
+Using `+` (querying for stable versions always having 3 parts) with only 2 version parts:  
+- `+.0` Use `+` or `+.0.0` instead.
+- `2.3+` Use `2.3+.0` instead.
+
+Using two or more of the `+`, `~` or `*` wildcard operators within the same version:  
+- `~.0.*` Use `~` or `~.0.0` instead.
+- `3.2*.1+` Use `3.2*.1`, `3.2.1+` or `3.2*.1,3.2.1+` instead.
+- `3.2+.1+` Use `3.2+.1` instead.
