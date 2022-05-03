@@ -15,7 +15,7 @@ Parameter | Type | Description | Default
 **context** | One of `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement`, `metadataprovisionagreement` | This parameter determines the constraints that need to be taken into account. Multiple constraints may need to be considered, depending on the selected value. For example, if dataflow is used, constraints attached to the dataflow and the DSD used by the dataflow must be considered when generating the schema. |
 **agencyID** | A string compliant with the *SDMX common:NCNameIDType* | The agency maintaining the artefact that defines the data validity. |
 **resourceID** | A string compliant with the SDMX *common:IDType* | The id of the artefact defining the data validity. |
-version | A string compliant with the SDMX *semantic versioning* rules| The version of the artefact defining the data validity. | `~`
+version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact defining the data validity. | `~`
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level. |
 
 Note: Mandatory parameters are highlighted in **bold**.
