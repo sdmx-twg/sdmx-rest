@@ -345,6 +345,7 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
+            metadataprovisionagreement,
           ]
     agencyID:
       in: path
