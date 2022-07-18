@@ -122,7 +122,6 @@ paths:
         - $ref: '#/components/parameters/resourceID'
         - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/explicitMeasure'
         - $ref: '#/components/parameters/accept-encoding'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
@@ -348,6 +347,7 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
+            metadataprovisionagreement,
           ]
     agencyID:
       in: path
@@ -563,14 +563,6 @@ components:
       name: includeHistory
       description: |
         This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality).
-      required: false
-      schema:
-        type: boolean
-        default: false
-    explicitMeasure:
-      in: query
-      name: explicitMeasure
-      description: For cross-sectional data validation, indicates whether observations are strongly typed.
       required: false
       schema:
         type: boolean
