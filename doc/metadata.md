@@ -105,8 +105,6 @@ The following media types can be used with _reference metadata_ queries:
 
 - **application/vnd.sdmx.metadata+json;version=2.0.0**
 - application/vnd.sdmx.metadata+xml;version=3.0.0
-- application/vnd.sdmx.metadata+csv;version=1.0.0
-- application/vnd.sdmx.genericmetadata+xml;version=2.1
-- application/vnd.sdmx.structurespecificmetadata+xml;version=2.1
+- application/vnd.sdmx.metadata+csv;version=2.0.0
 
-The default format is highlighted in **bold**.
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.

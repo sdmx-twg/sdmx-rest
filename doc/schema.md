@@ -24,15 +24,12 @@ Note: Mandatory parameters are highlighted in **bold**.
 
 The following media types can be used with _schema_ queries:
 
-- **application/vnd.sdmx.schema+json;version=3.0.0**
+- **application/vnd.sdmx.schema+json;version=2.0.0**
 - application/vnd.sdmx.schema+xml;version=3.0.0
 - application/vnd.sdmx.structure+xml;version=3.0.0
 - application/vnd.sdmx.structure+json;version=2.0.0
-- application/vnd.sdmx.schema+xml;version=2.1
-- application/vnd.sdmx.structure+xml;version=2.1
-- application/vnd.sdmx.structure+json;version=1.0.0
 
-The default format is highlighted in **bold**.
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 The _schema_ formats are meant to be used for **validation** purposes (i.e. to validate SDMX-ML and SDMX-JSON data files).
 
