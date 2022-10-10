@@ -54,14 +54,8 @@ The following media types can be used with _data_ queries:
 - **application/vnd.sdmx.data+json;version=2.0.0**
 - application/vnd.sdmx.data+xml;version=3.0.0
 - application/vnd.sdmx.data+csv;version=2.0.0;labels=[id|name|both];timeFormat=[original|normalized];keys=[none|obs|series|both]
-- application/vnd.sdmx.genericdata+xml;version=2.1
-- application/vnd.sdmx.structurespecificdata+xml;version=2.1
-- application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
-- application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
-- application/vnd.sdmx.data+json;version=1.0.0
-- application/vnd.sdmx.data+csv;version=1.0.0;labels=[id|both];timeFormat=[original|normalized]
 
-The default format is highlighted in **bold**.
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
 

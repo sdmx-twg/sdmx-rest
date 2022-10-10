@@ -150,11 +150,9 @@ For example, a dataflow only references a data structure definition and, in addi
 The following media types can be used with _structure_ queries:
 
 - **application/vnd.sdmx.structure+json;version=2.0.0**
-- application/vnd.sdmx.structure+json;version=1.0.0
 - application/vnd.sdmx.structure+xml;version=3.0.0
-- application/vnd.sdmx.structure+xml;version=2.1
 
-The default format is highlighted in **bold**.
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 ## Examples of queries
 
