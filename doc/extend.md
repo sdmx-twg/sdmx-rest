@@ -18,7 +18,7 @@ Apart from the behaviour and order of precedence in regard to the standard REST 
 
 REST APIs have become popular, not only for their simplicity and power, but also for being intuitive and easy to use through a web browser. Nevertheless, there is one important aspect of the SDMX REST API that is not available to end users via browsers, like the format and version of the returned resource.
 
-Currently, the SDMX REST API uses the [HTTP content negotiation](conneg.md) mechanism to allow clients to select the resource representation to be returned.
+Currently, the SDMX REST API uses the [HTTP content negotiation](content_negotiation.md) mechanism to allow clients to select the resource representation to be returned.
 
 The problem is that end users, on their browser, cannot set the HTTP `Accept` header, unless they use a dedicated extension (aka plugin) such as Postman; hence, they are always presented with the default representation that the specific web service implementation has. For this use case, some providers of SDMX REST web services have extended their API to make it easier for end users to select the required representation.
 
@@ -26,7 +26,7 @@ The problem is that end users, on their browser, cannot set the HTTP `Accept` he
 
 As an example of extending the SDMX REST API, a proposal for new query parameters is presented here. Since the normative way of the SDMX REST specifications for requesting representation is the HTTP content negotiation mechanism and, in principle, the API should not specify the same functionality in alternative ways, this proposal should be treated as an example of how to extend the API and not as a normative part of the standard.
 
-The *mime-types* for the `Accept` header, as specified by the SDMX REST API, may be found [here](conneg.md). They follow the following pattern:
+The *mime-types* for the `Accept` header, as specified by the SDMX REST API, may be found [here](content_negotiation.md). They follow the following pattern:
 `application/vnd.sdmx.<representation>+<format>;version=<version>`, where:
 
 - `<representation>` is any of the available SDMX message types, e.g. structurespecific, compact, data, schema, etc.
@@ -54,7 +54,7 @@ The `format`, as explained above, represents a combination of the representation
 
 The `formatVersion` represents the version of the message format, for any format specified by the `format` query parameter.
 
-The versions per the available formats, may be found in the section [HTTP content negotiation](conneg.md).
+The versions per the available formats, may be found in the section [HTTP content negotiation](content_negotiation.md).
 
 ### Default behaviour
 
