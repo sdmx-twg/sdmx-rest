@@ -122,7 +122,6 @@ paths:
         - $ref: '#/components/parameters/resourceID'
         - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/explicitMeasure'
         - $ref: '#/components/parameters/accept-encoding'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
@@ -278,7 +277,6 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
-            structureset,
             process,
             categorisation,
             dataconstraint,
@@ -305,6 +303,9 @@ components:
             categoryschememap,
             organisationschememap,
             reportingtaxonomymap,
+            metadataproviderscheme,
+            reportingtaxonomy,
+            metadataprovisionagreement
             "*",
           ]
     itemSchemeType:
@@ -346,6 +347,7 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
+            metadataprovisionagreement,
           ]
     agencyID:
       in: path
@@ -435,7 +437,7 @@ components:
         type: array
         items:
           type: string
-          pattern: '^(\*\+|~|\*|(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.?(0|[1-9]\d*[\+\*~]?|[\+\*~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
+          pattern: '^(\+|~(\.0){0,2}|\*(\.0){0,2}|(0|[1-9]\d*)(\.(0|[1-9]\d*))?|(0|[1-9]\d*)(\.(0|[1-9]\d*)){2}(-(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*))(\.(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*)))*)?|\+\.0\.0|[1-9]\d*(\.\+\.0|\+(\.(0|[1-9]\d*)){2}|\.(0|[1-9]\d*)(\.\+|\+\.(0|[1-9]\d*)|\.(0|[1-9]\d*)\+))|(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*)){1,2}|\.(\*|~)(\.0)?|\.(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*))?|\.(0|[1-9]\d*)?(\*|~)))(,(\+|~(\.0){0,2}|\*(\.0){0,2}|(0|[1-9]\d*)(\.(0|[1-9]\d*))?|(0|[1-9]\d*)(\.(0|[1-9]\d*)){2}(-(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*))(\.(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*)))*)?|\+\.0\.0|[1-9]\d*(\.\+\.0|\+(\.(0|[1-9]\d*)){2}|\.(0|[1-9]\d*)(\.\+|\+\.(0|[1-9]\d*)|\.(0|[1-9]\d*)\+))|(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*)){1,2}|\.(\*|~)(\.0)?|\.(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*))?|\.(0|[1-9]\d*)?(\*|~)))))*)$'
       style: simple
     items:
       in: path
@@ -561,14 +563,6 @@ components:
       name: includeHistory
       description: |
         This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality).
-      required: false
-      schema:
-        type: boolean
-        default: false
-    explicitMeasure:
-      in: query
-      name: explicitMeasure
-      description: For cross-sectional data validation, indicates whether observations are strongly typed.
       required: false
       schema:
         type: boolean

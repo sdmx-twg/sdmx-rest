@@ -15,7 +15,7 @@ Parameter | Type | Description | Default
 **context** | One of `datastructure`, `metadatastructure`, `dataflow`, `metadataflow`, `provisionagreement`, `metadataprovisionagreement` | This parameter determines the constraints that need to be taken into account. Multiple constraints may need to be considered, depending on the selected value. For example, if dataflow is used, constraints attached to the dataflow and the DSD used by the dataflow must be considered when generating the schema. |
 **agencyID** | A string compliant with the *SDMX common:NCNameIDType* | The agency maintaining the artefact that defines the data validity. |
 **resourceID** | A string compliant with the SDMX *common:IDType* | The id of the artefact defining the data validity. |
-version | A string compliant with the SDMX *semantic versioning* rules| The version of the artefact defining the data validity. | `~`
+version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact defining the data validity. | `~`
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level. |
 
 Note: Mandatory parameters are highlighted in **bold**.
@@ -24,15 +24,12 @@ Note: Mandatory parameters are highlighted in **bold**.
 
 The following media types can be used with _schema_ queries:
 
-- **application/vnd.sdmx.schema+json;version=3.0.0**
+- **application/vnd.sdmx.schema+json;version=2.0.0**
 - application/vnd.sdmx.schema+xml;version=3.0.0
 - application/vnd.sdmx.structure+xml;version=3.0.0
 - application/vnd.sdmx.structure+json;version=2.0.0
-- application/vnd.sdmx.schema+xml;version=2.1
-- application/vnd.sdmx.structure+xml;version=2.1
-- application/vnd.sdmx.structure+json;version=1.0.0
 
-The default format is highlighted in **bold**.
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 The _schema_ formats are meant to be used for **validation** purposes (i.e. to validate SDMX-ML and SDMX-JSON data files).
 
