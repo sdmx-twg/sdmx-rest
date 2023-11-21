@@ -49,7 +49,7 @@ The documentation is organized in the following sections:
 - [Schema queries](schema.md)
 - [Availability queries](availability.md)
 - [Query syntax for versions](querying_versions.md)
-- [Content-Negotiation](conneg.md)
+- [Content-Negotiation](content_negotiation.md)
 - [Status codes](status.md)
 - [Structure maintenance](maintenance.md)
 - [Tips for providers and consumers](tips.md)
