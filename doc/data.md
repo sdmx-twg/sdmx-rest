@@ -7,7 +7,7 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 ## Syntax
 
     protocol://ws-entry-point/data/{context}/{agencyID}/{resourceID}/{version}/{key}?
-    {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}&{attributes}&{measures}&{includeHistory}
+    {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}&{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
@@ -24,6 +24,9 @@ dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | 
 attributes | String | This parameter specifies the attributes to be returned. Possible options are: `dsd` (all the attributes defined in the data structure definition), `msd` (all the reference metadata attributes), `dataset` (all the attributes attached to the dataset-level), `series` (all the attributes attached to the series-level), `obs` (all the attributes attached to the observation-level), `all` (all attributes), `none` (no attributes), `{attribute_id}`: The ID of one or more attributes the caller is interested in. |`dsd`| Yes
 measures | String | This parameter specifies the measures to be returned. Possible options are: `all` (all measures), `none` (no measure), `{measure_id}`: The ID of one or more measures the caller is interested in. |`all`| Yes
 includeHistory | Boolean | This parameter allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. | `false` | No
+offset | Positive integer | The number of observations to skip before beginning to return observations. | 0 | No
+limit | Positive integer | The maximum number of observations to be returned. If no limit is set, all matching observations must be returned. | | No
+sort | String | This parameter specifies the order in which the returned observations should be sorted. The syntax is the ID of the component, followed by a colon, followed by the sort order (`asc` pr `desc`, with `asc` being the default). For example, to sort the data by descending period: `sort=TIME_PERIOD:desc`. In case the default order (ascending) is preferred, it is allowed (but not mandatory) to add the sort order (i.e. `sort=TIME_PERIOD` and `sort=TIME_PERIOD:asc` are equivalent). The plus (`+`) can be used whenever there is a need to sort by more than one criteria. For example, to indicate that the data should sorted by ascending INDICATOR and descending TIME_PERIOD, use the following: `sort=INDICATOR+TIME_PERIOD:desc`. Last but not least, the keyword `series_key` can be used to sort the data by series key. If the sort parameter is not set, the sorting strategy (if any) is left at the discretion of the service provider. | | No 
 
 The following rules apply:
 
@@ -170,3 +173,11 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
     <message:DataSet action="Delete" validToDate="2014-11-05T15:30:00.000+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
 </message:GenericData>
 ```
+
+- Retrieve the first 100 observations, sorted by ascending series key and descending time period:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?offset=0&limit=100&sort=series_key:asc+TIME_PERIOD:desc
+
+  The above is equivalent to:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?limit=100&sort=series_key+TIME_PERIOD:desc
