@@ -93,7 +93,7 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
 
         https://ws-entry-point/data/?c[TITLE]=co:euro&attributes=none&measures=none
 
-- Retrieving deltas using `updatedAfter`:
+- Retrieve deltas using `updatedAfter`:
 
         https://ws-entry-point/data/dataflow/ECB/EXR?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
@@ -130,13 +130,13 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
 </message:GenericData>
 ```
 
-- Retrieving a limited amount of observations using `firstNObservations` and `lastNObservations`:
+- Retrieve a limited amount of observations using `firstNObservations` and `lastNObservations`:
 
         https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?lastNObservations=2
 
   Using the `firstNObservations` and/or `lastNObservations` parameters, it is possible to specify the **maximum number of observations** to be returned for each of the matching series, starting from the first observation (`firstNObservations`) or counting back from the most recent observation (`lastNObservations`). This can be useful for building an overview page, for example, where, for each indicator, you only display 2 values (the current one and the previous one).
 
-- Retrieving how a time series evolved over time using the `includeHistory` parameter:
+- Retrieve how a time series evolved over time using the `includeHistory` parameter:
 
         https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?includeHistory=true
 
