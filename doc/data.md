@@ -170,3 +170,20 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
     <message:DataSet action="Delete" validToDate="2014-11-05T15:30:00.000+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
 </message:GenericData>
 ```
+
+- Retrieve attributes, but no data, using the `attributes` and `measures` parameters:
+
+      https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD...?attributes=all&measures=none
+
+  Services must return **all attributes** relevant for the matching data. For example, let's assume the following DSD:
+
+  ![sc](https://user-images.githubusercontent.com/1846109/166638272-6ba7177f-6c0c-4fdf-8b2d-23db79ad21f4.png)
+
+  And let's assume the following dataset:
+  
+  ![sc2](https://user-images.githubusercontent.com/1846109/166638412-063b03a1-95e2-4ed0-afce-e342240e5dcd.png)
+
+  When querying for `D.CHF.*.*`, the first row (ignoring the header) would be matched. All attributes applying to this row must be returned, 
+  regardless of their attachment level, i.e. the response must include the dataflow-level (`UNIT_MULT`), the group-level (`DECIMALS`, `UNIT`), the 
+  series-level (`COLL`), and the observation-level (`OBS_STATUS`) attributes. `OBS_COM` can be ignored, as no value is available for this optional attribute.
+
