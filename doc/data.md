@@ -7,7 +7,8 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 ## Syntax
 
     protocol://ws-entry-point/data/{context}/{agencyID}/{resourceID}/{version}/{key}?
-    {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}&{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}
+    {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}
+    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
