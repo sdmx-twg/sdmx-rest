@@ -598,7 +598,7 @@ components:
 
         The plus (`+`) can be used whenever there is a need to sort by more than one component. 
 
-        For example, to indicate that the data should sorted by ascending INDICATOR and descending TIME_PERIOD, use the following: `sort=INDICATOR+TIME_PERIOD:desc`. 
+        For example, to sort the data by ascending INDICATOR and descending TIME_PERIOD: `sort=INDICATOR+TIME_PERIOD:desc`. 
 
         Last but not least, the keyword `series_key` can be used to sort the data by series key. 
 
