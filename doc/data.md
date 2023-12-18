@@ -213,5 +213,5 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
   M,USD,EUR,2021-09,1.032,0,4,USD,A,,A
   ```
 
-  When querying for `D.CHF.*.*`, the first data row would be matched. All attributes applying to this row must be returned, regardless of their attachment level, i.e. the response must include the dataflow-level (`UNIT_MULT`), the group-level (`DECIMALS`, `UNIT_MEAS`), the series-level (`COLL`), and the observation-level (`OBS_STATUS`) attributes. `OBS_COM` can be ignored, as no value is available for this optional attribute.
+  When querying for `D.CHF.*`, the first data row would be matched. All attributes applying to this row must be returned, regardless of their attachment level, i.e. the response must include the dataflow-level (`UNIT_MULT`), the group-level (`DECIMALS`, `UNIT_MEAS`), the series-level (`COLL`), and the observation-level (`OBS_STATUS`) attributes. `OBS_COM` can be ignored, as no value is available for this optional attribute.
 
