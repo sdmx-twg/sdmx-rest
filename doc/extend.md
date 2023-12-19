@@ -85,7 +85,7 @@ While format selection is probably the most obvious example of content-negotiati
 
 ## Conflict resolution
 
-Ideally, there must be one obvious and standard way (e.g. HTTP Content-Negtiation) to support a feature (e.g. selecting a format or the preferred language). While this works well for most programmatic cases, this approach is suboptimal in an interactive scenario where the client, a web browser, sets the behaviour on behalf of its users. 
+Ideally, there must be one obvious and standard way (e.g. HTTP Content-Negotiation) to support a feature (e.g. selecting a format or the preferred language). While this works well for most programmatic cases, this approach is suboptimal in an interactive scenario where the client, a web browser, sets the behaviour on behalf of its users. 
 
 For example, a web browser will typically set the Content-Negotiation headers to generic values such as:
 
