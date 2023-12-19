@@ -77,3 +77,12 @@ To retrieve an SDMX-ML 2.1 Codelist, using the representation query parameters:
 To retrieve a json dataset, using the representation query parameters:
 
     https://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A?format=jsondata&formatVersion=1.0.0
+
+## Other parameters used for Content-Negotiation
+
+While format selection is probably the most obvious example of content-negotiation (via the HTTP `Accept` header), there are other use cases, such as language selection or output encoding. As for format selection, the normative way for SDMX REST services to support such use cases is via the HTTP content negotiation mechanism. However, if there is a need to set this via a web browser without any plugin such as Postman, the following parameters should be considered:
+
+| Parameter | Function | Allowed values | Default behaviour |
+| --- | --- | --- | --- |
+| compression | Select the desired compression algorithm for the response | `gzip`, `compress`, `deflate`, `br` | If compression is not set, then the response must be returned without compression. If the selected compression algorithm is not supported by the service, it must return a `406` status code. 
+| lang | Select the preferred natural language for the response | An ISO 639 2-letter language code, optionally followed by an ISO 3166 2-letter country code, indicating the country variant (e.g. fr-CH, en, en-MT, es, es-AR). The keyword `all` can be used to indicate that all available languages should be returned. | If the preferred language is not available, the service must return a `406` status code. 
