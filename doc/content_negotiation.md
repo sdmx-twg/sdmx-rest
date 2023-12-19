@@ -2,6 +2,9 @@
 
 [HTTP Content Negotiation](http://www.w3.org/Protocols/rfc2616/rfc2616-sec12.html) is a mechanism offered by HTTP that allows clients to indicate their preferred representation, language, encoding, etc. for a resource.
 
+> [!TIP]
+> HTTP Content-Negotiation is the standard way to support features such as format or language selection. However, there are use cases where an alternative is required. Please check the [Extending the SDMX REST API](extend.md) section for additional information about the alternative way of supporting these features. 
+
 ## Format selection
 
 Using the HTTP Content Negotiation mechanism, the client specifies the desired format for the resource using the [Accept header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
