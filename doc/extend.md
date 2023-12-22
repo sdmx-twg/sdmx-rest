@@ -44,6 +44,7 @@ The `format`, as explained above, represents a combination of the representation
 - `structure` for all SDMX-ML Structural Metadata
 - `schema` for all SDMX XML Generated Schema
 - `jsondata` for the SDMX-JSON Dataset
+- `jsonstructure` for the SDMX-JSON Structural Metadata
 - `csvdata` for the SDMX-CSV Dataset
 
 #### The `formatVersion` query parameter
