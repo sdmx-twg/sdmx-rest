@@ -9,7 +9,7 @@ These queries enable clients to find a single Registration by its unique ID.
 ### Syntax 
         protocol://ws-entry-point/registration/id/{registrationId}
 
-### Examples
+### Example
 
 Retrieve all Registrations for the Registration with unique ID 'abcd-efgh-ijkl'
 
