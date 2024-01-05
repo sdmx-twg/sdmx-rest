@@ -31,10 +31,10 @@ Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is ther
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
-providerAgencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency which maintains the Data Provider, Registrations  should only be returned if the referenced Provision Agreement is for a Data Provider which is maintained in a Data Provider Scheme belonging to this Agency | * | Yes
-providerID | A string compliant with the SDMX *common:IDType* | The id of the Data Provider, Registrations  should only be returned if the referenced Provision Agreement is for a Data Provider with this ID | * | Yes
-updatedBefore | xs:dateTime | Optional parameter, if this parameter is used, the returned message should only include Registrations updated before this time (exclusive) | | No
-updatedAfter | xs:dateTime | Optional parameter, if this parameter is used, the returned message should only include Registrations updated after this time (exclusive)  | | No
+providerAgencyID | A string compliant with the SDMX *common:NCNameIDType* | Registrations  should only be returned if the referenced Provision Agreement is for a Data Provider which is maintained in a Data Provider Scheme belonging to this Agency | * | Yes
+providerID | A string compliant with the SDMX *common:IDType* | Registrations should only be returned if the referenced Provision Agreement is for a Data Provider with this ID | * | Yes
+updatedBefore | xs:dateTime | Optional parameter: if this parameter is used, the returned message should only include Registrations updated before this time (exclusive) | | No
+updatedAfter | xs:dateTime | Optional parameter: if this parameter is used, the returned message should only include Registrations updated after this time (exclusive)  | | No
 
 ### Examples of queries
 
