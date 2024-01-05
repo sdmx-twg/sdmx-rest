@@ -20,7 +20,7 @@ Retrieve all Registrations for the Registration with unique ID 'abcd-efgh-ijkl'
 
 ### Overview
 
-These queries enable clients to find all Registrations for the Data Provider.  The Data Provider is resolved through 
+These queries enable clients to find all Registrations by Data Provider.  The Data Provider is resolved through 
 the Provision Agreement that the Registration references.  
 
 Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is therefore possible to use this query to retrieve all Registrations.
