@@ -246,7 +246,7 @@ paths:
       tags: 
         - Registration queries
       description: |
-        These queries enable clients to request a data registration by it's unique identifier
+        These queries enable clients to request a data registration by its unique identifier
       parameters:
         - $ref: '#/components/parameters/resourceIDs'
       responses:
@@ -273,7 +273,7 @@ paths:
 
   /registration/{context}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Registration queries (by data provider ID)'
+      summary: 'Registration queries (by context)'
       tags: 
         - Registration queries
       description: |
