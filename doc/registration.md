@@ -42,7 +42,7 @@ Retrieve all Registrations for the UK1 Data Provider maintained in the IMF Data 
 
         https://ws-entry-point/registration/provider/IMF/UK1
         
-Retrieve all Registrations for the UK1 and UK2 Data Provider maintained in the IMF Data Provider Scheme
+Retrieve all Registrations for both the UK1 and UK2 Data Providers maintained in the IMF Data Provider Scheme
 
         https://ws-entry-point/registration/provider/IMF/UK1,UK2
 
