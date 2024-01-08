@@ -1,4 +1,10 @@
 # Data registration queries
+## Overview
+A Data Registration defines the Data Source for a Provision Agreement along with a last updated timestamp and a unique identifier.
+
+The Data Registration query API enables a client application to discover registered data sources by querying by either the unique ID of the Data Registration, or by filtering Data Registration by its Provision Agreement or the corresponding Dataflow, Data Structure Definition, or Data Provider. 
+
+
 
 ## By Registration ID
 
