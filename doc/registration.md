@@ -82,7 +82,7 @@ Retrieve all Registrations for the Balance Sheet Item (BSI) Dataflow maintained 
 
         https://ws-entry-point/registration/dataflow/ECB/BSI/1.0.0
         
-Retrieve all Registrations for the BSI and EXT Dataflows maintained by the ECB
+Retrieve all Registrations for the BSI and EXR Dataflows maintained by the ECB
 
         https://ws-entry-point/registration/dataflow/ECB/BSI,EXR/1.0.0
  
