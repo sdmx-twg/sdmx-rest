@@ -239,6 +239,57 @@ paths:
         <<: *common_responses
         '200':
           $ref: '#/components/responses/200-meta'
+
+  /registration/id/{registrationID}:
+    get:
+      summary: 'Registration queries (by registration ID)'
+      tags: 
+        - Registration queries
+      description: |
+        These queries enable clients to request a data registration by its unique identifier
+      parameters:
+        - $ref: '#/components/parameters/resourceIDs'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
+  /registration/provider/{agencyID}/{providerID}:
+    get:
+      summary: 'Registration queries (by data provider ID)'
+      tags: 
+        - Registration queries
+      description: |
+        These queries enable clients to request data registrations by data provider(s)
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/updatedBeforeReg'
+        - $ref: '#/components/parameters/updatedAfterReg'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
+  /registration/{context}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Registration queries (by context)'
+      tags: 
+        - Registration queries
+      description: |
+        These queries enable clients to request data registrations by data structure, dataflow, or provision agreement
+      parameters:
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/updatedBeforeReg'
+        - $ref: '#/components/parameters/updatedAfterReg'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'          
+          
 components:
   parameters:
     dataContext:
@@ -397,7 +448,7 @@ components:
       in: path
       name: providerID
       description: | 
-        The provider of metadata.
+        The provider of metadata or data.
 
         Multiple values are possible and `*` can be used as shortcut to select all available providers.
       required: true
@@ -701,6 +752,24 @@ components:
     if-modified-since:
       in: header
       name: If-Modified-Since
+      schema:
+        type: string
+        format: date-time
+    updatedBeforeReg:
+      in: query
+      name: updatedBefore
+      description: |
+        If this parameter is used, the returned message should only include data registrations updated before this period.
+      required: false
+      schema:
+        type: string
+        format: date-time        
+    updatedAfterReg:
+      in: query
+      name: updatedAfter
+      description: |
+        If this parameter is used, the returned message should only include data registrations updated after this period.
+      required: false
       schema:
         type: string
         format: date-time
