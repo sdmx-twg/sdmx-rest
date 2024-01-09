@@ -13,7 +13,7 @@ Parameter | Type | Description | Default | Multiple values?
 context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | * | No
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
-version | A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the artefact for which data have been reported. | * | Yes
+version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
 key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.\*.EUR.SP00.A | * | Yes
 componentId | A string compliant with the SDMX common: IDType | The id of the Dimension for which to obtain availability information about.  In the case where this information is not provided, data availability will be provided for all Dimensions. | * | Yes
 c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. In case of attributes that support multiple values, the plus (`+`) can be used to list all values that an attribute must have. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`) | | Yes
@@ -138,10 +138,10 @@ The following media types can be used with _availability_ queries:
 
 - **application/vnd.sdmx.structure+json;version=2.0.0**
 - application/vnd.sdmx.structure+xml;version=3.0.0
-- application/vnd.sdmx.structure+xml;version=2.1
-- application/vnd.sdmx.structure+json;version=1.0.0
 
 The default format is highlighted in **bold**.
+
+For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 ## Examples
 

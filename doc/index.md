@@ -31,8 +31,8 @@ Furthemore, the API supports several operators, which will be described in more 
 | Character | Meaning |
 | --- | --- |
 | `*` | All |
-| `+` | Latest stable version |
-| `~` | Latest version (whether stable, draft or unversioned) |
+| `+` | [Latest stable version](querying_versions.md#query-for-the-latest-stable-semantic-version) |
+| `~` | [Latest version (whether stable, draft or unversioned)](querying_versions.md#query-for-the-latest-possibly-unstable-version) |
 | `,` | Or |
 | `.` | Subpart separator |
 | `+` | Multivalues attribute |
@@ -48,7 +48,8 @@ The documentation is organized in the following sections:
 - [Reference metadata queries](metadata.md)
 - [Schema queries](schema.md)
 - [Availability queries](availability.md)
-- [Content-Negotiation](conneg.md)
+- [Query syntax for versions](querying_versions.md)
+- [Content-Negotiation](content_negotiation.md)
 - [Status codes](status.md)
 - [Structure maintenance](maintenance.md)
 - [Tips for providers and consumers](tips.md)

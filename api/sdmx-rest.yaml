@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  version: '2.0.0'
-  title: 'SDMX RESTful API, v2.0.0'
+  version: '2.1.0'
+  title: 'SDMX RESTful API, v2.1.0'
   description: |
     The RESTful API for SDMX 3.0.
     
-    For additional information, check the [documentation](https://github.com/sdmx-twg/sdmx-rest/tree/develop/v2_1/ws/rest/docs).
+    For additional information, check the [documentation](https://github.com/sdmx-twg/sdmx-rest/blob/master/doc/index.md).
 servers:
   - description: Mock implementation (just for demo purposes!)
     url: https://localhost/
@@ -122,7 +122,6 @@ paths:
         - $ref: '#/components/parameters/resourceID'
         - $ref: '#/components/parameters/version'
         - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/explicitMeasure'
         - $ref: '#/components/parameters/accept-encoding'
         - $ref: '#/components/parameters/if-modified-since'
       responses:
@@ -240,6 +239,57 @@ paths:
         <<: *common_responses
         '200':
           $ref: '#/components/responses/200-meta'
+
+  /registration/id/{registrationID}:
+    get:
+      summary: 'Registration queries (by registration ID)'
+      tags: 
+        - Registration queries
+      description: |
+        These queries enable clients to request a data registration by its unique identifier
+      parameters:
+        - $ref: '#/components/parameters/resourceIDs'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
+  /registration/provider/{agencyID}/{providerID}:
+    get:
+      summary: 'Registration queries (by data provider ID)'
+      tags: 
+        - Registration queries
+      description: |
+        These queries enable clients to request data registrations by data provider(s)
+      parameters:
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/updatedBeforeReg'
+        - $ref: '#/components/parameters/updatedAfterReg'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'
+
+  /registration/{context}/{agencyID}/{resourceID}/{version}:
+    get:
+      summary: 'Registration queries (by context)'
+      tags: 
+        - Registration queries
+      description: |
+        These queries enable clients to request data registrations by data structure, dataflow, or provision agreement
+      parameters:
+        - $ref: '#/components/parameters/dataContext'
+        - $ref: '#/components/parameters/agencies'
+        - $ref: '#/components/parameters/resourceIDs'
+        - $ref: '#/components/parameters/versions'
+        - $ref: '#/components/parameters/updatedBeforeReg'
+        - $ref: '#/components/parameters/updatedAfterReg'
+      responses:
+        <<: *common_responses
+        '200':
+          $ref: '#/components/responses/200-meta'          
+          
 components:
   parameters:
     dataContext:
@@ -278,7 +328,6 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
-            structureset,
             process,
             categorisation,
             dataconstraint,
@@ -305,6 +354,9 @@ components:
             categoryschememap,
             organisationschememap,
             reportingtaxonomymap,
+            metadataproviderscheme,
+            reportingtaxonomy,
+            metadataprovisionagreement
             "*",
           ]
     itemSchemeType:
@@ -346,6 +398,7 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
+            metadataprovisionagreement,
           ]
     agencyID:
       in: path
@@ -395,7 +448,7 @@ components:
       in: path
       name: providerID
       description: | 
-        The provider of metadata.
+        The provider of metadata or data.
 
         Multiple values are possible and `*` can be used as shortcut to select all available providers.
       required: true
@@ -435,7 +488,7 @@ components:
         type: array
         items:
           type: string
-          pattern: '^(\*\+|~|\*|(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.(0|[1-9]\d*[\+\*~]?|[\+\*~]?)\.?(0|[1-9]\d*[\+\*~]?|[\+\*~]?)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$'
+          pattern: '^(\+|~(\.0){0,2}|\*(\.0){0,2}|(0|[1-9]\d*)(\.(0|[1-9]\d*))?|(0|[1-9]\d*)(\.(0|[1-9]\d*)){2}(-(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*))(\.(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*)))*)?|\+\.0\.0|[1-9]\d*(\.\+\.0|\+(\.(0|[1-9]\d*)){2}|\.(0|[1-9]\d*)(\.\+|\+\.(0|[1-9]\d*)|\.(0|[1-9]\d*)\+))|(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*)){1,2}|\.(\*|~)(\.0)?|\.(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*))?|\.(0|[1-9]\d*)?(\*|~)))(,(\+|~(\.0){0,2}|\*(\.0){0,2}|(0|[1-9]\d*)(\.(0|[1-9]\d*))?|(0|[1-9]\d*)(\.(0|[1-9]\d*)){2}(-(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*))(\.(([A-Za-z-][A-Za-z0-9-]*)|([A-Za-z0-9-]+[A-Za-z-][A-Za-z0-9-]*)|(0|[1-9][0-9]*)))*)?|\+\.0\.0|[1-9]\d*(\.\+\.0|\+(\.(0|[1-9]\d*)){2}|\.(0|[1-9]\d*)(\.\+|\+\.(0|[1-9]\d*)|\.(0|[1-9]\d*)\+))|(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*)){1,2}|\.(\*|~)(\.0)?|\.(0|[1-9]\d*)((\*|~)(\.(0|[1-9]\d*))?|\.(0|[1-9]\d*)?(\*|~)))))*)$'
       style: simple
     items:
       in: path
@@ -561,14 +614,6 @@ components:
       name: includeHistory
       description: |
         This attribute allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality).
-      required: false
-      schema:
-        type: boolean
-        default: false
-    explicitMeasure:
-      in: query
-      name: explicitMeasure
-      description: For cross-sectional data validation, indicates whether observations are strongly typed.
       required: false
       schema:
         type: boolean
@@ -707,6 +752,24 @@ components:
     if-modified-since:
       in: header
       name: If-Modified-Since
+      schema:
+        type: string
+        format: date-time
+    updatedBeforeReg:
+      in: query
+      name: updatedBefore
+      description: |
+        If this parameter is used, the returned message should only include data registrations updated before this period.
+      required: false
+      schema:
+        type: string
+        format: date-time        
+    updatedAfterReg:
+      in: query
+      name: updatedAfter
+      description: |
+        If this parameter is used, the returned message should only include data registrations updated after this period.
+      required: false
       schema:
         type: string
         format: date-time

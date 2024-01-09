@@ -14,7 +14,7 @@ Parameter | Type | Description | Default | Multiple values?
 context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | * | Yes
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
-version | A string compliant with the allowed SDMX versioning schemes | The version of the artefact for which data have been reported. | * | Yes
+version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
 key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.`*`.EUR.SP00.A. Any dimension value omitted at the end of the Key is assumed as equivalent to a wildcard, e.g. D.USD is equivalent to D.USD.`*`.`*`.`*`  | * | Yes
 c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. The comma effectively acts as an `OR` statement (i.e. FREQ is A OR FREQ is M). The plus (`+`) can be used whenever an `AND` statement is required, such as for example, for attributes with multiple values or for time ranges. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`), but only once per Component. | | Yes
 updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this parameter is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level). | | No
@@ -54,14 +54,8 @@ The following media types can be used with _data_ queries:
 - **application/vnd.sdmx.data+json;version=2.0.0**
 - application/vnd.sdmx.data+xml;version=3.0.0
 - application/vnd.sdmx.data+csv;version=2.0.0;labels=[id|name|both];timeFormat=[original|normalized];keys=[none|obs|series|both]
-- application/vnd.sdmx.genericdata+xml;version=2.1
-- application/vnd.sdmx.structurespecificdata+xml;version=2.1
-- application/vnd.sdmx.generictimeseriesdata+xml;version=2.1
-- application/vnd.sdmx.structurespecifictimeseriesdata+xml;version=2.1
-- application/vnd.sdmx.data+json;version=1.0.0
-- application/vnd.sdmx.data+csv;version=1.0.0;labels=[id|both];timeFormat=[original|normalized]
 
-The default format is highlighted in **bold**.
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
 
@@ -99,7 +93,7 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
 
         https://ws-entry-point/data/?c[TITLE]=co:euro&attributes=none&measures=none
 
-- Retrieving deltas using `updatedAfter`:
+- Retrieve deltas using `updatedAfter`:
 
         https://ws-entry-point/data/dataflow/ECB/EXR?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
@@ -117,9 +111,9 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
 
   A sample response message is provided below. In the response the `action` attribute of the `Dataset` element is of importance whereas the `validFromDate` is just there for information purposes.
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
     <message:Header>
         <message:ID>388d1c9a-d187-4f6a-8792-e117cf34047f</message:ID>
         <message:Test>false</message:Test>
@@ -131,18 +125,20 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
             </common:Structure>
         </message:Structure>
     </message:Header>
-    <message:DataSet action="Replace" validFromDate="2016-12-20T16:19:56.398+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
-    <message:DataSet action="Delete" validToDate="2016-12-20T16:19:56.440+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
-</message:GenericData>
-```
+    <message:DataSet action="Replace" validFromDate="2016-12-20T16:19:56.398+01:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+    <message:DataSet action="Delete" validToDate="2016-12-20T16:19:56.440+01:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+  </message:GenericData>
+  ```
 
-- Retrieving a limited amount of observations using `firstNObservations` and `lastNObservations`:
+- Retrieve a limited amount of observations using `firstNObservations` and `lastNObservations`:
 
         https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?lastNObservations=2
 
   Using the `firstNObservations` and/or `lastNObservations` parameters, it is possible to specify the **maximum number of observations** to be returned for each of the matching series, starting from the first observation (`firstNObservations`) or counting back from the most recent observation (`lastNObservations`). This can be useful for building an overview page, for example, where, for each indicator, you only display 2 values (the current one and the previous one).
 
-- Retrieving how a time series evolved over time using the `includeHistory` parameter:
+- Retrieve how a time series evolved over time using the `includeHistory` parameter:
 
         https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?includeHistory=true
 
@@ -155,9 +151,9 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
 
   A sample response message is provided below. In the response the `action` & the `validFromDate` attributes of the `Dataset` element are both equally important. While the `action` attribute indicates what needs to be done, the `validFromDate` attribute allows defining the validity periods of the reported data.
   
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
     <message:Header>
         <message:ID>a2c99026-00c8-4f9a-a3d4-1891f89bd2b0</message:ID>
         <message:Test>false</message:Test>
@@ -169,10 +165,53 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
             </common:Structure>
         </message:Structure>
     </message:Header>
-    <message:DataSet action="Replace" validFromDate="2014-12-03T15:30:00.000+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
-    <message:DataSet action="Replace" validFromDate="2015-06-02T15:30:00.000+02:00" structureRef="ECB_RTD1">[...]</message:DataSet>
-    <message:DataSet action="Replace" validFromDate="2015-10-21T15:30:00.000+02:00" structureRef="ECB_RTD1">[...]</message:DataSet>
-    <message:DataSet action="Replace" validFromDate="2016-06-01T15:30:00.000+02:00" structureRef="ECB_RTD1">[...]</message:DataSet>
-    <message:DataSet action="Delete" validToDate="2014-11-05T15:30:00.000+01:00" structureRef="ECB_RTD1">[...]</message:DataSet>
-</message:GenericData>
-```
+    <message:DataSet action="Replace" validFromDate="2014-12-03T15:30:00.000+01:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+    <message:DataSet action="Replace" validFromDate="2015-06-02T15:30:00.000+02:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+    <message:DataSet action="Replace" validFromDate="2015-10-21T15:30:00.000+02:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+    <message:DataSet action="Replace" validFromDate="2016-06-01T15:30:00.000+02:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+    <message:DataSet action="Delete" validToDate="2014-11-05T15:30:00.000+01:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+  </message:GenericData>
+  ```
+
+- Retrieve attributes, but no data, using the `attributes` and `measures` parameters:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.*.*.*?attributes=all&measures=none
+
+  Services must return **all attributes** relevant for the matching data. For example, let's assume the following DSD (different from previous examples):
+
+  ```
+  Dimensions:
+    FREQ: Frequency
+    CUR1: Currency 1
+    CUR2: Currency 2
+    TIME_PERIOD: Time period
+  Measures:
+    OBS_VALUE: Observation Value
+  Dataflow attributes:
+    UNIT_MULT: Unit multiplier
+  Group attributes:
+    DECIMALS: Number of decimals
+    UNIT_MEAS: Unit of measure
+  Time series attributes:
+    COLL: Collection
+  Observation attributes:
+    OBS_COM: Observation comment
+    OBS_STATUS: Observation status
+  ```
+
+  And let's assume the following dataset:
+  
+  ```
+  FREQ,CUR1,CUR2,TIME_PERIOD,OBS_VALUE,UNIT_MULT,DECIMALS,UNIT_MEAS,COLL,OBS_COM,OBS_STATUS
+  D,CHF,EUR,2021-10-05,1.0752,0,4,CHF,E,,A
+  M,CHF,EUR,2021-09,1.0857,0,4,CHF,A,,A
+  M,USD,EUR,2021-09,1.032,0,4,USD,A,,A
+  ```
+
+  When querying for `D.CHF.*`, the first data row would be matched. All attributes applying to this row must be returned, regardless of their attachment level, i.e. the response must include the dataflow-level (`UNIT_MULT`), the group-level (`DECIMALS`, `UNIT_MEAS`), the series-level (`COLL`), and the observation-level (`OBS_STATUS`) attributes. `OBS_COM` can be ignored, as no value is available for this optional attribute.
+
