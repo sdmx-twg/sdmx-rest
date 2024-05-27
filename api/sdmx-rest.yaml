@@ -604,7 +604,7 @@ components:
       required: false
       schema:
         type: string
-        pattern: '^[A-Za-z][A-Za-z\d_-]*(:(asc|desc))*(\+[A-Za-z][A-Za-z\d_-]*(:(asc|desc))*)*$'
+        pattern: '^(([A-Za-z0-9_@$\-]+(:(asc|desc))?(\+[A-Za-z0-9_@$\-]+(:(asc|desc))*)*)|((\*)+(:(asc|desc))?)){1}$'
     structDetail:
       in: query
       name: detail
