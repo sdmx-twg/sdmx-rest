@@ -592,21 +592,15 @@ components:
       description: |
         This parameter specifies the order in which the returned data should be sorted. 
 
-        Per component to be used for sorting, the syntax is the component ID, optionally followed by a colon and the sort order (`asc` or `desc`, with `asc` being the default). 
+        It contains either one or more component IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, or the keyword `series_key`, which represents all non-time dimensions as positioned in the DSD. 
 
-        For example, to sort the data by descending time period: `sort=TIME_PERIOD:desc`. 
+        The sorting must respect the sequence, in which the components are listed. 
 
-        The plus (`+`) can be used whenever there is a need to sort by more than one component. 
+        In addition, each component, or the set of components (through the operator or keyword) can be sorted in ascending or descending order by appending `:asc` or `:desc`, with `:asc` being the default. 
 
-        For example, to sort the data by ascending INDICATOR and descending TIME_PERIOD: `sort=INDICATOR+TIME_PERIOD:desc`. 
+        For any component not included in the sort parameter, the related order is non-deterministic. 
 
-        Last but not least, the keyword `series_key` can be used to sort the data by series key. 
-
-        If the data has a time dimension and if TIME_PERIOD is not included in the sort parameter, then observations are grouped per time series and sorted within each time series by ascending time period. 
-
-        For any other component not included in the sort parameter, the related order is non-deterministic. 
-
-        Except for time periods, the sorting within a component is based on the code IDs or the non-coded component values. 
+        Except for time periods, which have a natural chronological order, the sorting within a component is based on the code IDs or the non-coded component values. 
       required: false
       schema:
         type: string
