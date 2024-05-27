@@ -85,7 +85,7 @@ detail | *String* | This attribute specifies the desired amount of information t
 
 - To retrieve metadatasets against version 1.0.0 of the DSD with id ECB_EXR1 maintained by the ECB, as well as the code lists and the concepts used in the DSD:
 
-        https://ws-entry-point/metadata/datastructure/ECB/ECB_EXR1/1.0.0references=children&detail=referencepartial
+        https://ws-entry-point/metadata/datastructure/ECB/ECB_EXR1/1.0.0?references=children&detail=referencepartial
 
 - To retrieve metadatasets reported against the latest version of the DSD with id ECB_EXR1 maintained by the ECB, without the code lists and concepts of the DSD:
 
