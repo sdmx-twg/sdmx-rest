@@ -359,7 +359,7 @@ components:
             metadataproviderscheme,
             reportingtaxonomy,
             metadataprovisionagreement
-            "*",
+            "*"
           ]
     itemSchemeType:
       in: path
@@ -384,7 +384,7 @@ components:
             namepersonalisationscheme,
             vtlmappingscheme,
             valuelist,
-            "*",
+            "*"
           ]
     context:
       in: path
@@ -400,7 +400,7 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
-            metadataprovisionagreement,
+            metadataprovisionagreement
           ]
     agencyID:
       in: path
@@ -673,7 +673,7 @@ components:
             allcompletestubs,
             referencecompletestubs,
             referencepartial,
-            raw,
+            raw
           ]
         default: full
     metaDetail:
@@ -737,7 +737,7 @@ components:
               conceptschememap,
               categoryschememap,
               organisationschememap,
-              reportingtaxonomymap,
+              reportingtaxonomymap
             ]
           default: none
       style: form
@@ -772,7 +772,7 @@ components:
               conceptscheme,
               codelist,
               dataproviderscheme,
-              dataflow,
+              dataflow
             ]
           default: none
       style: form
