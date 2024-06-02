@@ -240,12 +240,8 @@ paths:
         - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-<<<<<<< cr-50_151
         "200":
           $ref: "#/components/responses/200-meta"
-=======
-        '200':
-          $ref: '#/components/responses/200-meta'
 
   /registration/id/{registrationID}:
     get:
@@ -258,7 +254,7 @@ paths:
         - $ref: '#/components/parameters/resourceIDs'
       responses:
         <<: *common_responses
-        '200':
+        "200":
           $ref: '#/components/responses/200-meta'
 
   /registration/provider/{agencyID}/{providerID}:
@@ -275,7 +271,7 @@ paths:
         - $ref: '#/components/parameters/updatedAfterReg'
       responses:
         <<: *common_responses
-        '200':
+        "200":
           $ref: '#/components/responses/200-meta'
 
   /registration/{context}/{agencyID}/{resourceID}/{version}:
@@ -294,10 +290,9 @@ paths:
         - $ref: '#/components/parameters/updatedAfterReg'
       responses:
         <<: *common_responses
-        '200':
+        "200":
           $ref: '#/components/responses/200-meta'          
           
->>>>>>> develop
 components:
   parameters:
     dataContext:
@@ -454,13 +449,8 @@ components:
     providers:
       in: path
       name: providerID
-<<<<<<< cr-50_151
-      description: |
-        The provider of metadata.
-=======
       description: | 
         The provider of metadata or data.
->>>>>>> develop
 
         Multiple values are possible and `*` can be used as shortcut to select all available providers.
       required: true
