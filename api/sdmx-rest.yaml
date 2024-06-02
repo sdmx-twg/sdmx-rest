@@ -1,18 +1,11 @@
 openapi: 3.0.0
 info:
-<<<<<<< cr-50_151
-  version: "2.1.0"
-  title: "SDMX RESTful API, v2.1.0"
-  description: |
-    The SDMX RESTful API, published in January 2024.
-=======
   version: '2.1.0'
   title: 'SDMX RESTful API, v2.1.0'
   description: |
     The RESTful API for SDMX 3.0.
     
     For additional information, check the [documentation](https://github.com/sdmx-twg/sdmx-rest/blob/master/doc/index.md).
->>>>>>> develop
 servers:
   - description: Mock implementation (just for demo purposes!)
     url: https://localhost/
