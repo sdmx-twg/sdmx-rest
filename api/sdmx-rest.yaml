@@ -358,7 +358,7 @@ components:
             reportingtaxonomymap,
             metadataproviderscheme,
             reportingtaxonomy,
-            metadataprovisionagreement
+            metadataprovisionagreement,
             "*"
           ]
     itemSchemeType:
