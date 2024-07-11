@@ -645,7 +645,7 @@ components:
       description: |
         This parameter specifies the order in which the returned data should be sorted. 
 
-        It contains either one or more component IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, or the keyword `series_key`, which represents all non-time dimensions as positioned in the DSD. 
+        It contains either one or more component IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, the keyword series_key, which represents, when `dimensionAtObservation` is not equal to `AllDimensions`, all dimensions not presented at the observational level and as positioned in the DSD. 
 
         The sorting must respect the sequence, in which the components are listed. 
 
