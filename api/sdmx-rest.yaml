@@ -772,7 +772,8 @@ components:
               conceptscheme,
               codelist,
               dataproviderscheme,
-              dataflow
+              dataflow,
+              valuelist
             ]
           default: none
       style: form
