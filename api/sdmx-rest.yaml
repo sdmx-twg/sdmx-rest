@@ -12,6 +12,8 @@ servers:
 
 x-commons:
   common_responses: &common_responses
+    "204":
+      $ref: "#/components/responses/204"
     "304":
       $ref: "#/components/responses/304"
     "400":
@@ -28,6 +30,8 @@ x-commons:
       $ref: "#/components/responses/413"
     "414":
       $ref: "#/components/responses/414"
+    "422":
+      $ref: "#/components/responses/422"
     "500":
       $ref: "#/components/responses/500"
     "501":
@@ -900,6 +904,8 @@ components:
         application/vnd.sdmx.structurespecificmetadata+xml;version=2.1:
           schema:
             type: string
+    "204":
+      description: No content
     "304":
       description: No changes
     "400":
@@ -916,6 +922,8 @@ components:
       description: Request entity too large
     "414":
       description: URI too long
+    "422":
+      description: Unprocessable content
     "500":
       description: Internal server error
     "501":
