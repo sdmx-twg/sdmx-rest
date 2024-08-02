@@ -8,7 +8,7 @@ This is typically used for **validation and/or communication purposes**, for exa
 
 ## Syntax
 
-    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}
+    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}&{deletion}
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
@@ -17,6 +17,7 @@ Parameter | Type | Description | Default
 **resourceID** | A string compliant with the SDMX *common:IDType* | The id of the artefact defining the data validity. |
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact defining the data validity. | `~`
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level. |
+deletion | Boolean | Whether the generated schema will be used to validate deletion messages. | `false` 
 
 Note: Mandatory parameters are highlighted in **bold**.
 
