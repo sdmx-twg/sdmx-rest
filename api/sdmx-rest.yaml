@@ -125,6 +125,7 @@ paths:
         - $ref: "#/components/parameters/resourceID"
         - $ref: "#/components/parameters/version"
         - $ref: "#/components/parameters/dimensionAtObservation"
+        - $ref: "#/components/parameters/deletion"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/if-modified-since"
       responses:
@@ -778,6 +779,15 @@ components:
           default: none
       style: form
       explode: false
+    deletion:
+      in: query
+      name: deletion
+      description: |
+        Whether the generated schema will be used to validate deletion messages.
+      required: false
+      schema:
+        type: boolean
+        default: false
     accept-encoding:
       in: header
       name: Accept-Encoding
