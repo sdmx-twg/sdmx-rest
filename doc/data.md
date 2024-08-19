@@ -12,7 +12,7 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | * | Yes
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. If possible, services must **respect the requested context type** when returning data. For example, if the client sets the context to `provisionagreement`, the response should contain one dataset per matching provision agreement, i.e. the service should not group the matching data into one dataset, even if all provision agreements relate to the same dataflow (or the same data structure). | * | Yes
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
