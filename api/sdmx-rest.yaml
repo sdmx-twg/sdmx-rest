@@ -72,6 +72,7 @@ paths:
         - $ref: "#/components/parameters/offset"
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/asOf"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -130,6 +131,7 @@ paths:
         - $ref: "#/components/parameters/version"
         - $ref: "#/components/parameters/dimensionAtObservation"
         - $ref: "#/components/parameters/deletion"
+        - $ref: "#/components/parameters/asOf"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/if-modified-since"
       responses:
@@ -153,6 +155,7 @@ paths:
         - $ref: "#/components/parameters/versions"
         - $ref: "#/components/parameters/references"
         - $ref: "#/components/parameters/structDetail"
+        - $ref: "#/components/parameters/asOf"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -176,6 +179,7 @@ paths:
         - $ref: "#/components/parameters/items"
         - $ref: "#/components/parameters/references"
         - $ref: "#/components/parameters/structDetail"
+        - $ref: "#/components/parameters/asOf"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -199,6 +203,7 @@ paths:
         - $ref: "#/components/parameters/resourceIDs"
         - $ref: "#/components/parameters/versions"
         - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/asOf"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -220,6 +225,7 @@ paths:
         - $ref: "#/components/parameters/versions"
         - $ref: "#/components/parameters/providers"
         - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/asOf"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -240,6 +246,7 @@ paths:
         - $ref: "#/components/parameters/resourceIDs"
         - $ref: "#/components/parameters/versions"
         - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/asOf"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -560,6 +567,15 @@ components:
         The last time the query was performed by the client. 
 
         If this parameter is used, the returned message should only include the dimension values for the data that have changed since that point in time (updates and revisions).
+      required: false
+      schema:
+        type: string
+        format: date-time
+    asOf:
+      in: query
+      name: asOf
+      description: |
+        Retrieve the resource as it was at the supplied point in time (aka time travel) 
       required: false
       schema:
         type: string
