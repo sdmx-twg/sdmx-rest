@@ -12,10 +12,12 @@ These queries enable clients to find metadatasets by the identification of the m
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
-providerID | A string compliant with the SDMX _common:NestedNCNameIDType_ for MetadataProvider | The id of the data provider who maintains the Metadata Set.  It is possible to set more than one id, using `,` as separator (e.g. UK1,UK2) | * | Yes
-metadatasetID | A string compliant with the SDMX _common:NestedNCNameIDType_ for MetadataSet | The Id of the Metadata Set to be returned.  It is possible to set more than one id, using `,` as separator (e.g. MS1,MS2) | * | Yes
+providerID | A string compliant with the SDMX _common:NestedNCNameIDType_ for MetadataProvider | The id of the data provider who maintains the metadata set.  It is possible to set more than one id, using `,` as separator (e.g. UK1,UK2) | * | Yes
+metadatasetID | A string compliant with the SDMX _common:NestedNCNameIDType_ for MetadataSet | The Id of the metadata set to be returned.  It is possible to set more than one id, using `,` as separator (e.g. MS1,MS2) | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1+.7). | ~ | Yes
-detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the metadataset  (i.e.: id, dataprovider id, version and name). Most notably, metadata attributes of a metadataset  will not be returned Possible values are: (1) `full`: all available information for all returned metadatasets should be returned. (2) `allstubs`: all returned metadatasets should be returned as stubs, i.e. only containing identification information and the metadataset' name. | **full** | No
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the metadataset  (i.e.: id, dataprovider id, version and name). Most notably, metadata attributes of a metadataset  will not be returned Possible values are: (1) `full`: all available information for all returned metadatasets should be returned. (2) `allstubs`: all returned metadatasets should be returned as stubs, i.e. only containing identification information and the metadataset' name. | 
+**full** | No
+asOf | xs:dateTime | Retrieve the metadata set as it was at the specified point in time (aka time travel). | | No
 
 Notes:
 
@@ -48,6 +50,7 @@ flowID | A string compliant with the SDMX *common:IDType* | The id of the metada
 flowVersion |  A string compliant with the *VersionType* defined in the SDMX Open API specification | The version of the metadataflow for which data have been reported. | ~ | Yes
 providerRef | A string identifying the metadata provider. The syntax is agency id, provider id, separated by a `.`, i.e. `AGENCY_ID.PROVIDER_ID`. In case the string only contains one out of these 2 elements, it is considered to be the provider id, i.e. `*.PROVIDER_ID`. | The provider of the data (or metadata) to be retrieved. If not supplied, the returned message will contain data (or metadata) provided by any provider. Its a common use case in SDMX-based web services that the provider id is sufficient to uniquely identify a data provider. Should this not be the case, the agency can be used, in conjunction with the provider id, in order to uniquely identify a data provider. It is possible to set more than one provider, using `,` as separator. For example, the following value can be used to indicate that the metadataset should be provided by the Swiss National Bank (CH2) or Central Bank of Norway (NO2): `CH2,NO2`. | * | Yes
 detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the metadataset  (i.e.: id, dataprovider id, version and name). Most notably, metadata attributes of a metadataset  will not be returned Possible values are: (1) `full`: all available information for all returned metadatasets should be returned. (2) `allstubs`: all returned metadatasets should be returned as stubs, i.e. only containing identification information and the metadataset' name. | **full** | No
+asOf | xs:dateTime | Retrieve the metadata sets as they were at the specified point in time (aka time travel). | | No
 
 Notes:
 
@@ -79,7 +82,8 @@ artefactType | One of the following types: datastructure, metadatastructure, cat
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `,` as separator (e.g. BIS,ECB). | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `,` as separator (e.g. CL_FREQ,CL_CONF_STATUS). | * | Yes
 version | A string compliant with the SDMX *semantic versioning* rules | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1.7). | ~ | Yes
-detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the metadataset  (i.e.: id, dataprovider id, version and name). Most notably, metadata attributes of a metadataset will not be returned. Possible values are: (1) `full`: all available information for all returned metadatasets should be returned. (2) `allstubs`: all returned metadatasets should be returned as stubs, i.e. only containing identification information and the metadataset' name. | **full** | No
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the metadataset  (i.e.: id, dataprovider id, version and name). Most notably, metadata attributes of a metadataset will not be returned. Possible values are: (1) `full`: all available information for all returned metadata sets should be returned. (2) `allstubs`: all returned metadatasets should be returned as stubs, i.e. only containing identification information and the metadataset' name. | **full** | No
+asOf | xs:dateTime | Retrieve the metadata sets as they were at the specified point in time (aka time travel). | | No
 
 ### Examples
 

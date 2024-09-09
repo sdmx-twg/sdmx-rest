@@ -18,6 +18,7 @@ Parameter | Type | Description | Default
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact defining the data validity. | `~`
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level. |
 deletion | Boolean | Whether the generated schema will be used to validate deletion messages. | `false` 
+asOf | xs:dateTime | Retrieve the schema as it was at the specified point in time (aka time travel). | | No
 
 Note: Mandatory parameters are highlighted in **bold**.
 
