@@ -8,15 +8,14 @@ These queries enable clients to find metadatasets by the identification of the m
 
 ### Syntax
 
-    protocol://ws-entry-point/metadata/metadataset/{providerID}/{metadatasetID}/{version}?{detail}
+    protocol://ws-entry-point/metadata/metadataset/{providerID}/{metadatasetID}/{version}?{detail}&{asOf}
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
 providerID | A string compliant with the SDMX _common:NestedNCNameIDType_ for MetadataProvider | The id of the data provider who maintains the metadata set.  It is possible to set more than one id, using `,` as separator (e.g. UK1,UK2) | * | Yes
 metadatasetID | A string compliant with the SDMX _common:NestedNCNameIDType_ for MetadataSet | The Id of the metadata set to be returned.  It is possible to set more than one id, using `,` as separator (e.g. MS1,MS2) | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1+.7). | ~ | Yes
-detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the metadataset  (i.e.: id, dataprovider id, version and name). Most notably, metadata attributes of a metadataset  will not be returned Possible values are: (1) `full`: all available information for all returned metadatasets should be returned. (2) `allstubs`: all returned metadatasets should be returned as stubs, i.e. only containing identification information and the metadataset' name. | 
-**full** | No
+detail | *String* | This attribute specifies the desired amount of information to be returned. For example, it is possible to instruct the web service to return only basic information about the metadataset  (i.e.: id, dataprovider id, version and name). Most notably, metadata attributes of a metadataset  will not be returned Possible values are: (1) `full`: all available information for all returned metadatasets should be returned. (2) `allstubs`: all returned metadatasets should be returned as stubs, i.e. only containing identification information and the metadataset' name. | **full** | No
 asOf | xs:dateTime | Retrieve the metadata set as it was at the specified point in time (aka time travel). | | No
 
 Notes:
@@ -41,7 +40,7 @@ These queries enable clients to find metadatasets by the collection (metadataflo
 
 ### Syntax
 
-    protocol://ws-entry-point/metadata/metadataflow/{flowAgencyID}/{flowID}/{flowVersion}/{providerRef}?{detail}
+    protocol://ws-entry-point/metadata/metadataflow/{flowAgencyID}/{flowID}/{flowVersion}/{providerRef}?{detail}&{asOf}
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
@@ -74,7 +73,7 @@ These queries enable clients to request all metadata sets which are reported aga
 
 ### Syntax
 
-    protocol://ws-entry-point/metadata/structure/{artefactType}/{agencyID}/{resourceID}/{version}?{detail}
+    protocol://ws-entry-point/metadata/structure/{artefactType}/{agencyID}/{resourceID}/{version}?{detail}&{asOf}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
