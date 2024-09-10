@@ -15,11 +15,11 @@ Structure queries in SDMX allow you to retrieve structural metadata at various l
 
 ## Syntax
 
-        protocol://ws-entry-point/structure/{artefactType}/{agencyID}/{resourceID}/{version}?{detail}&{references}
+        protocol://ws-entry-point/structure/{artefactType}/{agencyID}/{resourceID}/{version}?{detail}&{references}&{asOf}
 
 For item schemes, an additional path parameter (itemID) is permissible.
 
-        protocol://ws-entry-point/structure/{artefactType}/{agencyID}/{resourceID}/{version}/{itemID}?{detail}&{references}
+        protocol://ws-entry-point/structure/{artefactType}/{agencyID}/{resourceID}/{version}/{itemID}?{detail}&{references}&{asOf}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
