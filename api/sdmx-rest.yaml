@@ -73,6 +73,7 @@ paths:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/reportingYearStartDay"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -105,6 +106,7 @@ paths:
         - $ref: "#/components/parameters/mode"
         - $ref: "#/components/parameters/acreferences"
         - $ref: "#/components/parameters/updatedAfter"
+        - $ref: "#/components/parameters/reportingYearStartDay"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -607,6 +609,15 @@ components:
       schema:
         type: string
         pattern: '^[A-Za-z][A-Za-z\d_-]*$'
+    reportingYearStartDay:
+      in: query
+      name: reportingYearStartDay
+      description: |
+        This parameter allows providing an explicit value for the reporting year start day.
+      required: false
+      schema:
+        type: string
+        pattern: '^\-\-\d{2}\-\d{2}$'
     attributes:
       in: query
       name: attributes
