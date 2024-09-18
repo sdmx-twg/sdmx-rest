@@ -8,7 +8,7 @@ This is typically used for **validation and/or communication purposes**, for exa
 
 ## Syntax
 
-    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}&{deletion}
+    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}&{deletion}&{asOf}
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
