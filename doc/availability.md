@@ -6,7 +6,8 @@ Availability queries allow to see what data are available for a structure (data 
 
 ## Syntax
 
-        protocol://ws-entry-point/availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentId}?{c}&{updatedAfter}&{references}&{mode}
+        protocol://ws-entry-point/availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentId}?
+        {c}&{updatedAfter}&{references}&{mode}&{reportingYearStartDay}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
@@ -20,6 +21,7 @@ c | Map | Filter data by component value. For example, if a structure defines a 
 updatedAfter | xs:dateTime | The last time the query was performed by the client. If this attribute is used, the returned message should only include the dimension values for the data that have changed since that point in time (updates and revisions). This should include the dimension values for data that have been added since the last time the query was performed (INSERT), data that have been revised since the last time the query was performed (UPDATE) and data that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. | | No
 references  |  String | This attribute instructs the web service to return (or not) the artefacts referenced by the DataConstraint to be returned. Possible values are: "codelist", "valuelist", "datastructure", "conceptscheme", "dataflow", "dataproviderscheme", "none", "all". The keyword "all" is used to indicate the inclusion of dataflow, datastructure, conceptschemes, dataproviderschemes, codelists and valuelists. Note, in the case ItemSchemes are returned (i.e. Codelists, ValueLists, ConceptSchemes and DataProviderSchemes), only the items used by the DataConstraint will be included (i.e. concepts used by the constrained dimensions; codes for which data are available; data providers that have provided data available according to the CubeRegion). Additionally for Codelists parent codes will be included in the response if the child codes are in the returned codelist, irrespective of whether they are referenced by the DataConstraint. If this results in a partial list, the isPartial attribute will be set to true. | **none** | Yes
 mode  | String  | This attribute instructs the web service to return a DataConstraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters. | **exact** | No
+reportingYearStartDay | String | This parameter allows providing an explicit value for the reporting year start day. For example, if the query requests data greater than or equal to 2010-Q3 (`c[TIME_PERIOD]=ge:2010-Q3`), and sets `reportingYearStartDay` to `--07-01`, then any data where the start period occurs on or after `2010-01-01T00:00:00` should be returned. | | No
 
 Notes:
 
