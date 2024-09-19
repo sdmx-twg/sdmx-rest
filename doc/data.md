@@ -8,7 +8,7 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 
     protocol://ws-entry-point/data/{context}/{agencyID}/{resourceID}/{version}/{key}?
     {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}
-    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}&{reportingYearStartDay}
+    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}&{asOf}&{reportingYearStartDay}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
@@ -52,6 +52,21 @@ sw | Starts with |
 ew | Ends with |
 
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
+
+The table below offers a few examples and how they should be interpreted.
+
+| Example | Meaning |
+| --- | --- | 
+|c[X]=A |X = A|
+|c[X]=A,B |X = A OR X = B|
+|c[X]=ge:A |X >= A|
+|c[X]=ge:A+le:B |X >= A AND X <= B|
+|c[X]=A,B+C |X = A OR (X = B AND X = C)|
+|c[X]=ge:A+le:B,ge:C+le:D |(X >= A AND X <= B) OR (X >= C AND X <= D)|
+|c[X]=ne:A,B |X <> A OR X = B|
+|c[X]=ne:A+B |X <> A AND X = B|
+|c[X]=ne:A,ne:B |X <> A OR X <> B|
+|c[X]=ne:A+ne:B |X <> A AND X <> B|
 
 ## Response types
 
