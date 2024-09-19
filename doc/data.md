@@ -8,7 +8,7 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 
     protocol://ws-entry-point/data/{context}/{agencyID}/{resourceID}/{version}/{key}?
     {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}
-    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}&asOf
+    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}&{asOf}&{reportingYearStartDay}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
@@ -29,6 +29,7 @@ offset | Positive integer | The number of observations (or series keys) to skip 
 limit | Positive integer | The maximum number of observations (or series keys) to be returned. If no limit is set, all matching observations (or series keys) must be returned. | | No
 sort | String | This parameter specifies the order in which the returned data should be sorted. It contains either one or more component IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, or the keyword `series_key`, which represents, when `dimensionAtObservation` is not equal to `AllDimensions`, all dimensions not presented at the observational level and as positioned in the DSD. The sorting must respect the sequence, in which the components are listed. In addition, each component, or the set of components (through the operator or keyword) can be sorted in ascending or descending order by appending `:asc` or `:desc`, with `:asc` being the default. For any component not included in the sort parameter, the related order is non-deterministic. Except for time periods, which have a natural chronological order, the sorting within a component is based on the code IDs or the non-coded component values. | | No
 asOf | xs:dateTime | Retrieve the data as they were at the specified point in time (aka time travel). In case both `updatedAfter` and `asOf` are set, the service is expected to return a client error if `updatedAfter` is more recent than `asOf`. | | No
+reportingYearStartDay | String | This parameter allows providing an explicit value for the reporting year start day. This is useful when the data is not related to a Gregorian calendar year, such as, for example, when the data is related to, say, a fiscal year. For example, if the query requests data greater than or equal to 2010-Q3 (`c[TIME_PERIOD]=ge:2010-Q3`), and sets `reportingYearStartDay` to `--07-01`, then any data where the start period occurs on or after `2010-01-01T00:00:00` should be returned. | | No
 
 The following rules apply:
 
