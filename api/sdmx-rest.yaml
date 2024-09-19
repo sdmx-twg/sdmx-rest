@@ -12,71 +12,79 @@ servers:
 
 x-commons:
   common_responses: &common_responses
-    '304':
-      $ref: '#/components/responses/304'
-    '400':
-      $ref: '#/components/responses/400'
-    '401':
-      $ref: '#/components/responses/401'
-    '403':
-      $ref: '#/components/responses/403'
-    '404':
-      $ref: '#/components/responses/404'
-    '406':
-      $ref: '#/components/responses/406'
-    '413':
-      $ref: '#/components/responses/413'
-    '414':
-      $ref: '#/components/responses/414'
-    '500':
-      $ref: '#/components/responses/500'
-    '501':
-      $ref: '#/components/responses/501'
-    '503':
-      $ref: '#/components/responses/503'
+    "204":
+      $ref: "#/components/responses/204"
+    "304":
+      $ref: "#/components/responses/304"
+    "400":
+      $ref: "#/components/responses/400"
+    "401":
+      $ref: "#/components/responses/401"
+    "403":
+      $ref: "#/components/responses/403"
+    "404":
+      $ref: "#/components/responses/404"
+    "406":
+      $ref: "#/components/responses/406"
+    "413":
+      $ref: "#/components/responses/413"
+    "414":
+      $ref: "#/components/responses/414"
+    "422":
+      $ref: "#/components/responses/422"
+    "500":
+      $ref: "#/components/responses/500"
+    "501":
+      $ref: "#/components/responses/501"
+    "503":
+      $ref: "#/components/responses/503"
 
 paths:
   /data/{context}/{agencyID}/{resourceID}/{version}/{key}:
     get:
-      summary: 'Data queries'
-      tags: 
+      summary: "Data queries"
+      tags:
         - Data queries
       description: |
         Data queries allow **retrieving statistical data**. 
-        
+
         Entire datasets can be retrieved or individual observations, or anything in between, using filters on dimensions (including time), attributes and/or measures. 
-        
+
         All data matching a query can be retrieved or only the data that has changed since the last time the same query was performed. 
-        
+
         Using the _includeHistory_ parameter, it is also possible to retrieve previous versions of the data. 
-        
+
         Last but not least, the data retrieved can be packaged in different ways (as time series, cross-sections or as a table), in a variety of formats (JSON, XML, CSV, etc.).
       parameters:
-        - $ref: '#/components/parameters/dataContext'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/key'
-        - $ref: '#/components/parameters/c'
-        - $ref: '#/components/parameters/updatedAfter'
-        - $ref: '#/components/parameters/firstNObservations'
-        - $ref: '#/components/parameters/lastNObservations'
-        - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/attributes'
-        - $ref: '#/components/parameters/measures'
-        - $ref: '#/components/parameters/includeHistory'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/dataContext"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/key"
+        - $ref: "#/components/parameters/c"
+        - $ref: "#/components/parameters/updatedAfter"
+        - $ref: "#/components/parameters/firstNObservations"
+        - $ref: "#/components/parameters/lastNObservations"
+        - $ref: "#/components/parameters/dimensionAtObservation"
+        - $ref: "#/components/parameters/attributes"
+        - $ref: "#/components/parameters/measures"
+        - $ref: "#/components/parameters/includeHistory"
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200'
+        "200":
+          $ref: "#/components/responses/200"
 
   /availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentID}:
     get:
-      summary: 'Data availability queries'
-      tags: 
+      summary: "Data availability queries"
+      tags:
         - Data queries
       description: |
         See which data would match a query, without actually retrieving these data.
@@ -87,158 +95,165 @@ paths:
         The query returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
         the query itself is more akin to a data query.
       parameters:
-        - $ref: '#/components/parameters/dataContext'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/key'
-        - $ref: '#/components/parameters/componentID'
-        - $ref: '#/components/parameters/c'
-        - $ref: '#/components/parameters/mode'
-        - $ref: '#/components/parameters/acreferences'
-        - $ref: '#/components/parameters/updatedAfter'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/dataContext"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/key"
+        - $ref: "#/components/parameters/componentID"
+        - $ref: "#/components/parameters/c"
+        - $ref: "#/components/parameters/mode"
+        - $ref: "#/components/parameters/acreferences"
+        - $ref: "#/components/parameters/updatedAfter"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-struct'
+        "200":
+          $ref: "#/components/responses/200-struct"
 
   /schema/{context}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Data validity queries'
+      summary: "Data validity queries"
       description: |
         Data validity queries (aka schema queries) allow retrieving **the definition of data validity for a certain context**. 
-        
+
         The service must take into account the constraints that apply within that context (e.g. dataflow).
-        
+
         This is typically used for **validation and/or communication purposes**, for example as a way to inform providers about the data they are expected to report.
-      tags: 
+      tags:
         - Data queries
       parameters:
-        - $ref: '#/components/parameters/context'
-        - $ref: '#/components/parameters/agencyID'
-        - $ref: '#/components/parameters/resourceID'
-        - $ref: '#/components/parameters/version'
-        - $ref: '#/components/parameters/dimensionAtObservation'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/context"
+        - $ref: "#/components/parameters/agencyID"
+        - $ref: "#/components/parameters/resourceID"
+        - $ref: "#/components/parameters/version"
+        - $ref: "#/components/parameters/dimensionAtObservation"
+        - $ref: "#/components/parameters/deletion"
+        - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-schemas'
+        "200":
+          $ref: "#/components/responses/200-schemas"
 
   /structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Structure queries'
-      tags: 
+      summary: "Structure queries"
+      tags:
         - Structure queries
       description: |
         Structure queries allow **retrieving structural metadata**.
 
         Structure queries in SDMX allow you to retrieve structural metadata at various levels of granularity, from all structural metadata available in the source to a single code from a particular version of a particular codelist maintained by a particular agency.
       parameters:
-        - $ref: '#/components/parameters/structureType'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/structureType"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/references"
+        - $ref: "#/components/parameters/structDetail"
+        - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-struct'
+        "200":
+          $ref: "#/components/responses/200-struct"
 
   /structure/{itemSchemeType}/{agencyID}/{resourceID}/{version}/{itemID}:
     get:
-      summary: 'Item Scheme queries'
-      tags: 
+      summary: "Item Scheme queries"
+      tags:
         - Structure queries
       description: |
         Item queries extend structure queries by allowing to retrieve items in item schemes such as particular codes in a codelist.
       parameters:
-        - $ref: '#/components/parameters/itemSchemeType'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/items'
-        - $ref: '#/components/parameters/references'
-        - $ref: '#/components/parameters/structDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/itemSchemeType"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/items"
+        - $ref: "#/components/parameters/references"
+        - $ref: "#/components/parameters/structDetail"
+        - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-struct'
+        "200":
+          $ref: "#/components/responses/200-struct"
 
   /metadata/structure/{structureType}/{agencyID}/{resourceID}/{version}:
     get:
-      summary: 'Metadata queries (by structure)'
-      tags: 
+      summary: "Metadata queries (by structure)"
+      tags:
         - Reference metadata queries
       description: |
         These queries enable clients to request all metadata sets which are reported against one or more structures.
-        
+
         As such the syntax for defining which structures to find metadata for follows the same syntax as the structure queries.
       parameters:
-        - $ref: '#/components/parameters/structureType'
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/metaDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/structureType"
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-meta'
+        "200":
+          $ref: "#/components/responses/200-meta"
 
   /metadata/metadataflow/{agencyID}/{resourceID}/{version}/{providerID}:
     get:
-      summary: 'Metadata queries (by metadataflow)'
-      tags: 
+      summary: "Metadata queries (by metadataflow)"
+      tags:
         - Reference metadata queries
       description: |
         These queries enable clients to find metadatasets by the collection (metadataflow), optionally filtered by the metadata provider.
       parameters:
-        - $ref: '#/components/parameters/agencies'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/providers'
-        - $ref: '#/components/parameters/metaDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/agencies"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/providers"
+        - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-meta'
+        "200":
+          $ref: "#/components/responses/200-meta"
 
   /metadata/metadataset/{providerID}/{resourceID}/{version}:
     get:
-      summary: 'Metadata queries (by metadatasets)'
-      tags: 
+      summary: "Metadata queries (by metadatasets)"
+      tags:
         - Reference metadata queries
       description: |
         These queries enable clients to find metadatasets by the identification of the metadataset, enabling clients to checkout specific reports.
       parameters:
-        - $ref: '#/components/parameters/providers'
-        - $ref: '#/components/parameters/resourceIDs'
-        - $ref: '#/components/parameters/versions'
-        - $ref: '#/components/parameters/metaDetail'
-        - $ref: '#/components/parameters/accept-encoding'
-        - $ref: '#/components/parameters/accept-language'
-        - $ref: '#/components/parameters/if-modified-since'
+        - $ref: "#/components/parameters/providers"
+        - $ref: "#/components/parameters/resourceIDs"
+        - $ref: "#/components/parameters/versions"
+        - $ref: "#/components/parameters/metaDetail"
+        - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/accept-encoding"
+        - $ref: "#/components/parameters/accept-language"
+        - $ref: "#/components/parameters/if-modified-since"
       responses:
         <<: *common_responses
-        '200':
-          $ref: '#/components/responses/200-meta'
+        "200":
+          $ref: "#/components/responses/200-meta"
 
   /registration/id/{registrationID}:
     get:
@@ -251,7 +266,7 @@ paths:
         - $ref: '#/components/parameters/resourceIDs'
       responses:
         <<: *common_responses
-        '200':
+        "200":
           $ref: '#/components/responses/200-meta'
 
   /registration/provider/{agencyID}/{providerID}:
@@ -268,7 +283,7 @@ paths:
         - $ref: '#/components/parameters/updatedAfterReg'
       responses:
         <<: *common_responses
-        '200':
+        "200":
           $ref: '#/components/responses/200-meta'
 
   /registration/{context}/{agencyID}/{resourceID}/{version}:
@@ -287,7 +302,7 @@ paths:
         - $ref: '#/components/parameters/updatedAfterReg'
       responses:
         <<: *common_responses
-        '200':
+        "200":
           $ref: '#/components/responses/200-meta'          
           
 components:
@@ -321,8 +336,7 @@ components:
       required: true
       schema:
         type: string
-        enum:
-          [
+        enum: [
             datastructure,
             metadatastructure,
             dataflow,
@@ -356,8 +370,8 @@ components:
             reportingtaxonomymap,
             metadataproviderscheme,
             reportingtaxonomy,
-            metadataprovisionagreement
-            "*",
+            metadataprovisionagreement,
+            "*"
           ]
     itemSchemeType:
       in: path
@@ -382,7 +396,7 @@ components:
             namepersonalisationscheme,
             vtlmappingscheme,
             valuelist,
-            "*",
+            "*"
           ]
     context:
       in: path
@@ -398,7 +412,7 @@ components:
             dataflow,
             metadataflow,
             provisionagreement,
-            metadataprovisionagreement,
+            metadataprovisionagreement
           ]
     agencyID:
       in: path
@@ -425,7 +439,7 @@ components:
         `+` can be used to retrieve the latest stable version.
 
         `~` can be used to retrieve the latest version, regardless of its status (stable, draft, etc.).
-      
+
       required: true
       schema:
         type: string
@@ -551,8 +565,17 @@ components:
       name: updatedAfter
       description: |
         The last time the query was performed by the client. 
-        
+
         If this parameter is used, the returned message should only include the dimension values for the data that have changed since that point in time (updates and revisions).
+      required: false
+      schema:
+        type: string
+        format: date-time
+    asOf:
+      in: query
+      name: asOf
+      description: |
+        Retrieve the resource as it was at the supplied point in time (aka time travel) 
       required: false
       schema:
         type: string
@@ -578,7 +601,7 @@ components:
       name: dimensionAtObservation
       description: |
         The ID of the dimension to be attached at the observation level. 
-        
+
         This parameter allows the client to indicate how the data should be packaged by the service.
       required: false
       schema:
@@ -589,7 +612,7 @@ components:
       name: attributes
       description: |
         The attributes to be returned. 
-        
+
         For example, it is possible to instruct the web service to return data only (i.e. no attributes).
       required: false
       schema:
@@ -601,7 +624,7 @@ components:
     measures:
       in: query
       name: measures
-      description: The measures to be returned. 
+      description: The measures to be returned.
       required: false
       schema:
         type: array
@@ -618,10 +641,48 @@ components:
       schema:
         type: boolean
         default: false
+    offset:
+      in: query
+      name: offset
+      description: |
+        The number of observations (or series keys) to skip before beginning to return observations (or series keys).
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    limit:
+      in: query
+      name: limit
+      description: |
+        The maximum number of observations (or series keys) to be returned. If no limit is set, all matching observations (or series keys) must be returned.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    sort:
+      in: query
+      name: sort
+      description: |
+        This parameter specifies the order in which the returned data should be sorted. 
+
+        It contains either one or more component IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, the keyword series_key, which represents, when `dimensionAtObservation` is not equal to `AllDimensions`, all dimensions not presented at the observational level and as positioned in the DSD. 
+
+        The sorting must respect the sequence, in which the components are listed. 
+
+        In addition, each component, or the set of components (through the operator or keyword) can be sorted in ascending or descending order by appending `:asc` or `:desc`, with `:asc` being the default. 
+
+        For any component not included in the sort parameter, the related order is non-deterministic. 
+
+        Except for time periods, which have a natural chronological order, the sorting within a component is based on the code IDs or the non-coded component values. 
+      required: false
+      schema:
+        type: string
+        pattern: '^(([A-Za-z0-9_@$\-]+(:(asc|desc))?(\+[A-Za-z0-9_@$\-]+(:(asc|desc))*)*)|((\*)+(:(asc|desc))?)){1}$'
     structDetail:
       in: query
       name: detail
-      description: The desired amount of information to be returned. 
+      description: The desired amount of information to be returned.
       required: false
       schema:
         type: string
@@ -733,10 +794,20 @@ components:
               codelist,
               dataproviderscheme,
               dataflow,
+              valuelist
             ]
           default: none
       style: form
       explode: false
+    deletion:
+      in: query
+      name: deletion
+      description: |
+        Whether the generated schema will be used to validate deletion messages.
+      required: false
+      schema:
+        type: boolean
+        default: false
     accept-encoding:
       in: header
       name: Accept-Encoding
@@ -859,6 +930,8 @@ components:
         application/vnd.sdmx.structurespecificmetadata+xml;version=2.1:
           schema:
             type: string
+    "204":
+      description: No content
     "304":
       description: No changes
     "400":
@@ -875,6 +948,8 @@ components:
       description: Request entity too large
     "414":
       description: URI too long
+    "422":
+      description: Unprocessable content
     "500":
       description: Internal server error
     "501":

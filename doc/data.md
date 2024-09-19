@@ -7,11 +7,12 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 ## Syntax
 
     protocol://ws-entry-point/data/{context}/{agencyID}/{resourceID}/{version}/{key}?
-    {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}&{attributes}&{measures}&{includeHistory}
+    {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}
+    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}&asOf
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | * | Yes
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. If possible, services must **respect the requested context type** when returning data. For example, if the client sets the context to `provisionagreement`, the response should contain one dataset per matching provision agreement, i.e. the service should not group the matching data into one dataset, even if all provision agreements relate to the same dataflow (or the same data structure). | * | Yes
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
@@ -20,10 +21,14 @@ c | Map | Filter data by component value. For example, if a structure defines a 
 updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this parameter is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level). | | No
 firstNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, starting from the first observation | | No
 lastNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, counting back from the most recent observation ||No
-dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* / *table* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to TimeDimension, if the data structure definition has one, or else, to default to AllDimensions.|Depends on DSD|No
+dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* / *table* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to `TIME_PERIOD`, if the data structure definition has one, or else, to default to `AllDimensions`.|Depends on DSD|No
 attributes | String | This parameter specifies the attributes to be returned. Possible options are: `dsd` (all the attributes defined in the data structure definition), `msd` (all the reference metadata attributes), `dataset` (all the attributes attached to the dataset-level), `series` (all the attributes attached to the series-level), `obs` (all the attributes attached to the observation-level), `all` (all attributes), `none` (no attributes), `{attribute_id}`: The ID of one or more attributes the caller is interested in. |`dsd`| Yes
 measures | String | This parameter specifies the measures to be returned. Possible options are: `all` (all measures), `none` (no measure), `{measure_id}`: The ID of one or more measures the caller is interested in. |`all`| Yes
 includeHistory | Boolean | This parameter allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. | `false` | No
+offset | Positive integer | The number of observations (or series keys) to skip before beginning to return observations (or series keys). | 0 | No
+limit | Positive integer | The maximum number of observations (or series keys) to be returned. If no limit is set, all matching observations (or series keys) must be returned. | | No
+sort | String | This parameter specifies the order in which the returned data should be sorted. It contains either one or more component IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, or the keyword `series_key`, which represents, when `dimensionAtObservation` is not equal to `AllDimensions`, all dimensions not presented at the observational level and as positioned in the DSD. The sorting must respect the sequence, in which the components are listed. In addition, each component, or the set of components (through the operator or keyword) can be sorted in ascending or descending order by appending `:asc` or `:desc`, with `:asc` being the default. For any component not included in the sort parameter, the related order is non-deterministic. Except for time periods, which have a natural chronological order, the sorting within a component is based on the code IDs or the non-coded component values. | | No
+asOf | xs:dateTime | Retrieve the data as they were at the specified point in time (aka time travel). In case both `updatedAfter` and `asOf` are set, the service is expected to return a client error if `updatedAfter` is more recent than `asOf`. | | No
 
 The following rules apply:
 
@@ -46,6 +51,21 @@ sw | Starts with |
 ew | Ends with |
 
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
+
+The table below offers a few examples and how they should be interpreted.
+
+| Example | Meaning |
+| --- | --- | 
+|c[X]=A |X = A|
+|c[X]=A,B |X = A OR X = B|
+|c[X]=ge:A |X >= A|
+|c[X]=ge:A+le:B |X >= A AND X <= B|
+|c[X]=A,B+C |X = A OR (X = B AND X = C)|
+|c[X]=ge:A+le:B,ge:C+le:D |(X >= A AND X <= B) OR (X >= C AND X <= D)|
+|c[X]=ne:A,B |X <> A OR X = B|
+|c[X]=ne:A+B |X <> A AND X = B|
+|c[X]=ne:A,ne:B |X <> A OR X <> B|
+|c[X]=ne:A+ne:B |X <> A AND X <> B|
 
 ## Response types
 
@@ -177,6 +197,34 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
     [...]</message:DataSet>
   </message:GenericData>
   ```
+  
+- Retrieve the first 100 observations, sorted by ascending series key and descending time period:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?offset=0&limit=100&sort=series_key:asc+TIME_PERIOD:desc
+
+  The above is equivalent to:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?limit=100&sort=series_key+TIME_PERIOD:desc
+
+- Retrieve the third batch of 1000 observations (skipping the first 2000 observations):
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?offset=2000&limit=1000
+  
+- Retrieve the data sorted by descending time period:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A?sort=TIME_PERIOD:desc
+
+- Retrieve the data sorted by ascending CURRENCY and time period:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?sort=CURRENCY+TIME_PERIOD
+
+- Retrieve the data sorted ascendingly for all dimensions as positioned in the DSD:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?sort=*:asc
+
+  The above is equivalent to:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR?sort=*
 
 - Retrieve attributes, but no data, using the `attributes` and `measures` parameters:
 
@@ -214,4 +262,3 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
   ```
 
   When querying for `D.CHF.*`, the first data row would be matched. All attributes applying to this row must be returned, regardless of their attachment level, i.e. the response must include the dataflow-level (`UNIT_MULT`), the group-level (`DECIMALS`, `UNIT_MEAS`), the series-level (`COLL`), and the observation-level (`OBS_STATUS`) attributes. `OBS_COM` can be ignored, as no value is available for this optional attribute.
-
