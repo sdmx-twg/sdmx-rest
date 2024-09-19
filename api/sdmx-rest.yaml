@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  version: '2.1.0'
-  title: 'SDMX RESTful API, v2.1.0'
+  version: '2.2.0'
+  title: 'SDMX RESTful API, v2.2.0'
   description: |
     The RESTful API for SDMX 3.0.
     
