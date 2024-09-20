@@ -102,7 +102,7 @@ Sometimes, you may want your data store to act as a replica of another data stor
 
 Using the `asOf` parameter, you can retrieve the data as they were at a certain point in time, for example, as they were when a certain report or press release was published. 
 
-This can be combined with `updatedAfter`, to retrieve the data as they were at the `asOf` point in time, but only those that were updated after the `updatedAfter` point in time. Obviously, the `updatedAfter` point in time must be before the `asOf` point in time.
+This can be combined with `updatedAfter`, to retrieve the data as they were at the `asOf` point in time, but only those that were updated after the `updatedAfter` point in time. The `updatedAfter` point in time must be before the `asOf` point in time.
 
 ## Examples of queries
 
