@@ -80,6 +80,30 @@ The default format is highlighted in **bold**. For media types of previous SDMX 
 
 SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
 
+## Use cases behind the various time-related queries
+
+### Efficient data exchanges
+
+When executing a data query such as, for example `https://ws-endpoint/data/dataflow/ECB/EXR`, you will get the current version of the data matching that query. However, you may want to only retrieve the most recent changes since the last time you executed the same query (so called *deltas*). This is the purpose of the `updatedAfter` query parameters. This option supports very efficient data exchanges, as only the most recent changes will be transmitted between the service and the client.
+
+### Data caching
+
+Sometimes, you may want your data store to act as a data cache, i.e. you want to cache the result of a query, while ensuring that the cache remains up-to-date. 
+
+In this scenario, you want to retrieve all the data, but only if something has changed since the last time you executed the same query. To support this, you can leverage HTTP features, such as the `If-Modified-Since` or `If-None-Match` HTTP headers. In this case, you will get a `200` status code (`OK`) and all the data matching the query if something has changed in the data, or a `304` status code (`Not Modified`) if nothing was modified. Whenever you get a 304, you can serve the data from your cache, as it is still valid. In case you get a 200, you need to replace the content of your cache with the updated content.
+
+### Data replication
+
+Sometimes, you may want your data store to act as a replica of another data store. In this case, you don't only want the most recent changes (like when using `updatedAfter`), you want to ensure that you get every change ever made to the data. This is the purpose of the `includeHistory` parameter. With `includeHistory`, if the data matching the query has changed 5 times, you will get 5 datasets in the response, with their `validFrom` and `validTo` properties indicating when these data were valid.
+
+`includeHistory` and `updatedAfter` can be combined in the same query to retrieve all versions of the data matching the query, but only those that changed after a certain point in time.
+
+### Time travel
+
+Using the `asOf` parameter, you can retrieve the data as they were at a certain point in time, for example, as they were when a certain report or press release was published. 
+
+This can be combined with `updatedAfter`, to retrieve the data as they were at the `asOf` point in time, but only those that were updated after the `updatedAfter` point in time. The `updatedAfter` point in time must be before the `asOf` point in time.
+
 ## Examples of queries
 
 - Retrieve the data matching the supplied path parameters:
