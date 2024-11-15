@@ -10,7 +10,7 @@ Authentication refers to the process of uniquely identifying an entity. In the c
 
 Clients of web services have a high interest in ensuring that they are connected to the service they intend to consume and not to a rogue service masquerading as a trusted entity. To support this, use SSL/TLS and offer clients the possibility to consume the web service over HTTPS. This allows the client to validate that the certificate matches the domain name of the service, is issued by a trusted authority, and has not expired.
 
-When restrictions apply to the data and metadata published, it is important for the service provider to be able to uniquely identify the client. To support this requirement, use HTTP basic authentication over SSL/TLS. If stronger authentication is required, use SSL client certificates instead.
+When restrictions apply to the data and metadata published, it is important for the service provider to be able to uniquely identify the client. To support this requirement, various mechanisms are available such as OAuth2, OpenID Connect, API Keys, etc. The choice of the appropriate mechanism is left to the service provider.
 
 ### Confidentiality
 
