@@ -8,7 +8,7 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 
     protocol://ws-entry-point/data/{context}/{agencyID}/{resourceID}/{version}/{key}?
     {c}&{updatedAfter}&{firstNObservations}&{lastNObservations}&{dimensionAtObservation}
-    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}&asOf
+    &{attributes}&{measures}&{includeHistory}&{offset}&{limit}&{sort}&{asOf}&{reportingYearStartDay}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
@@ -22,13 +22,14 @@ updatedAfter | xs:dateTime | The last time the query was performed by the client
 firstNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, starting from the first observation | | No
 lastNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, counting back from the most recent observation ||No
 dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* / *table* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to `TIME_PERIOD`, if the data structure definition has one, or else, to default to `AllDimensions`.|Depends on DSD|No
-attributes | String | This parameter specifies the attributes to be returned. Possible options are: `dsd` (all the attributes defined in the data structure definition), `msd` (all the reference metadata attributes), `dataset` (all the attributes attached to the dataset-level), `series` (all the attributes attached to the series-level), `obs` (all the attributes attached to the observation-level), `all` (all attributes), `none` (no attributes), `{attribute_id}`: The ID of one or more attributes the caller is interested in. |`dsd`| Yes
+attributes | String | This parameter specifies the attributes to be returned. Possible options are: `dsd` (all the attributes defined in the data structure definition), `msd` (all the reference metadata attributes), `dataset` (all the attributes attached to the dataset-level), `series` (all the attributes attached to the series- and group-level), `obs` (all the attributes attached to the observation-level), `all` (all attributes), `none` (no attributes), `{attribute_id}`: The ID of one or more attributes the caller is interested in. |`dsd`| Yes
 measures | String | This parameter specifies the measures to be returned. Possible options are: `all` (all measures), `none` (no measure), `{measure_id}`: The ID of one or more measures the caller is interested in. |`all`| Yes
 includeHistory | Boolean | This parameter allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. | `false` | No
 offset | Positive integer | The number of observations (or series keys) to skip before beginning to return observations (or series keys). | 0 | No
 limit | Positive integer | The maximum number of observations (or series keys) to be returned. If no limit is set, all matching observations (or series keys) must be returned. | | No
 sort | String | This parameter specifies the order in which the returned data should be sorted. It contains either one or more component IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, or the keyword `series_key`, which represents, when `dimensionAtObservation` is not equal to `AllDimensions`, all dimensions not presented at the observational level and as positioned in the DSD. The sorting must respect the sequence, in which the components are listed. In addition, each component, or the set of components (through the operator or keyword) can be sorted in ascending or descending order by appending `:asc` or `:desc`, with `:asc` being the default. For any component not included in the sort parameter, the related order is non-deterministic. Except for time periods, which have a natural chronological order, the sorting within a component is based on the code IDs or the non-coded component values. | | No
 asOf | xs:dateTime | Retrieve the data as they were at the specified point in time (aka time travel). In case both `updatedAfter` and `asOf` are set, the service is expected to return a client error if `updatedAfter` is more recent than `asOf`. | | No
+reportingYearStartDay | String | This parameter allows providing an explicit value for the reporting year start day. This is useful when the data is not related to a Gregorian calendar year, such as, for example, when the data is related to, say, a fiscal year. For example, if the query requests data greater than or equal to 2010-Q3 (`c[TIME_PERIOD]=ge:2010-Q3`), and sets `reportingYearStartDay` to `--07-01`, then any data where the start period occurs on or after `2010-01-01T00:00:00` should be returned. | | No
 
 The following rules apply:
 
@@ -78,6 +79,30 @@ The following media types can be used with _data_ queries:
 The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
+
+## Use cases behind the various time-related queries
+
+### Efficient data exchanges
+
+When executing a data query such as, for example `https://ws-endpoint/data/dataflow/ECB/EXR`, you will get the current version of the data matching that query. However, you may want to only retrieve the most recent changes since the last time you executed the same query (so called *deltas*). This is the purpose of the `updatedAfter` query parameters. This option supports very efficient data exchanges, as only the most recent changes will be transmitted between the service and the client.
+
+### Data caching
+
+Sometimes, you may want your data store to act as a data cache, i.e. you want to cache the result of a query, while ensuring that the cache remains up-to-date. 
+
+In this scenario, you want to retrieve all the data, but only if something has changed since the last time you executed the same query. To support this, you can leverage HTTP features, such as the `If-Modified-Since` or `If-None-Match` HTTP headers. In this case, you will get a `200` status code (`OK`) and all the data matching the query if something has changed in the data, or a `304` status code (`Not Modified`) if nothing was modified. Whenever you get a 304, you can serve the data from your cache, as it is still valid. In case you get a 200, you need to replace the content of your cache with the updated content.
+
+### Data replication
+
+Sometimes, you may want your data store to act as a replica of another data store. In this case, you don't only want the most recent changes (like when using `updatedAfter`), you want to ensure that you get every change ever made to the data. This is the purpose of the `includeHistory` parameter. With `includeHistory`, if the data matching the query has changed 5 times, you will get 5 datasets in the response, with their `validFrom` and `validTo` properties indicating when these data were valid.
+
+`includeHistory` and `updatedAfter` can be combined in the same query to retrieve all versions of the data matching the query, but only those that changed after a certain point in time.
+
+### Time travel
+
+Using the `asOf` parameter, you can retrieve the data as they were at a certain point in time, for example, as they were when a certain report or press release was published. 
+
+This can be combined with `updatedAfter`, to retrieve the data as they were at the `asOf` point in time, but only those that were updated after the `updatedAfter` point in time. The `updatedAfter` point in time must be before the `asOf` point in time.
 
 ## Examples of queries
 
