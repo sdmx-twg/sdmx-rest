@@ -33,7 +33,7 @@ Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is ther
 
 
 ### Syntax 
-        protocol://ws-entry-point/registration/provider/{providerAgencyID}/{providerID}
+        protocol://ws-entry-point/registration/provider/{providerAgencyID}/{providerID}?{updatedAfter}&{updatedBefore}
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
@@ -71,7 +71,7 @@ is used to determin the corresponding Dataflow and Data Structure Definition.
 Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is therefore possible to use this query to retrieve all Registrations.
 
 ### Syntax 
-        protocol://ws-entry-point/registration/{context}/{agencyID}/{resourceID}/{version}
+        protocol://ws-entry-point/registration/{context}/{agencyID}/{resourceID}/{version}?{updatedAfter}&{updatedBefore}
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
