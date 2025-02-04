@@ -15,11 +15,15 @@ These queries enable clients to find a single Registration by its unique ID.
 ### Syntax 
         protocol://ws-entry-point/registration/id/{registrationId}
 
+Parameter | Type | Description | Default | Multiple values
+--- | --- | --- | --- | ---
+registrationId | A string compliant with the SDMX *common:IDType* | The ID of the registration to be returned. |  | No
+
 ### Example
 
 Retrieve all Registrations with unique ID 'abcd-efgh-ijkl'
 
-        https://ws-entry-point/registration/provider/IMF/abcd-efgh-ijkl
+        https://ws-entry-point/registration/id/abcd-efgh-ijkl
 
 
 ## By Data Provider
