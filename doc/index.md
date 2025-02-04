@@ -48,6 +48,7 @@ The documentation is organized in the following sections:
 - [Reference metadata queries](metadata.md)
 - [Schema queries](schema.md)
 - [Availability queries](availability.md)
+- [Registration queries](registration.md)
 - [Query syntax for versions](querying_versions.md)
 - [Content-Negotiation](content_negotiation.md)
 - [Status codes](status.md)
