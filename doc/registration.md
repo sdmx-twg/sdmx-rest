@@ -4,8 +4,6 @@ A Data Registration defines the Data Source for a Provision Agreement along with
 
 The Data Registration query API enables a client application to discover registered data sources by querying by either the unique ID of the Data Registration, or by filtering Data Registration by its Provision Agreement or the corresponding Dataflow, Data Structure Definition, or Data Provider. 
 
-
-
 ## By Registration ID
 
 ### Overview
@@ -25,7 +23,6 @@ Retrieve all Registrations with unique ID 'abcd-efgh-ijkl'
 
         https://ws-entry-point/registration/id/abcd-efgh-ijkl
 
-
 ## By Data Provider
 
 ### Overview
@@ -34,7 +31,6 @@ These queries enable clients to find all Registrations by Data Provider, this is
 the Provision Agreement that the Registration references.  
 
 Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is therefore possible to use this query to retrieve all Registrations.
-
 
 ### Syntax 
         protocol://ws-entry-point/registration/provider/{providerAgencyID}/{providerID}?{updatedAfter}&{updatedBefore}
@@ -103,4 +99,11 @@ Retrieve all Registrations for the ECOFIN DataStructure maintained by the IMF
 Retrieve all Registrations updated after a specific point in time (percent encoded)
         
         https://ws-entry-point/registration/datastructure/*/*/*?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
-        
+
+## Response types
+
+The following media types can be used with _registration_ queries:
+
+- **application/vnd.sdmx.registry+xml;version=3.0.0**
+
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.

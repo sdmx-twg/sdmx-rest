@@ -26,6 +26,7 @@ The full list of media types is available in the _Response types_ section of the
 - [Reference metadata queries](metadata.md#response-types)
 - [Schema queries](schema.md#response-types)
 - [Data availability queries](availability.md#response-types)
+- [Registration queries](registration.md#response-types)
 
 ## Selection of the appropriate version
 
