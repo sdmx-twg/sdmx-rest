@@ -75,7 +75,7 @@ Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is ther
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Registrations relate to provision agreement, which in turn can be used to identify the related dataflow and data structure definition. This parameter allows selecting the desired context for registration retrieval. | * | Yes
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Registrations relate to provision agreement, which in turn can be used to identify the related dataflow and data structure definition. This parameter allows selecting the desired context for registration retrieval. | * | No
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the context artefact. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the context artefact. | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the context artefact. | * | Yes

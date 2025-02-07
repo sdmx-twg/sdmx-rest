@@ -96,7 +96,7 @@ paths:
         The query returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
         the query itself is more akin to a data query.
       parameters:
-        - $ref: "#/components/parameters/dataContext"
+        - $ref: "#/components/parameters/specificDataContext"
         - $ref: "#/components/parameters/agencies"
         - $ref: "#/components/parameters/resourceIDs"
         - $ref: "#/components/parameters/versions"
@@ -317,6 +317,14 @@ components:
       schema:
         type: string
         enum: [datastructure, dataflow, provisionagreement, "*"]
+    specificDataContext:
+      in: path
+      name: context
+      description: A specific context for availability queries.
+      required: true
+      schema:
+        type: string
+        enum: [datastructure, dataflow, provisionagreement]
     key:
       in: path
       name: key

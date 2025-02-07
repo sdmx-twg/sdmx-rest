@@ -11,7 +11,7 @@ Availability queries allow to see what data are available for a structure (data 
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | * | No
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | | No
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
@@ -173,7 +173,7 @@ The use case can be supported as follows:
 
 1. Query Data Availability API with a query for all data for the dataflow, and include all references:
 
-        https://ws-entry-point/availability/dataflow/ECB_EXR1_WEB/?references=all
+        https://ws-entry-point/availability/dataflow/ECB/ECB_EXR1_WEB/?references=all
 
 2. The response includes the DataConstraint and the Data Structure Definition. We can iterate the dimensions to build the Dimension picker. For each dimension, we can get the concept, as this provides the human readable label (ideally in the chosen locale, if available). The Cube Region constraint provides the available values for the dimension. If the dimension is coded, then the codelist can be used to get the human readable label in the chosen locale. The code will additionally provide any hierarchy information. An HTML checkbox is created for each available dimension value.
 
@@ -197,7 +197,7 @@ The use case can be supported as follows:
 
 1. When the user adds or removes a data query filter by checking or unchecking a checkbox, call the Data Availability API with current data query state and `mode=available`.
 
-        https://ws-entry-point/availability/dataflow/EMPLOYMENT/UK.*.M,FR.*.M?mode=available
+        https://ws-entry-point/availability/dataflow/*/EMPLOYMENT/*/UK.*.M,FR.*.M?mode=available
 
 2. The response will include only the values which remain valid selections. Use this information to enable or disable the dimension values.
 
