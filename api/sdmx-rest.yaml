@@ -765,6 +765,7 @@ components:
               categorisation,
               dataconstraint,
               metadataconstraint,
+              dimensionconstraint,
               transformationscheme,
               rulesetscheme,
               userdefinedoperatorscheme,
