@@ -23,7 +23,7 @@ For item schemes, an additional path parameter (itemID) is permissible.
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
-artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist,  agencyscheme, dataproviderscheme, metadataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, metadataprovisionagreement, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, reportingtaxonomymap, process, categorisation, dataconstraint, dimensionconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned. | * | No
+artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist,  agencyscheme, dataproviderscheme, metadataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, metadataprovisionagreement, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, reportingtaxonomymap, process, categorisation, dataconstraint, dimensionconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned. | * | No
 agencyID | A string compliant with the SDMX *common:NestedNCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `,` as separator (e.g. BIS,ECB). | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `,` as separator (e.g. CL_FREQ,CL_CONF_STATUS). | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1+.7). | ~ | Yes
@@ -97,22 +97,24 @@ Codelist | AgencyScheme, *Categorisation*, __*Codelist*__, *ConceptScheme*, *Dat
 ConceptScheme | AgencyScheme, *Categorisation*, Codelist, *ConceptSchemeMap*, *DataStructureDefinition*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataStructureDefinition*, *Process*, *VtlMappingScheme*
 ConceptSchemeMap | AgencyScheme, *Categorisation*, ConceptScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 CustomTypeScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*
-DataConstraint | AgencyScheme, *Categorisation*, *Dataflow*, *DataStructureDefinition*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ProvisionAgreement*
+DataConstraint | AgencyScheme, *Categorisation*, Dataflow, DataProviderScheme, DataStructureDefinition, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ProvisionAgreement
 DataConsumerScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*
-Dataflow | AgencyScheme, *Categorisation*, DataConstraint, DataStructureDefinition, DimensionConstraint, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, *VtlMappingScheme*
-DataProviderScheme | AgencyScheme, *Categorisation*, DataConstraint, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*, *ProvisionAgreement*
-DataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, DataConstraint, *Dataflow*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, MetadataStructureDefinition, *Process*, *StructureMap*, ValueList
-DimensionConstraint | AgencyScheme, *Categorisation*, *Dataflow*, *DataProviderScheme*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+Dataflow | AgencyScheme, *Categorisation*, *DataConstraint*, DataStructureDefinition, DimensionConstraint, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, *VtlMappingScheme*
+DataProviderScheme | AgencyScheme, *Categorisation*, *DataConstraint*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*, *ProvisionAgreement*
+DataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, *DataConstraint*, *Dataflow*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, MetadataStructureDefinition, *Process*, *StructureMap*, ValueList
+DimensionConstraint | AgencyScheme, *Categorisation*, *Dataflow*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 Hierarchy | AgencyScheme, *Categorisation*, Codelist, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 HierarchyAssociation | All, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
-Metadataflow | All, *Categorisation*, DataConstraint, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ReportingTaxonomy*
-MetadataProviderScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process* 
-MetadataProvisionAgreement | All, *Categorisation*, DataConstraint, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
-MetadataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, DataConstraint, *DataStructureDefinition*, *HierarchyAssociation*, NamePersonalisationScheme | AgencyScheme, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*
+MetadataConstraint | AgencyScheme, *Categorisation*, *HierarchyAssociation*, __*Metadataflow*__, MetadataProviderScheme, __*MetadataProvisionAgreement*__, MetadataStructureDefinition, *Process*
+Metadataflow | All, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ReportingTaxonomy*
+MetadataProviderScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process* 
+MetadataProvisionAgreement | All, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataConstraint*, *Process*
+MetadataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, *DataStructureDefinition*, *HierarchyAssociation*, *MetadataConstraint*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ValueList
+NamePersonalisationScheme | AgencyScheme, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*
 OrganisationSchemeMap | AgencyScheme, *Categorisation*, DataConsumerScheme, DataProviderScheme, *HierarchyAssociation*, *Metadataflow*, MetadataProviderScheme, *MetadataProvisionAgreement*, OrganisationUnitScheme, *Process*
 OrganisationUnitScheme | AgencyScheme, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*
 Process | All, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*
-ProvisionAgreement | AgencyScheme, *Categorisation*, DataConstraint, Dataflow, DataProviderScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+ProvisionAgreement | AgencyScheme, *Categorisation*, *DataConstraint*, Dataflow, DataProviderScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 ReportingTaxonomy | AgencyScheme, *Categorisation*, *CategorySchemeMap*, *HierarchyAssociation*, Dataflow, __*Metadataflow*__, *MetadataProvisionAgreement*, *Process*, *ReportingTaxonomyMap*
 ReportingTaxonomyMap | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ReportingTaxonomy
 RepresentationMap | AgencyScheme, *Categorisation*, Codelist, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ValueList
@@ -132,7 +134,7 @@ Also, when returning only partial references (via `referencepartial`), the filte
 | Codelist | Only the codes referenced by the returned categorisations, data/metadata constraints, hierarchies or structure sets should be included in the returned codelist(s) |
 | ConceptScheme | Only the concepts referenced by the returned categorisations, data structure definitions, metadata structure definitions or structure sets should be included in the returned concept scheme(s) |
 | DataConsumerScheme | Only the data consumers referenced by the returned categorisations, metadata structure definitions or structure sets should be included in the returned data consumer scheme(s) |
-| DataProviderScheme | Only the data providers referenced by the returned categorisations, provision agreements or structure sets should be included in the returned data provider scheme(s) |
+| DataProviderScheme | Only the data providers referenced by the returned categorisations, data constraints or provision agreements or structure sets should be included in the returned data provider scheme(s) |
 | MetadataProviderScheme | Only the data providers referenced by the returned categorisations, metadata constraints, metadata provision agreements or structure sets should be included in the returned metadata provider scheme(s) |
 | HierarchicalCodelist | Only the hierarchies referenced by the returned categorisations or structure sets should be included in the returned hierarchical codelist(s) |
 | OrganisationUnitScheme | Only the organisation units referenced by the returned categorisations or structure sets in the returned organisation unit scheme(s) |
