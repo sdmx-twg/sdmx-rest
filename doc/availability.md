@@ -45,6 +45,9 @@ Operators appear as prefix to the component value(s) and are separated from it b
 
 As already mentioned, the response from the Data Availability API is an SDMX DataConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data.  These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
 
+> [!TIP]
+> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.    
+
 ### Response Mode
 
 The API response to the data query depends on the **mode** the API is called with.  `mode` is a query parameter to the API, and if not provided defaults to `exact`. Depending on the mode, the returned values represent either:
