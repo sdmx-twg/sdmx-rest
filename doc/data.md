@@ -68,6 +68,9 @@ The table below offers a few examples and how they should be interpreted.
 |c[X]=ne:A,ne:B |X <> A OR X <> B|
 |c[X]=ne:A+ne:B |X <> A AND X <> B|
 
+> [!TIP]
+> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.    
+
 ## Response types
 
 The following media types can be used with _data_ queries:
