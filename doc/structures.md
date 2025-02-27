@@ -102,7 +102,6 @@ DataConsumerScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Me
 Dataflow | AgencyScheme, *Categorisation*, *DataConstraint*, DataStructureDefinition, DimensionConstraint, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *ProvisionAgreement*, *ReportingTaxonomy*, *StructureMap*, *VtlMappingScheme*
 DataProviderScheme | AgencyScheme, *Categorisation*, *DataConstraint*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*, *ProvisionAgreement*
 DataStructureDefinition | AgencyScheme, *Categorisation*, Codelist, ConceptScheme, *DataConstraint*, *Dataflow*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, MetadataStructureDefinition, *Process*, *StructureMap*, ValueList
-DimensionConstraint | AgencyScheme, *Categorisation*, *Dataflow*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 Hierarchy | AgencyScheme, *Categorisation*, Codelist, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 HierarchyAssociation | All, *Categorisation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
 MetadataConstraint | AgencyScheme, *Categorisation*, *HierarchyAssociation*, __*Metadataflow*__, MetadataProviderScheme, __*MetadataProvisionAgreement*__, MetadataStructureDefinition, *Process*
