@@ -133,7 +133,7 @@ Also, when returning only partial references (via `referencepartial`), the filte
 | Codelist | Only the codes referenced by the returned categorisations, data/metadata constraints, hierarchies or structure sets should be included in the returned codelist(s) |
 | ConceptScheme | Only the concepts referenced by the returned categorisations, data structure definitions, metadata structure definitions or structure sets should be included in the returned concept scheme(s) |
 | DataConsumerScheme | Only the data consumers referenced by the returned categorisations, metadata structure definitions or structure sets should be included in the returned data consumer scheme(s) |
-| DataProviderScheme | Only the data providers referenced by the returned categorisations, provision agreements or structure sets should be included in the returned data provider scheme(s) |
+| DataProviderScheme | Only the data providers referenced by the returned categorisations, data constraints or provision agreements or structure sets should be included in the returned data provider scheme(s) |
 | MetadataProviderScheme | Only the data providers referenced by the returned categorisations, metadata constraints, metadata provision agreements or structure sets should be included in the returned metadata provider scheme(s) |
 | HierarchicalCodelist | Only the hierarchies referenced by the returned categorisations or structure sets should be included in the returned hierarchical codelist(s) |
 | OrganisationUnitScheme | Only the organisation units referenced by the returned categorisations or structure sets in the returned organisation unit scheme(s) |
