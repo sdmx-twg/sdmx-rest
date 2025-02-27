@@ -4,8 +4,6 @@ A Data Registration defines the Data Source for a Provision Agreement along with
 
 The Data Registration query API enables a client application to discover registered data sources by querying by either the unique ID of the Data Registration, or by filtering Data Registration by its Provision Agreement or the corresponding Dataflow, Data Structure Definition, or Data Provider. 
 
-
-
 ## By Registration ID
 
 ### Overview
@@ -15,12 +13,15 @@ These queries enable clients to find a single Registration by its unique ID.
 ### Syntax 
         protocol://ws-entry-point/registration/id/{registrationId}
 
+Parameter | Type | Description | Default | Multiple values
+--- | --- | --- | --- | ---
+registrationId | A string compliant with the SDMX *common:IDType* | The ID of the registration to be returned. |  | No
+
 ### Example
 
 Retrieve all Registrations with unique ID 'abcd-efgh-ijkl'
 
-        https://ws-entry-point/registration/provider/IMF/abcd-efgh-ijkl
-
+        https://ws-entry-point/registration/id/abcd-efgh-ijkl
 
 ## By Data Provider
 
@@ -31,9 +32,8 @@ the Provision Agreement that the Registration references.
 
 Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is therefore possible to use this query to retrieve all Registrations.
 
-
 ### Syntax 
-        protocol://ws-entry-point/registration/provider/{providerAgencyID}/{providerID}
+        protocol://ws-entry-point/registration/provider/{providerAgencyID}/{providerID}?{updatedAfter}&{updatedBefore}
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
@@ -71,11 +71,11 @@ is used to determin the corresponding Dataflow and Data Structure Definition.
 Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is therefore possible to use this query to retrieve all Registrations.
 
 ### Syntax 
-        protocol://ws-entry-point/registration/{context}/{agencyID}/{resourceID}/{version}
+        protocol://ws-entry-point/registration/{context}/{agencyID}/{resourceID}/{version}?{updatedAfter}&{updatedBefore}
 
 Parameter | Type | Description | Default | Multiple values
 --- | --- | --- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Registrations relate to provision agreement, which in turn can be used to identify the related dataflow and data structure definition. This parameter allows selecting the desired context for registration retrieval. | * | Yes
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Registrations relate to provision agreement, which in turn can be used to identify the related dataflow and data structure definition. This parameter allows selecting the desired context for registration retrieval. | * | No
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the context artefact. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the context artefact. | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the context artefact. | * | Yes
@@ -99,4 +99,11 @@ Retrieve all Registrations for the ECOFIN DataStructure maintained by the IMF
 Retrieve all Registrations updated after a specific point in time (percent encoded)
         
         https://ws-entry-point/registration/datastructure/*/*/*?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
-        
+
+## Response types
+
+The following media types can be used with _registration_ queries:
+
+- **application/vnd.sdmx.registry+xml;version=3.0.0**
+
+The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.

@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  version: '2.1.0'
-  title: 'SDMX RESTful API, v2.1.0'
+  version: '2.2.0'
+  title: 'SDMX RESTful API, v2.2.0'
   description: |
     The RESTful API for SDMX 3.0.
     
@@ -73,6 +73,7 @@ paths:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/reportingYearStartDay"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -95,7 +96,7 @@ paths:
         The query returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
         the query itself is more akin to a data query.
       parameters:
-        - $ref: "#/components/parameters/dataContext"
+        - $ref: "#/components/parameters/specificDataContext"
         - $ref: "#/components/parameters/agencies"
         - $ref: "#/components/parameters/resourceIDs"
         - $ref: "#/components/parameters/versions"
@@ -105,6 +106,7 @@ paths:
         - $ref: "#/components/parameters/mode"
         - $ref: "#/components/parameters/acreferences"
         - $ref: "#/components/parameters/updatedAfter"
+        - $ref: "#/components/parameters/reportingYearStartDay"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/accept-language"
         - $ref: "#/components/parameters/if-modified-since"
@@ -315,6 +317,14 @@ components:
       schema:
         type: string
         enum: [datastructure, dataflow, provisionagreement, "*"]
+    specificDataContext:
+      in: path
+      name: context
+      description: A specific context for availability queries.
+      required: true
+      schema:
+        type: string
+        enum: [datastructure, dataflow, provisionagreement]
     key:
       in: path
       name: key
@@ -607,6 +617,15 @@ components:
       schema:
         type: string
         pattern: '^[A-Za-z][A-Za-z\d_-]*$'
+    reportingYearStartDay:
+      in: query
+      name: reportingYearStartDay
+      description: |
+        This parameter allows providing an explicit value for the reporting year start day.
+      required: false
+      schema:
+        type: string
+        pattern: '^\-\-\d{2}\-\d{2}$'
     attributes:
       in: query
       name: attributes

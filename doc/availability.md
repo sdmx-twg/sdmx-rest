@@ -6,11 +6,12 @@ Availability queries allow to see what data are available for a structure (data 
 
 ## Syntax
 
-        protocol://ws-entry-point/availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentId}?{c}&{updatedAfter}&{references}&{mode}
+        protocol://ws-entry-point/availability/{context}/{agencyID}/{resourceID}/{version}/{key}/{componentId}?
+        {c}&{updatedAfter}&{references}&{mode}&{reportingYearStartDay}
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
-context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | * | No
+context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. | | No
 agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
@@ -20,6 +21,7 @@ c | Map | Filter data by component value. For example, if a structure defines a 
 updatedAfter | xs:dateTime | The last time the query was performed by the client. If this attribute is used, the returned message should only include the dimension values for the data that have changed since that point in time (updates and revisions). This should include the dimension values for data that have been added since the last time the query was performed (INSERT), data that have been revised since the last time the query was performed (UPDATE) and data that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. | | No
 references  |  String | This attribute instructs the web service to return (or not) the artefacts referenced by the DataConstraint to be returned. Possible values are: "codelist", "valuelist", "datastructure", "conceptscheme", "dataflow", "dataproviderscheme", "none", "all". The keyword "all" is used to indicate the inclusion of dataflow, datastructure, conceptschemes, dataproviderschemes, codelists and valuelists. Note, in the case ItemSchemes are returned (i.e. Codelists, ValueLists, ConceptSchemes and DataProviderSchemes), only the items used by the DataConstraint will be included (i.e. concepts used by the constrained dimensions; codes for which data are available; data providers that have provided data available according to the CubeRegion). Additionally for Codelists parent codes will be included in the response if the child codes are in the returned codelist, irrespective of whether they are referenced by the DataConstraint. If this results in a partial list, the isPartial attribute will be set to true. | **none** | Yes
 mode  | String  | This attribute instructs the web service to return a DataConstraint which defines a Cube Region containing values which will be returned by executing the query (mode="exact") vs a Cube Region showing what values remain valid selections that could be added to the data query (mode="available"). A valid selection is one which results in one or more series existing for the selected value, based on the current data query selection state defined by the current path parameters. | **exact** | No
+reportingYearStartDay | String | This parameter allows providing an explicit value for the reporting year start day. This is useful when the data is not related to a Gregorian calendar year, such as, for example, when the data is related to, say, a fiscal year. For example, if the query requests data greater than or equal to 2010-Q3 (`c[TIME_PERIOD]=ge:2010-Q3`), and sets `reportingYearStartDay` to `--07-01`, then any data where the start period occurs on or after `2010-01-01T00:00:00` should be returned. | | No
 
 Notes:
 
@@ -42,6 +44,9 @@ ew | Ends with |
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
 
 As already mentioned, the response from the Data Availability API is an SDMX DataConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data.  These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
+
+> [!TIP]
+> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.    
 
 ### Response Mode
 
@@ -171,7 +176,7 @@ The use case can be supported as follows:
 
 1. Query Data Availability API with a query for all data for the dataflow, and include all references:
 
-        https://ws-entry-point/availability/dataflow/ECB_EXR1_WEB/?references=all
+        https://ws-entry-point/availability/dataflow/ECB/ECB_EXR1_WEB/?references=all
 
 2. The response includes the DataConstraint and the Data Structure Definition. We can iterate the dimensions to build the Dimension picker. For each dimension, we can get the concept, as this provides the human readable label (ideally in the chosen locale, if available). The Cube Region constraint provides the available values for the dimension. If the dimension is coded, then the codelist can be used to get the human readable label in the chosen locale. The code will additionally provide any hierarchy information. An HTML checkbox is created for each available dimension value.
 
@@ -195,7 +200,7 @@ The use case can be supported as follows:
 
 1. When the user adds or removes a data query filter by checking or unchecking a checkbox, call the Data Availability API with current data query state and `mode=available`.
 
-        https://ws-entry-point/availability/dataflow/EMPLOYMENT/UK.*.M,FR.*.M?mode=available
+        https://ws-entry-point/availability/dataflow/*/EMPLOYMENT/*/UK.*.M,FR.*.M?mode=available
 
 2. The response will include only the values which remain valid selections. Use this information to enable or disable the dimension values.
 
