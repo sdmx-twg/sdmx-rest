@@ -43,7 +43,7 @@ ew | Ends with |
 
 Operators appear as prefix to the component value(s) and are separated from it by a `:` (e.g. `c[TIME_PERIOD]=ge:2020-01+le:2020-12`).
 
-As already mentioned, the response from the Data Availability API is an SDMX AvailabilityConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data.  These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
+As already mentioned, the response from the Data Availability API is an SDMX AvailabilityConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data. These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
 
 > [!TIP]
 > Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.    
@@ -109,13 +109,13 @@ Reference Area UK has now become available, this is because if the user were to 
 
 ### Temporal coverage
 
-For DSDs that have a time dimension, temporal coverage can be included in the AvailabilityConstraint's `validFrom` and `validTo` property that are part of the Cube Region's Key Value. If provided these properties indicate the earliest and latest observation dates available for specific Component values based on the current data query.  
+For DSDs that have a time dimension, temporal coverage can be included in the AvailabilityConstraint's `validFrom` and `validTo` property that are part of the Cube Region's Key Value. If provided, these properties indicate the earliest and latest observation dates available for specific Component values based on the current data query.  
 
 This information may not be included in the response if the service does not have access to this information.
 
 ### Metrics
 
-The `AvailabilityConstraint` may provide details on the  **number of series** and the **number of observations** which will be returned if the data query presented to this API were run against the data API.  
+The `AvailabilityConstraint` may provide details on the **number of series** and the **number of observations** which will be returned if the data query presented to this API were run against the data API.  
 
 The `Metrics` are provided as explicit `obsCount` and `seriesCount` properties on the `AvailabilityConstraint`.
 
