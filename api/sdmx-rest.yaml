@@ -93,7 +93,7 @@ paths:
         This can be used, for example, to build a data query form that enables users of the UI to create a data query by selecting dimension values. 
         For example the user is able to click 'Reporting Country' and then select the codes 'United Kingdom', 'Greece', and 'Switzerland'.
 
-        The query returns a `Constraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
+        The query returns an `AvailabilityConstraint`, i.e. structural metadata, and is therefore similar to the other structural metadata queries but 
         the query itself is more akin to a data query.
       parameters:
         - $ref: "#/components/parameters/specificDataContext"
