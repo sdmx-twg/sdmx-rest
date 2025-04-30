@@ -211,4 +211,4 @@ Let’s imagine a situation where the service has imposed a limit on 2000 series
 The use case can be supported as follows:
 
 1. When the user adds or removes a data query filter by checking or unchecking a checkbox, call the Data Availability API with the current data query state.
-2. The response will include the DataAvailability constraint. If the DataAvailability constraint has a seriesCount it can be used to either enable or disable the 'Run Query' button based on its value.
+2. The response will include the AvailabilityConstraint. If the AvailabilityConstraint has a seriesCount it can be used to either enable or disable the 'Run Query' button based on its value.
