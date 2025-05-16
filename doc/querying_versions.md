@@ -1,6 +1,6 @@
 # Query syntax for specific, latest or all artefact versions
 
-The SDMX REST API supports retrievals of specific, latest or all artefact versions according to the [SDMX semantic versioning & dependency management rules](https://github.com/sdmx-twg/sdmx-im/tree/master/docs/source/semanticVersioning.md) by means of the [SDMX REST API wildcard operators](https://github.com/sdmx-twg/sdmx-rest/blob/master/doc/index.md#use-of-operators).
+The SDMX REST API supports retrievals of specific, latest or all artefact versions according to the SDMX semantic versioning & dependency management rules ([cf. Section 4.3 of the SDMX Technical Notes](https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_6_FINAL-1_0.pdf)) by means of the [SDMX REST API wildcard operators](https://github.com/sdmx-twg/sdmx-rest/blob/master/doc/index.md#use-of-operators).
 
 Let's use the version form `X.Y.Z-EXT`, where 
 - `X` is a non-negative number representing the MAJOR version part
