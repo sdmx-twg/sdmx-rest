@@ -83,6 +83,23 @@ The default format is highlighted in **bold**. For media types of previous SDMX 
 
 SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
 
+## Recommended returned dataset actions in SDMX web service responses to GET data queries
+
+1. Without the `updatedAfter`, `includeHistory`, `detail`, `attributes` or `measures` URL parameters:  
+   The response message should contain the retrieved data in a `replace` dataset (instead of the previous `information` dataset). 
+2. Without the `updatedAfter` and `includeHistory`, but with `detail`, `attributes` or `measures` URL parameters:  
+   The response message should contain the retrieved data in a `merge` dataset (instead of the previous `information` dataset). 
+3. With the `updatedAfter` URL parameter:  
+   The response must include the information of all previously updated, inserted and deleted data/metadata, even if bulk deletions have been used. One of the two approaches are possible:
+   - a `delete` dataset for entirely deleted observations and for entirely deleted sets of (reference metadata) attribute values attached to specific dimension combinations and  
+     a `replace` dataset for all other changed observations and changed attribute and reference metadata values attached to specific dimension combinations, or
+   - a `delete` dataset for entirely deleted observations, for entirely deleted sets of (reference metadata) attribute values attached to specific dimension combinations and for individually deleted mesure, attribute and reference metadata values and  
+     a `merge` dataset for all other updated or inserted observation, attribute and reference metadata values.   
+
+   The DB synchronization use case requires that the generated response must always allow achieving to replicate the exact same punctual data content as currently stored in the queried data source.
+4. With the `includeHistory` URL parameter:  
+   Using a number of datasets with `delete`, `replace` or `merge` actions and limited in their validity time span that allow achieving to replicate the exact same punctual data contents as previously stored in the queried data source.
+
 ## Use cases behind the various time-related queries
 
 ### Efficient data exchanges

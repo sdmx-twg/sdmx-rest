@@ -1,47 +1,44 @@
-# Maintaining Structural and Reference Metadata via the SDMX REST API
+# Maintaining Structural and Reference Metadata and their underlying Data via the SDMX REST API
 
-The following sections describe the foreseen **HTTP methods** for the maintenance of SDMX Structural and Reference Metadata via the SDMX REST API.  
-
-Note that maintenance actions for data are defined by the `Action` property of the related Datasets. See here for details:
-- [SDMX-ML](https://github.com/sdmx-twg/sdmx-ml/blob/master/documentation/SDMX_3-1_SECTION_3A_PART_IV_DATA.md#41-Data-Actions)
-- [SDMX-JSON](https://github.com/sdmx-twg/sdmx-json/blob/master/data-message/docs/1-sdmx-json-field-guide.md#dataset)
-- [SDMX-CSV](https://github.com/sdmx-twg/sdmx-csv/blob/master/data-message/docs/sdmx-csv-field-guide.md#column-content-all-rows-after-header)
+The following sections describe the foreseen **HTTP methods** for the maintenance of SDMX Structural and Reference Metadata and their underlying data via the SDMX REST API. These specifications align with [RFC7231](https://www.rfc-editor.org/rfc/rfc7231). 
 
 -------------
 
 **Content:**
 
 - [Maintaining Structural Metadata](#maintaining-structural-metadata)
-  - [CREATE](#create)
-    - [Artefact (Structure)](#artefact-structure)
-      - [Client](#client)
-      - [Server](#server)
-      - [Response](#response)
-  - [UPDATE](#update)
-    - [Replace full Artefacts](#replace-full-artefacts)
-      - [Client](#client-1)
-      - [Server](#server-1)
-      - [Response](#response-1)
-    - [Partially update Item Schemes](#partially-update-item-schemes)
-      - [Client](#client-2)
-      - [Server](#server-2)
-      - [Response](#response-2)
-  - [DELETE](#delete)
-      - [Client](#client-3)
-      - [Server](#server-3)
-      - [Response](#response-3)
-- [Maintaining Reference Metadata](#maintaining-reference-metadata)
-  - [CREATE, UPDATE or DELETE a single Reference Metadataset](#create-update-or-delete-a-single-reference-metadataset)
-  - [CREATE or UPDATE multiple Reference Metadatasets](#create-or-update-multiple-reference-metadatasets)
-  - [Client](#client-4)
-  - [Server](#server-4)
+  - [Create/Replace](#create-replace)
+    - [Client](#client)
+    - [Server](#server)
+    - [Response](#response)
+  - [Partial update](#partial-update)
+    - [Partially update or extend Item Schemes](#partially-update-or-extend-item-schemes)
+    - [Partially add or update specific localised properties](#partially-add-or-update-specific-localised-properties)
+  - [Delete](#delete)
+    - [Client](#client-1)
+    - [Server](#server-1)
+    - [Response](#response-1)
+- [Maintaining Reference Metadatasets](#maintaining-reference-metadatasets)
+  - [Create, Update or Delete a single Reference Metadataset](#create-update-or-delete-a-single-reference-metadataset)
+  - [Create or Update multiple Reference Metadatasets](#create-or-update-multiple-reference-metadatasets)
+  - [Client](#client-2)
+  - [Server](#server-2)
+- [Maintaining related Data](#maintaining-related-data)
+  - [Actions](#actions)
+    - [Merge](#merge)
+    - [Replace](#replace)
+    - [Delete](#delete-1)
+  - [Client](#client-3)
+  - [Server](#server-3)
+  - [Response](#response-2)
 - [ANNEX I: RegistryInterface messages for Subscription and Registration](#annex-i-registryinterface-messages-for-subscription-and-registration)
   - [Introduction](#introduction)
   - [Retrieving Subscriptions and Registrations](#retrieving-subscriptions-and-registrations)
   - [Maintaining Subscriptions and Registrations](#maintaining-subscriptions-and-registrations)
-- [ANNEX II: Structure response message](#annex-ii-structure-response-message)
+- [ANNEX II: Structure maintenance response message](#annex-ii-structure-maintenance-response-message)
+- [ANNEX III: Data maintenance response message](#annex-iii-data-maintenance-response-message)
 - [ANNEX III: Nested Items](#annex-iii-nested-items)
-- [ANNEX IV: ANNEX IV: Summary of HTTP response codes for structure management](#annex-iv-summary-of-http-response-codes-for-structure-management)
+- [ANNEX IV: Summary of HTTP response codes for structure management](#annex-iv-summary-of-http-response-codes-for-structure-management)
 - [ANNEX V: Examples for structure management](#annex-v-examples-for-structure-management)
   - [Difference between replace and partially update](#difference-between-replace-and-partially-update)
 
@@ -49,178 +46,101 @@ Note that maintenance actions for data are defined by the `Action` property of t
 
 ## Maintaining Structural Metadata
 
-### CREATE
+### Create/Replace
 
-Inserting or creating new SDMX Structural Metadata is detailed in this secion.
+Inserting (or creating) new SDMX Structural Metadata (Maintainable Artefacts) or fully replacing them is detailed in this secion.
 
-#### Artefact (Structure)
-
-Submitting SDMX Artefacts in bulk, either of the same or of different types, is achieved with an HTTP `POST` method.
-Creating new Artefact(s) may be issued by:
-- `POST` one or more Maintainable Artefacts under the proper resource type, e.g. for Codelists: `/structure/codelist/`
-- `POST` one or more Maintainable Artefacts under the abstract structure resource type, e.g. `/structure/`
-
-##### Client
-
-In order to create Artefacts, the client:
-
-- MAY set the `Accept` header to indicate the preferred response format;
-- MUST set the `Content-type` header according to the format of the submitted Artefact(s);
-- MUST include in the request body, one or more Maintainable Artefacts in the SDMX format indicated in the `Content-type` header and of the SDMX type indicated in the resource, i.e.:
-  - any set of Maintainable Artefacts under resource `/structure/`
-  - a set of specific type of Maintainable Artefacts under the corresponding resource type, e.g. for Codelists: `/structure/codelist/`
-
-##### Server
-
-In response to Artefact(s) creation, the server:
-
-- MUST return `201` upon successful creation (or `207` for partial success);
-- MUST return a `SubmitStructureResponse` message with the result of the action(s), according to the `Accept` header, or the default, if the `Accept` type is not supported (currently available only in SDMX-ML format);
-- MUST set the `Content-type` according to the returned format;
-- MAY set the `Location` header to point to the created/primary resource/Artefact (only one instance is allowed);
-
-##### Response
-
-The `SubmitStructureResponse` message must be returned in any case (success, partial success, failure).
-This is defined as part of the `RegistryInterface` messages.
-The details of the message are explained in section **Structure response message**, below.
-
-Especially when different results occur on the Artefacts (e.g. partial success), the server should act as follows:
-- Return a multi-status return code (like `207`);
-- Return a `JSON` or `XML` message with the details of the result (currently available only in SDMX-ML);
-
-| Method | Exists | Versioning respected | Is Referenced | References exist/provided | Response Code |
-|---|---|---|---|---|---|
-| POST | F | T | - | T | `201` (successful) or `207` (partially successful) |
-| POST | F | T | - | F | `409` missing references |
-| POST | F | F | - | I | `409` failure to respect the versioning rules |
-
-<sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
-
-<sup>NOTE: The rules for versioning in SDMX 3.0 are based on Semantic Versioning. In addition, Artefacts with no version are supported. SDMX 3.0 does not specify rules for legacy versioning - i.e. versioning prior to SDMX 3.0. The versioning rules in that case are up to the organisation using them.</sup>
-
-### UPDATE
-
-Updating existing SDMX Structural Metadata is detailed in this section.
-
-#### Replace full Artefacts
-
-Following the current SDMX practices, updating (replacing) means providing the new version of any Maintainable Artefact.
-According to RFC7231, `PUT` is the proper way to update a resource, as identified by the URL, but `POST` may also be used in case more than one resources need to be updated.
-
-The `POST` method may be used like this:
-
-- under `/structure` for different types of Maintainable Artefacts, i.e. an SDMX Structure message; 
-- under `/structure/{maintainable}` for Maintainable Artefacts of type `{maintainable}`, i.e. an SDMX Structure message including only a specific type of Structures; e.g. an SDMX message with one or more Dataflows, under `/structure/dataflow`;
+Submitting individual SDMX Artefacts can be achieved with an HTTP `PUT` method.  
+Submitting individual SDMX Artefacts or in bulk, either of the same or of different types, is achieved with an HTTP `POST` method.
 
 The `PUT` method may be used like this:
 
 - under `/structure/{maintainable}/{identifier}` for the Maintainable Artefact of type `{maintainable}`, identified by `{identifier}`, i.e. an SDMX DSD message with `ESTAT:NA_MAIN(1.1)` under `/structure/datastructure/ESTAT/NA_MAIN/1.1`
 
-The result, following the current practices of updates in SDMX, is to **completely replace** the identified Artefact, unless a Maintainable Artefact has the `isPartialLanguage` property set to `true`, in which case only the included languages are added or updated and other languages are not changed.
+The `POST` method may be used like this:
 
-##### Client
+- under `/structure` for different types of Maintainable Artefacts, i.e. an SDMX Structure message
+- under `/structure/{maintainable}` for Maintainable Artefacts of type `{maintainable}`, i.e. an SDMX Structure message including only a specific type of Structures; e.g. an SDMX message with one or more Dataflows, under `/structure/dataflow`
 
-In order to update Artefact(s), the client:
+In case, a submitted Maintainable Artefact already exists and the submitted Maintainable Artefact has the `isPartialLanguage` or `isPartial` property set to `true`, the Maintainable Artefact is not fully replaced but updated. For more details see section [PARTIAL UPDATE](#partial-update) below.
 
-- MAY set the `Accept` header to indicate the preferred response format;
-- MUST set the `Content-type` header according to the format of the submitted Artefact(s);
+#### Client
+
+In order to create Artefacts, the client:
+
+- MAY set the `Accept` header to indicate the preferred response format
+- MUST set the `Content-type` header according to the format of the submitted Artefact(s)
 - MUST include in the request body, one or more Maintainable Artefacts in the SDMX format indicated in the `Content-type` header and of the SDMX type indicated in the resource, i.e.:
-- for `POST`:
-  - any set of Maintainable Artefacts under resource `/structure/`
-  - one or more Maintainable Artefacts of the specific type under the corresponding resource type, e.g. Dataflows under `/structure/dataflow/`
-- for `PUT`:
-  - one Maintainable Artefact, of the specific type under the corresponding resource type and identified according to the resource parameters, e.g., DSD `ESTAT:NA_MAIN(1.1)` under `/structure/datastructure/ESTAT/NA_MAIN/1.1`
+  - for `POST`:
+    - any set of Maintainable Artefacts under resource `/structure/`
+    - one or more Maintainable Artefacts of the specific type under the corresponding resource type, e.g. Dataflows under `/structure/dataflow/`
+  - for `PUT`:
+    - one Maintainable Artefact, of the specific type under the corresponding resource type and identified according to the resource parameters, e.g., DSD `ESTAT:NA_MAIN(1.1)` under `/structure/datastructure/ESTAT/NA_MAIN/1.1`
 
-##### Server
+#### Server
 
-In response to Artefact(s) update, the server:
+In response to the client request, the server:
 
-- MUST respond with `200` in case of successful update;
-- MUST return a `SubmitStructureResponse` message with the result of the action(s), according to the `Accept` header, or the default, if the `Accept` type is not supported (currently available only in SDMX-ML);
-- MUST set the `Content-type` according to the returned format;
-- MUST respond with `422` in case of resource type mismatch, i.e. the resource type identified in the URL does not match the Artefact type(s) of the included SDMX Artefact(s), or the identification of the Artefact (in case of `PUT`) does not match the resource path parameters.
-- MUST respond with `404` if the resource was not found;
+- MUST return `201` (created) upon successful insertion/creation of all submitted artefacts
+- MUST return `200` (ok) or `204` (no content) upon successful full replacement or partial update of all submitted artefacts
+- MUST return `207` (multi-status) if the outcome differs between the submitted artefacts, including unsuccessful submissions
+- In case of any response other than `201`, `204` or `404`:
+  - MUST return a `SubmitStructureResponse` message indicating the outcome for each of the submitted artefacts, as `JSON` (default) or `XML` message according to the `Accept` header
+  - MUST set the `Content-type` according to the returned format
+- MAY set the `Location` header to point to the inserted/created Artefact if only one Maintainable Artefact was submitted (only one instance is allowed)
+- MUST return `409` (conflict) in case versioning rules are violated or references are missing or would break
+- MUST return `422` (unprocessable content) in case of resource type mismatch, i.e. the resource type identified in the URL does not match the Artefact type(s) of the included SDMX Artefact(s), or the identification of the Artefact (in case of `PUT`) does not match the resource path parameters
+- MUST return `404` (not found) if the submitted Maintainable Artefact has the `isPartialLanguage` or `isPartial` property set to `true` but the corresponding Maintainable Artefact doesn't exist
 
-##### Response
+#### Response
 
-The `SubmitStructureResponse` message must be returned in any case (success, partial success, failure).
-This is defined as part of the `RegistryInterface` messages.
-The details of the message are explained in section **Structure response message**, below.
+The `SubmitStructureResponse` message (defined as part of the `RegistryInterface` messages) must be returned in case of any response other than `201`, `204` and `404`.
+The details of the message are explained in [annex II **Structure maintenance response message**](#annex-ii-structure-maintenance-response-message), below.
 
 The following matrix summarises the returned `HTTP` response codes.
 
-| Method | Exists | Versioning respected | Is Referenced | References exist/provided | Return Code |
-|---|---|---|---|---|---|
-| PUT/POST | T | T | F | T | `200` (successful) or `207` (partially successful)  |
-| PUT/POST | T | T | F | F | `409` |
-| PUT/POST | T | T | T | T | `200` if update is possible - `409` if references would break |
-| PUT/POST | T | F | - | - | `409` in case of changes that violate the versioning requirements |
-| PUT/POST | - | - | - | - | `422` see section **Server** |
-| PUT | F | - | - | - | `404` |
+| Method | Exists | Semantic Versioning respected | Is Referenced | References exist/provided | Response Code |
+|----------|---|-----|---|---|--------------------------------------------------------------------------------|
+| POST     |   |     |   |   | `207` (multi-status) if differing outcome between different submitted artefacts |
+| PUT/POST | F | T\* |   | T | `201` (created) if successful insertion/creation of all submitted artefacts |
+| PUT/POST | T |     | F | T | `200` (ok) or `204` (no content) if successful replacement/update of all submitted artefacts, which are all not semantically versioned |
+| PUT/POST |   | F   |   |   | `409` (conflict) in case semantic versioning rules are violated |
+| PUT/POST | T |     | T |   | `409` (conflict) especially in case of semantic versioning since references would break |
+| PUT/POST | F | T\* |   | F | `409` (conflict) since missing references |
+| PUT/POST |   |     |   |   | `422` (unprocessable content) see section **Server** above |
+| PUT/POST | F |     |   |   | `404` (not found) if the submitted artefact has the `isPartialLanguage` or `isPartial` property set to `true` |
 
-<sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
+<sup>T: True, F: False, [empty]: Irrelevant/Not applicable, *: at least for the semantically versioned artefacts</sup>
 
-#### Partially update Item Schemes
+<sup>NOTE: The rules for versioning in SDMX 3.0 are based on Semantic Versioning. In addition, Artefacts with no version are supported. SDMX 3.0 does not specify strict rules for legacy versioning - i.e. versioning prior to SDMX 3.0. The versioning rules in that case are up to the organisation using them.</sup>
 
-In the case of Item Schemes, it is possible to submit a partial Item Scheme, including the Items that must be updated.
-The usage of `POST` and `PUT` is the same as in the case of full replacement. The only difference is that the submitted Items Schemes to be partially updated (i.e. not completely replaced) must include the flag `isPartial="true"`.
+
+### Partial Update
+
+Partial updates use the rules for submissions defined above for insertion/creation and full replacements, see section [CREATE/REPLACE](#create-replace). 
+
+#### Partially update or extend Item Schemes
+
+In the case of Item Schemes, it is possible to submit a partial Item Scheme, including only the Items that must be added or updated.
+The usage of `POST` and `PUT` is the same as in the case of insertion/creation and full replacement. The only difference is that the submitted Items Schemes to be partially updated or extended (i.e. not completely replaced) must include the flag `isPartial="true"`.
 
 In this case, any Item included in the submitted partial Item Scheme:
-- fully replaces the Item, if it existed in the stored Item Scheme; the Item stays in the same position;
+- fully replaces the Item, if it existed in the stored Item Scheme; the Item stays in the same position
 - is added as a new Item, if it did not exist
-  - in a selected position, if it is submitted relatively to existing Items;
-  - else, at the end of the Item Scheme.
+  - in a selected position, if it is submitted relatively to existing Items
+  - else, at the end of the Item Scheme
 
-For more details on nested Items (like Categories), please refer to section **Nested Items** below.
+For more details on nested Items (like Categories), please refer to [ANNEX III: Nested Items](#annex-iii-nested-items) below.
 
 In addition to the Items, the Item Scheme details are also updated accordingly, i.e. the names, description, annotations and any other attributes.
 Names and Descriptions are replaced if they exist for the submitted language (i.e. the value of their `lang` attribute), or simply added, if new. Annotations and other Item Scheme attributes are fully replaced.
 
-##### Client
+#### Partially add or update specific localised properties
 
-In order to partially update an Item Scheme, the client:
-
-- MAY set the `Accept` header to indicate the preferred response format;
-- MUST set the `Content-type` header according to the format of the submitted Item Scheme(s);
-- MUST include the flag `isPartial="true"` in the submitted Item Scheme(s);
-- MUST include in the request body:
-  - For `PUT`, **one** Item Scheme in the SDMX format indicated in the `Content-type` header and of the Item Scheme type indicated in the resource, e.g. a Concept Scheme under resource `/conceptscheme`;
-  - For `POST`, one or more Item Schemes in the SDMX format indicated in the `Content-type` header and
-    - of the Item Scheme type indicated in the resource, in case of a specific Item Scheme resource, e.g. a Codelist under resource `/structure/codelist/`
-    - of any Item Scheme type, in case of the `/structure` resource.
-
-##### Server
-
-In response to an Item Scheme partial update, the server:
-
-- MUST respond with `200` in case of successful update;
-- MUST return a `SubmitStructureResponse` message with the result of the action, according to the `Accept` header, or the default, if the `Accept` type is not supported (currently available only in SDMX-ML);
-- MUST set the `Content-type` according to the returned format;
-- MUST respond with `422` in case of resource type mismatch, i.e. the artefact identified in the URL does not match either to the resource type or identification of the included SDMX Artefact.
-- MUST respond with `404` if the resource was not found;
-
-##### Response
-
-The `SubmitStructureResponse` message must be returned in any case (success, partial success, failure).
-This is defined as part of the `RegistryInterface` messages.
-The details of the message are explained in section **Structure response message**, below.
-
-The following matrix summarises the returned `HTTP` response codes.
-
-| Method | Exists | Versioning respected | Is Referenced | Refs exist/ provided | Response Code |
-|---|---|---|---|---|---|
-| PUT/POST | T | T | F | T | `200` (successful) or `207` (partially successful)  |
-| PUT/POST | T | T | F | F | `409` |
-| PUT/POST | T | T | T | T | `200` if update is possible - `409` if references would break |
-| PUT/POST | T | F | - | - | `409` in case of changes that violate the versioning requirements |
-| PUT/POST | - | - | - | - | `422` see section **Server** |
-| PUT | F | - | - | - | `404` |
-
-<sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
+In case a submitted Maintainable Artefact has the `isPartialLanguage` property set to `true`, only the included languages are added or updated and other languages are not changed.
 
 
-### DELETE
+### Delete
 
 Always concerns one Maintainable Artefact or one Item. 
 For example:
@@ -228,47 +148,49 @@ For example:
 - A fully identified Item, e.g. `/structure/codelist/SDMX/CL_FREQ/1.0/M`
 
 In case the deleted Item was acting as a parent to other Item(s), then the server should make sure that:
-- in case of flat Item Schemes the children become orphans, i.e. their parent is removed;
-- in case of nested Item Schemes, all children are also deleted.
+- in case of flat Item Schemes the children become orphans, i.e. their parent is removed
+- in case of nested Item Schemes, all children are also deleted
 
-##### Client
+#### Client
 
 In order to delete an Artefact, the client:
 
-- MAY set the `Accept` header to indicate the preferred response format;
-- MUST fully identify exactly **one** Maintainable Artefact or **one** Item, by means of the proper URL;
+- MAY set the `Accept` header to indicate the preferred response format
+- MUST fully identify exactly **one** Maintainable Artefact or **one** Item, by means of the proper URL
 
-##### Server
+#### Server
 
 In response to an Artefact deletion, the server:
 
-- MUST respond with `200` in case of successful deletion;
-- MUST return a `SubmitStructureResponse` message with the result of the action, according to the `Accept` header, or the default, if the `Accept` type is not supported (currently available only in SDMX-ML);
-- MUST respond with `404` if the resource was not found;
+- MUST return `200` (ok) or `204` (no content) in case of successful deletion
+- In case of any response other than `204` and `404`:
+  - MUST return a `SubmitStructureResponse` message indicating the outcome for each of the submitted artefacts, as `JSON` (default) or `XML` message according to the `Accept` header
+  - MUST set the `Content-type` according to the returned format
+- MUST return `409` (conflict) in case versioning rules are violated or references are missing or would break
+- MUST respond with `404` (not found) if the resource was not found
 
-##### Response
+#### Response
 
-The `SubmitStructureResponse` message must be returned in any case (success, failure).
-This is defined as part of the `RegistryInterface` messages.
-The details of the message are explained in section **Structure response message**, below.
+The `SubmitStructureResponse` message (defined as part of the `RegistryInterface` messages) must be returned in case of any response other than `204` and `404`.
+The details of the message are explained in [annex II **Structure maintenance response message**](#annex-ii-structure-maintenance-response-message), below.
 
 The following matrix summarises the returned `HTTP` response codes.
 
-| Method | Exists | Versioning respected | Is Referenced | References exist/ provided | Response Code |
+| Method | Exists | Semantic Versioning used | Is Referenced | References exist/ provided | Response Code |
 |---|---|---|---|---|---|
-| DELETE | F | - | - | - | `404` |
-| DELETE | T | F | F | I | `200` |
-| DELETE | T | T | I | I | `409` when trying to delete a stable artefact, a deprecation strategy may be followed |
-| DELETE | T | F | T | I | `409` |
+| DELETE | T | F | F |   | `200` (ok) or `204` (no content) |
+| DELETE | F |   |   |   | `404` (not found) |
+| DELETE | T | T |   |   | `409` (conflict) since (internal/external) references could break; however, a deprecation strategy may be followed |
+| DELETE | T | F | T |   | `409` (conflict) since references would break |
 
-<sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
+<sup>T: True, F: False, [empty]: Irrelevant/Not applicable</sup>
 
 
-## Maintaining Reference Metadata
+## Maintaining Reference Metadatasets
 
 This section fully applies the [RFC7231 standard](https://www.rfc-editor.org/rfc/rfc7231#section-4.3) for the meaning of HTTP methods. 
 
-### CREATE, UPDATE or DELETE a single Reference Metadataset
+### Create, Update or Delete a single Reference Metadataset
 
 Inserting (creating a new), updating (an existing) and deleting an individual (maintainable) SDMX Reference Metadataset is detailed in this secion.
 
@@ -277,7 +199,7 @@ The Reference Metadataset is created if it doesn't exist yet in the underlying r
 
 Use the `DELETE` method on the related target resource `/metadata/metadataset/{identifier}` to **delete** an individual Reference Metadataset, i.e. the `ESTAT:MDS_EXAMPLE(1.0)` Reference Metadataset under `/metadata/metadataset/ESTAT/MDS_EXAMPLE/1.0`.
 
-### CREATE or UPDATE multiple Reference Metadatasets
+### Create or Update multiple Reference Metadatasets
 
 Inserting (creating new) and updating (completely replacing existing) multiple (maintainable) SDMX Reference Metadatasets is detailed in this secion.
 
@@ -288,49 +210,139 @@ All Reference Metadatasets that don't exist yet in the underlying registry are c
 
 In order to create, update or delete Reference Metadatasets, the client:
 
-- MAY set the `Accept` header to indicate the preferred response format;
+- MAY set the `Accept` header to indicate the preferred response format
 
 In order to create or update Reference Metadatasets, the client:
 
-- MUST set the `Content-type` header according to the format of the submitted Reference Metadataset(s);
+- MUST set the `Content-type` header according to the format of the submitted Reference Metadataset(s)
 - MUST include in the request body, one or more Reference Metadatasets in the SDMX format indicated in the `Content-type` header
 
 ### Server
 
 In response to Reference Metadataset(s) creation, update or deletion, the server:
 
-- MUST respond with `201` in case of successful creation (or `207` for multi-status);
-- MAY set the `Location` header to point to the created Reference Metadataset (only one instance is allowed);
-- MUST respond with `200` in case of successful update or deletion (or `207` for multi-status);
-- MUST return a `SubmitStructureResponse` message with the result of the action(s) as defined for the `RegistryInterface` messages (success, partial success, failure), in the SDMX format requested by the `Accept` header, or the default, if the `Accept` type is not supported (currently available only in SDMX-ML format). This is especially important when varying results occur for different Reference Metadatasets. The details of the message are explained in section [**Structure response message**](#ANNEX-II-Structure-response-message);
-- MUST set the `Content-type` according to the returned format (currently only in SDMX-ML format);
-- MUST respond with `422` in case of semantic errors, i.e. the content submitted in the request body is not Reference Metadatsets, or the identification of the Reference Metadatset (in case of `PUT`) does not match the resource path parameters (or `207` for multi-status).
-- MUST respond with `404` if the to be deleted Reference Metadataset was not found;
+- MUST respond with `201` in case of successful creation (or `207` for multi-status)
+- MAY set the `Location` header to point to the created Reference Metadataset (only one instance is allowed)
+- MUST respond with `200` in case of successful update or deletion (or `207` for multi-status)
+- MUST return a `SubmitStructureResponse` message with the result of the action(s) as defined for the `RegistryInterface` messages (success, partial success, failure), in the SDMX format requested by the `Accept` header, or the default, if the `Accept` type is not supported (currently available only in SDMX-ML format). This is especially important when varying results occur for different Reference Metadatasets. The details of the message are explained in section [**Structure response message**](#ANNEX-II-Structure-response-message).
+- MUST set the `Content-type` according to the returned format (currently only in SDMX-ML format)
+- MUST respond with `422` in case of semantic errors, i.e. the content submitted in the request body is not Reference Metadatsets, or the identification of the Reference Metadatset (in case of `PUT`) does not match the resource path parameters (or `207` for multi-status)
+- MUST respond with `404` if the to be deleted Reference Metadataset was not found
 
 The following matrix summarises the returned `HTTP` response codes.
 
-| Method | Exists | Versioning respected | Is Referenced | References exist/provided | Response Code |
-|--------|--------|----------------------|---------------|---------------------------|---------------|
-| PUT/POST | F    | T                    | -             | T                         | `201` (successful) \*   |
-| PUT/POST | F    | T                    | -             | F                         | `409` (missing references) \* |
-| PUT/POST | T    | T                    | F             | T                         | `200` (successful) \*  |
-| PUT/POST | T    | T                    | F             | F                         | `409` (missing references) \* |
-| PUT/POST | T    | T                    | T             | T                         | `200` if update is possible or `409` if references would break \* |
-| PUT/POST | T/F  | F                    | I             | I                         | `409` in case of changes that violate the versioning requirements \* |
-| PUT/POST | -    | -                    | -             | -                         | `422` (semantic error) \* |
-| DELETE | F      | -                    | -             | -                         | `404` (not found) |
-| DELETE | T      | F                    | F             | I                         | `200` (successful) |
-| DELETE | T      | F                    | T             | I                         | `409` |
-| DELETE | T      | T                    | I             | I                         | `409` when trying to delete a stable Reference Metadatset, a deprecation strategy may be followed |
+| Method | Exists | Semantic Versioning respected | Is Referenced | References exist/provided | Response Code |
+|--------|--------|-------------------------------|---------------|---------------------------|---------------|
+| POST   |        |                               |               |                           | `207` (multi-status) if differing outcome between different submitted artefacts |
+| PUT/POST | F    | T\*                           |               | T                         | `201` (created) if successful insertion/creation of all submitted artefacts |
+| PUT/POST | T    |                               | F             | T                         | `200` (ok) or `204` (no content) if successful replacement/update of all submitted artefacts, which are all not semantically versioned |
+| PUT/POST |      | F                             |               |                           | `409` (conflict) in case semantic versioning rules are violated |
+| PUT/POST | T    |                               | T             |                           | `409` (conflict) especially in case of semantic versioning since references would break |
+| PUT/POST | F    | T\*                           |               | F                         | `409` (conflict) since missing references |
+| PUT/POST |      |                               |               |                           | `422` (unprocessable content) semantic error |
+| PUT/POST | F    |                               |               |                           | `404` (not found) if the submitted artefact has the `isPartialLanguage` property set to `true` |
+| DELETE   | T    | F                             | F             |                           | `200` (ok) or `204` (no content) if successfully deleted |
+| DELETE   | F    |                               |               |                           | `404` (not found) |
+| DELETE   | T    | T                             |               |                           | `409` (conflict) when trying to delete a stable Reference Metadatset, a deprecation strategy may be followed |
+| DELETE   | T    | F                             | T             |                           | `409` (conflict) since references would break |
 
-(*) Whenever multiple Reference Metadatsets are created or updated through a POST and the outcome diverges between these Reference Metadatsets then the overall response code is `207` (multi-status).
-
-<sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>  
+<sup>T: True, F: False, [empty]: Irrelevant/Not applicable, *: at least for the semantically versioned artefacts</sup>  
 <sup>NOTE: The rules for versioning in SDMX 3.0 are based on Semantic Versioning. SDMX 3.0 does not specify rules for legacy versioning - i.e. versioning prior to SDMX 3.0. The versioning rules in that case are up to the organisation using them.</sup>
 <sup>NOTE: The previous message header property “DataSetAction” is deprecated for Reference Metadatasets and to be ignored if still present.</sup>
 
 
-### ANNEX I: RegistryInterface messages for Subscription and Registration
+## Maintaining related Data
+
+Managing SDMX Data or data-related Reference Metadata is detailed in this secion.
+
+Submitting individual SDMX Datasets or in bulk, either with the same or of different type of actions (see [Actions](#actions) below), is achieved with an HTTP `POST` method.
+
+### Actions
+
+The action to be executed per dataset is defined by the `Action` property of the related dataset contained in the submitted SDMX data message.
+
+For format-specific details see here:
+- [SDMX-ML](https://github.com/sdmx-twg/sdmx-ml/blob/master/documentation/SDMX_3-1_SECTION_3A_PART_IV_DATA.md#41-Data-Actions)
+- [SDMX-JSON](https://github.com/sdmx-twg/sdmx-json/blob/master/data-message/docs/1-sdmx-json-field-guide.md#dataset)
+- [SDMX-CSV](https://github.com/sdmx-twg/sdmx-csv/blob/master/data-message/docs/sdmx-csv-field-guide.md#column-content-all-rows-after-header)
+
+The following types of actions are defined:
+
+#### Merge
+
+Data or data-releated reference metadata is to be merged, through either update or insertion depending on already existing information. This operation does not allow deleting any component values. Updating individual values in multi-valued measure, attribute or reference metadata values is not supported either. The complete multi-valued value is to be provided.  
+Only non-dimensional components (measure, attribute or reference metadata values) can be **omitted** as long as at least one of those components is present. Bulk merges are thus not supported. Only the provided values are merged.  
+Dimension values for higher-level (reference metadata) attributes can be **switched-off** when those are not attached to these dimensions.  
+All observations as well as the sets of reference metadata attributes at specific dimension combinations impacted by the *merge* action change their time stamp.
+
+Note: The previous ***append*** and ***information*** actions have been deprectated. It is recommended to discontinue using these action types. If a dataset with one of these actions is uploaded, it is to be interpreted as a *merge* action.
+
+#### Replace
+
+Data or reference metadata is to be replaced, through either update, insert or delete depending on already existing information. A full replacement is hereby assumed to take place at specific “replacement levels”: either for entire observations or for any specific dimension combination for reference metadata attributes. Within these “replacement levels” the provided values are inserted or updated, and omitted values are deleted. Values provided for the other attributes (those above the observation level) are merged (see Merge action).  
+Only non-dimensional components (measure, attribute or reference metadata values) can be **omitted**. Bulk replacing is thus not supported.  
+Dimension values for higher-level (reference metadata) attributes can be **switched-off** when those are not attached to these dimensions.  
+Replacing non-existing elements is not resulting in an error.  
+All observations as well as the sets of reference metadata attributes at specific dimension combinations impacted by the *replace* action change their time stamp.  
+Because the *replace* action always takes place at specific levels, it cannot be used to replace a whole dataset. However, a “replace all” effect can be achieved by combining an empty *delete* dataset with a *merge* or *replace* dataset within the same data message. To replace a whole time series, a message can combine a *delete* dataset containing only the partial key of the time series (where not used dimension values are omitted) with a *merge* or *replace* dataset for that time series.
+
+#### Delete
+
+Data or reference metadata is to be deleted. Deletion is hereby assumed to take place at the lowest level of detail provided in the message.  
+Any component (including dimensions) can be **omitted**. Omitting dimension values allows for bulk deletions. Partially omitting non-dimension component values allows restricting the deletion of measure, attribute or reference metadata values to the ones being present. Instead of real values for non-dimensional components, it is sufficient to use any valid value.   
+With this, whole datasets, any slices of observations for dimension groups such as time series, observations or individual measure, attribute and reference metadata attributes values can be deleted.  
+Dimension values for higher-level (reference metadata) attributes can be **switched-off** when those are not attached to these dimensions.  
+Deleting non-existing elements or values is not resulting in an error.  
+All observations as well as the sets of attributes and reference metadata at higher partial keys impacted by the *delete* action change their time stamp.
+
+### Client
+
+In order to upload datasets, the client:
+
+- MAY set the `Accept` header to indicate the preferred response format
+- MUST set the `Content-type` header according to the format of the submitted Artefact(s)
+- MUST include in the request body, one or more SDMX Datasets in the SDMX format indicated in the `Content-type` header, i.e.:
+  - for `POST`:
+    - one or more datasets under resource `/data/`
+
+Note: For the moment, the SDMX standard doesn't define yet ways of uploading files that exceed the allowed body size, nor compressed messages.
+
+### Server
+
+In response to the client request, the server:
+
+- MUST return `200` (ok) upon successful execution of the actions defined for each of the submitted datasets
+- MUST return a `SubmitDataResponse` message indicating the outcome for each of the submitted datasets, as `JSON` message
+- MUST set the `Content-type` according to this returned format
+- MUST return `404` (not found) if a corresponding Maintainable Artefact doesn't exist for any of the submitted datasets. No data is modified in this case.
+- MUST return `422` (unprocessable content) in case any content of the datasets submitted does not match the definitions in any of the corresponding Maintainable Artefacts, or if any other applied validation rules are not respected. No data is modified in this case. 
+- MUST return `409` (conflict) in case the server cannot process the message because it is already occupied with uploading data for the same scope, and when queueing is not supported. No data is modified in this case. 
+
+Notes:
+- The terms “*delete*”, “*merge*” and “*replace*” do not imply a physical replacement or deletion of values in the underlying database. To minimize the physical resource requirements, SDMX web service implementations that do not support the *includeHistory* URL parameter might physically replace the existing values in the database. SDMX web services that neither support the *updatedAfter* URL parameter might also implement physical deletions. However, SDMX web services that support these parameters (or other time-machine features), would not overwrite or delete the physical values. 
+- SDMX web services that support the *includeHistory* URL parameter should never allow deleting their historic data content because this would interfere with the interests of data consumers, such as data aggregators. Therefore, a specific feature to physically delete previous (outdated) content is intentionally not supported by the SDMX standard syntax. If such a feature is required by an organisation, then it needs to be implemented as a custom feature outside the SDMX standard.
+- Likewise, all SDMX-compliant systems that do (or are configured to) support the *updatedAfter* URL parameter need to systematically retain the information about deleted data (or metadata).
+- All datasets – even with varying actions – within a single data message have always to be treated as **ACID transaction** to guarantee “transactional safety” (full data consistency and validity despite errors, power failures, and other mishaps). These datasets are to be processed in the order of appearance in the message. The advantage of such data messages is thus the ability to bundle separate *delete* and *replace* or *merge* actions into one transactional data message.
+
+
+### Response
+
+The `SubmitDataResponse` message must always be returned.
+The details of the message are explained in [annex II **Data maintenance response message**](#annex-iii-data-maintenance-response-message), below.
+
+The following matrix summarises the returned `HTTP` response codes.
+
+| Method | all corresponding Maintainable Artefact exist | Response Code |
+|---|---|---|---|---|---|
+| POST | T | `200` (ok) upon successful execution of the actions defined for each of the submitted datasets |
+| POST | F | `404` (not found) |
+| POST | T | `422` (unprocessable content) in case any content of the datasets submitted does not match the definitions in any of the corresponding Maintainable Artefacts, or if any other applied validation rules are not respected. |
+| POST | T | `409` (conflict) in case the server cannot process the message because it is already occupied with uploading data for the same scope, and when queueing is not supported. |
+
+<sup>T: True, F: False</sup>
+
+
+## ANNEX I: RegistryInterface messages for Subscription and Registration
 
 Support for Subscriptions and Registrations are not yet part of the SDMX RESTful API.
 Thus, an intermediate solution for supporting them in SDMX 3.0 (after the deprecation of the SOAP API) is needed.
@@ -377,7 +389,7 @@ Similarly, for Registrations:
 - As a result, a ```SubmitRegistrationsResponse``` or a ```RegistryInterface/SubmitRegistrationsResponse``` message will be returned as a response to describe the outcome of the insertion/update/deletion of Registrations.
 
 
-### ANNEX II: Structure response message
+## ANNEX II: Structure maintenance response message
 
 The `SubmitStructureResponse` message must be returned in any case (success, partial success, failure).
 This is defined as part of the `RegistryInterface` messages.
@@ -443,8 +455,83 @@ In the case of a multi-status response, the `SubmitStructureResponse` message wi
 </reg:SubmissionResult>
 ```
 
+## ANNEX III: Data maintenance response message
 
-### ANNEX III: Nested Items
+The `SubmitDataResponse` message must be returned in any case (success, partial success, failure).
+This message includes the following information:
+- Per submitted dataset:
+  - A URN reference to a specific Maintainable Artefact
+  - The `action`, e.g. `Merge`, `Replace` or `Delete`
+  - Intermediate status message(s) with the result of the current action, containing:
+    - The status, e.g. `Success`, `Failure` or `Warning`
+    - One or more multilingual texts to explain the status
+- Final submission result of the action, which contains:
+    - Final status code (the finally resulting specific HTTP code)
+    - Final status message with the result of the submission, containing:
+      - The status, e.g. `Success`, `Failure` or `Warning`
+      - One or more multilingual texts to explain the result
+
+An example is shown below:
+
+```xml
+<reg:SubmitDataResponse>
+
+  <reg:SubmittedData urn="...datastructure.Dataflow:SDMX:DF_EXAMPLE(1.0.0)" action="Merge"/> <!-- Merge|Replace|Delete -->
+    <reg:StatusMessage status="Success"> <!-- status: Success|Failure|Warning -->
+      <com:Text xml:lang="en">Data successfully read</com:Text>
+      <com:Text xml:lang="fr">Données lues avec succès</com:Text>
+    </reg:StatusMessage>
+    <reg:StatusMessage status="Success"> <!-- status: Success|Failure|Warning -->
+      <com:Text xml:lang="en">Data successfully merged</com:Text>
+      <com:Text xml:lang="fr">Données fusionnées avec succès</com:Text>
+    </reg:StatusMessage>
+  </reg:SubmittedData>
+
+ <reg:SubmissionResult code="200" > <!-- code: Could be the HTTP code 200, 404, 409, 422... -->
+    <reg:StatusMessage status="Success"> <!-- status: Success|Failure|Warning -->
+      <com:Text xml:lang="en">All changes have been successfully completed</com:Text>
+      <com:Text xml:lang="fr">Toutes les modifications ont été effectuées avec succès</com:Text>
+    </reg:StatusMessage>
+  </reg:SubmissionResult>
+
+</reg:SubmitDataResponse>
+```
+
+In the case of multiple datasets, the `SubmitDataResponse` message will include the corresponding information per dataset, e.g.:
+
+```xml
+<reg:SubmitDataResponse>
+
+  <reg:SubmittedData urn="...datastructure.Dataflow:SDMX:DF_EXAMPLE(1.0.0)" action="Merge"/> <!-- Merge|Replace|Delete -->
+    <reg:StatusMessage status="Success"> <!-- status: Success|Failure|Warning -->
+      <com:Text xml:lang="en">Data successfully read</com:Text>
+      <com:Text xml:lang="fr">Données lues avec succès</com:Text>
+    </reg:StatusMessage>
+    <reg:StatusMessage status="Success"> <!-- status: Success|Failure|Warning -->
+      <com:Text xml:lang="en">Data successfully merged</com:Text>
+      <com:Text xml:lang="fr">Données fusionnées avec succès</com:Text>
+    </reg:StatusMessage>
+  </reg:SubmittedData>
+
+  <reg:SubmittedData urn="...datastructure.Dataflow:SDMX:DF_EXAMPLE2(1.0.0)" action="Replace"/> <!-- Merge|Replace|Delete -->
+    <reg:StatusMessage status="Failure"> <!-- status: Success|Failure|Warning -->
+      <com:Text xml:lang="en">The dataflow SDMX:DF_EXAMPLE2(1.0.0) doesn't exist</com:Text>
+      <com:Text xml:lang="fr">Le dataflow SDMX:DF_EXAMPLE2(1.0.0) n'existe pas</com:Text>
+    </reg:StatusMessage>
+  </reg:SubmittedData>
+
+ <reg:SubmissionResult code="409" > <!-- code: Could be the HTTP code 200, 404, 409, 422... -->
+    <reg:StatusMessage status="Failure"> <!-- status: Success|Failure|Warning -->
+      <com:Text xml:lang="en">Due to the previous error, all changes have been completely aborted</com:Text>
+      <com:Text xml:lang="fr">En raison de l'erreur précédente, toutes les modifications ont été complètement annulées</com:Text>
+    </reg:StatusMessage>
+  </reg:SubmissionResult>
+
+</reg:SubmitDataResponse>
+
+```
+
+## ANNEX IV: Nested Items
 
 This section aims at explaining the particularities of nested Items for a subset of the available Item Schemes, namely:
 - CategoryScheme (Category)
@@ -552,39 +639,17 @@ Moreover, in order to add a new Category under `SECTORAL_STAT` in the initial Ca
 </str:CategoryScheme>
 ```
 
-### ANNEX IV: Summary of HTTP response codes for structure management
+## ANNEX V: Examples for structure management
 
-| Method | Exists | Versioning respected | Is Referenced | References exist/provided | Response Code |
-|---|---|---|---|---|---|
-| POST | F | T | - | T | `201` (successful) or `207` (partially successful) |
-| POST | F | T | - | F | `409` missing references |
-| POST | F | F | - | I | `409` failure to respect the versioning rules |
-| PUT/POST | T | T | F | T | `200` (successful) or `207` (partially successful)  |
-| PUT/POST | T | T | F | F | `409` |
-| PUT/POST | T | T | T | T | `200` if update is possible - `409` if references would break |
-| PUT/POST | T | F | - | - | `409` in case of changes that violate the versioning requirements |
-| PUT/POST | - | - | - | - | `422` see section **Server** |
-| PUT | F | - | - | - | `404` |
-| DELETE | F | - | - | - | `404` |
-| DELETE | T | F | F | I | `200` |
-| DELETE | T | T | I | I | `409` when trying to delete a stable artefact, a deprecation strategy may be followed |
-| DELETE | T | F | T | I | `409` |
+### Difference between replace and partially update for a non-semantically-versioned artefact
 
-<sup>T: True, F: False, I: Irrelevant, -: Not applicable</sup>
-
-
-### ANNEX V: Examples for structure management
-
-#### Difference between replace and partially update
-
-To explain the updating semantics, the difference between replacing and partially updating the same SDMX Artefact shall be illustrated in the following example. 
+To explain the updating semantics, the difference between replacing and partially updating the same non-semantically-versioned SDMX Artefact shall be illustrated in the following example. 
 For the sake of simplicity, a Codelist will be utilised, i.e. let's assume:
 
 ```xml
 <str:Codelist agencyID="SDMX" id="CL_DECIMALS" version="1.0">
    <com:Name>Code list for Decimals (DECIMALS)</com:Name>
-   <com:Description xml:lang="en">It provides a list of values showing the 
-     number of decimal digits used in the data.</com:Description>
+   <com:Description xml:lang="en">It provides a list of values showing the number of decimal digits used in the data.</com:Description>
    <str:Code id="0">
       <com:Name>Zero</com:Name>
    </str:Code>
@@ -602,8 +667,7 @@ Let's assume that we `PUT` the following Codelist, under `/codelist/SDMX/CL_DECI
 ```xml
 <str:Codelist agencyID="SDMX" id="CL_DECIMALS" version="1.0">
    <com:Name>Code list for Decimals (DECIMALS)</com:Name>
-   <com:Description xml:lang="en">It provides a list of values showing the 
-     number of decimal digits used in the data.</com:Description>
+   <com:Description xml:lang="en">It provides a list of values showing the number of decimal digits used in the data.</com:Description>
    <str:Code id="0">
       <com:Name>No decimal</com:Name>
    </str:Code>
@@ -620,8 +684,7 @@ If, instead, we added the flag `isPartial="true"` in the above Codelist, i.e.:
 ```xml
 <str:Codelist agencyID="SDMX" id="CL_DECIMALS" version="1.0" isPartial="true">
    <com:Name>Code list for Decimals (DECIMALS)</com:Name>
-   <com:Description xml:lang="en">It provides a list of values showing the 
-     number of decimal digits used in the data.</com:Description>
+   <com:Description xml:lang="en">It provides a list of values showing the number of decimal digits used in the data.</com:Description>
    <str:Code id="0">
       <com:Name>No decimal</com:Name>
    </str:Code>
@@ -636,8 +699,7 @@ Then the result would be a bit different. The new Codelist will still have three
 ```xml
 <str:Codelist agencyID="SDMX" id="CL_DECIMALS" version="1.0">
    <com:Name>Code list for Decimals (DECIMALS)</com:Name>
-   <com:Description xml:lang="en">It provides a list of values showing the 
-     number of decimal digits used in the data.</com:Description>
+   <com:Description xml:lang="en">It provides a list of values showing the number of decimal digits used in the data.</com:Description>
    <str:Code id="0">
       <com:Name>No decimal</com:Name>
    </str:Code>
