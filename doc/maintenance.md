@@ -253,7 +253,7 @@ The following matrix summarises the returned `HTTP` response codes.
 
 ## Maintaining related Data
 
-Managing SDMX Data or data-related Reference Metadata is detailed in this secion.
+Managing SDMX Data or data-related Reference Metadata is detailed in this section.
 
 Submitting individual SDMX Datasets or in bulk, either with the same or of different type of actions (see [Actions](#actions) below), is achieved with an HTTP `POST` method.
 
@@ -321,19 +321,18 @@ In response to the client request, the server:
 Notes:
 - The terms “*delete*”, “*merge*” and “*replace*” do not imply a physical replacement or deletion of values in the underlying database. To minimize the physical resource requirements, SDMX web service implementations that do not support the *includeHistory* URL parameter might physically replace the existing values in the database. SDMX web services that neither support the *updatedAfter* URL parameter might also implement physical deletions. However, SDMX web services that support these parameters (or other time-machine features), would not overwrite or delete the physical values. 
 - SDMX web services that support the *includeHistory* URL parameter should never allow deleting their historic data content because this would interfere with the interests of data consumers, such as data aggregators. Therefore, a specific feature to physically delete previous (outdated) content is intentionally not supported by the SDMX standard syntax. If such a feature is required by an organisation, then it needs to be implemented as a custom feature outside the SDMX standard.
-- Likewise, all SDMX-compliant systems that do (or are configured to) support the *updatedAfter* URL parameter need to systematically retain the information about deleted data (or metadata).
+- Likewise, all SDMX-compliant systems that do (or are configured to) support the *updatedAfter* URL parameter need to systematically retain the information about last instance of deleted data (or metadata).
 - All datasets – even with varying actions – within a single data message have always to be treated as **ACID transaction** to guarantee “transactional safety” (full data consistency and validity despite errors, power failures, and other mishaps). These datasets are to be processed in the order of appearance in the message. The advantage of such data messages is thus the ability to bundle separate *delete* and *replace* or *merge* actions into one transactional data message.
-
 
 ### Response
 
 The `SubmitDataResponse` message must always be returned.
-The details of the message are explained in [annex II **Data maintenance response message**](#annex-iii-data-maintenance-response-message), below.
+The details of the message are explained in [Annex II **Data maintenance response message**](#annex-iii-data-maintenance-response-message), below.
 
 The following matrix summarises the returned `HTTP` response codes.
 
-| Method | all corresponding Maintainable Artefact exist | Response Code |
-|---|---|---|---|---|---|
+| Method | all corresponding Maintainable Artefacts exist | Response Code |
+|---|---|---|
 | POST | T | `200` (ok) upon successful execution of the actions defined for each of the submitted datasets |
 | POST | F | `404` (not found) |
 | POST | T | `422` (unprocessable content) in case any content of the datasets submitted does not match the definitions in any of the corresponding Maintainable Artefacts, or if any other applied validation rules are not respected. |
