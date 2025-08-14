@@ -1,8 +1,10 @@
 # Data registration queries
+
 ## Overview
+
 A Data Registration defines the Data Source for a Provision Agreement along with a last updated timestamp and a unique identifier.
 
-The Data Registration query API enables a client application to discover registered data sources by querying by either the unique ID of the Data Registration, or by filtering Data Registration by its Provision Agreement or the corresponding Dataflow, Data Structure Definition, or Data Provider. 
+The Data Registration query API enables a client application to discover registered data sources by querying by either the unique ID of the Data Registration, or by filtering Data Registration by its Provision Agreement or the corresponding Dataflow, Data Structure Definition, or Data Provider.
 
 ## By Registration ID
 
@@ -10,7 +12,8 @@ The Data Registration query API enables a client application to discover registe
 
 These queries enable clients to find a single Registration by its unique ID.  
 
-### Syntax 
+### Syntax
+
         protocol://ws-entry-point/registration/id/{registrationId}
 
 Parameter | Type | Description | Default | Multiple values
@@ -27,12 +30,13 @@ Retrieve all Registrations with unique ID 'abcd-efgh-ijkl'
 
 ### Overview
 
-These queries enable clients to find all Registrations by Data Provider, this is resolved through 
+These queries enable clients to find all Registrations by Data Provider, this is resolved through
 the Provision Agreement that the Registration references.  
 
 Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is therefore possible to use this query to retrieve all Registrations.
 
-### Syntax 
+### Syntax
+
         protocol://ws-entry-point/registration/provider/{providerAgencyID}/{providerID}?{updatedAfter}&{updatedBefore}
 
 Parameter | Type | Description | Default | Multiple values
@@ -60,7 +64,7 @@ Retrieve all Registrations for any Data Provider maintained in the IMF Data Prov
 
 ### Overview
 
-These queries enable clients to find all Registrations related to one or more Provision Agreements, Dataflows or Data Structure Definitions.  The 
+These queries enable clients to find all Registrations related to one or more Provision Agreements, Dataflows or Data Structure Definitions.  The
 context controls which level the filter is applied to (datastructure, dataflow, provisionagreement) with the subsequent path parameters defining more
 precisely which context structures to filter for. For example if the context is dataflow, with agencyID of ECB the response will contain all Registrations
 related to ECB Dataflows.
@@ -70,7 +74,8 @@ is used to determin the corresponding Dataflow and Data Structure Definition.
 
 Each path parameter can contain a wildcard filter '*' to mean 'all'.  It is therefore possible to use this query to retrieve all Registrations.
 
-### Syntax 
+### Syntax
+
         protocol://ws-entry-point/registration/{context}/{agencyID}/{resourceID}/{version}?{updatedAfter}&{updatedBefore}
 
 Parameter | Type | Description | Default | Multiple values
@@ -91,19 +96,20 @@ Retrieve all Registrations for the Balance Sheet Item (BSI) Dataflow maintained 
 Retrieve all Registrations for the BSI and EXR Dataflows maintained by the ECB
 
         https://ws-entry-point/registration/dataflow/ECB/BSI,EXR/1.0.0
- 
+
 Retrieve all Registrations for the ECOFIN DataStructure maintained by the IMF
-        
+
         https://ws-entry-point/registration/datastructure/IMF/ECOFIN/1.0
         
 Retrieve all Registrations updated after a specific point in time (percent encoded)
-        
+
         https://ws-entry-point/registration/datastructure/*/*/*?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
 ## Response types
 
-The following media types can be used with _registration_ queries:
+The following media types can be used with *registration* queries:
 
-- **application/vnd.sdmx.registry+xml;version=3.0.0**
+- **application/vnd.sdmx.registry+xml;version=3.1.0**
+- application/vnd.sdmx.registry+xml;version=3.0.0
 
 The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.

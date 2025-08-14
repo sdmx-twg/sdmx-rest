@@ -13,18 +13,18 @@ Data queries allow **retrieving statistical data**. Entire datasets, individual 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
 context | One of the following: `datastructure`, `dataflow`, `provisionagreement` | Data can be reported against a data structure, a dataflow or a provision agreement. This parameter allows selecting the desired context for data retrieval. If possible, services must **respect the requested context type** when returning data. For example, if the client sets the context to `provisionagreement`, the response should contain one dataset per matching provision agreement, i.e. the service should not group the matching data into one dataset, even if all provision agreements relate to the same dataflow (or the same data structure). | * | No
-agencyID | A string compliant with the SDMX *common:NCNameIDType* | The agency maintaining the artefact for which data have been reported. | * | Yes
-resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact for which data have been reported. | * | Yes
-version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
-key | A string compliant with the *KeyType* defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.`*`.EUR.SP00.A. Any dimension value omitted at the end of the Key is assumed as equivalent to a wildcard, e.g. D.USD is equivalent to D.USD.`*`.`*`.`*`  | * | Yes
+agencyID | A string compliant with the SDMX _common:NCNameIDType_ | The agency maintaining the artefact for which data have been reported. | * | Yes
+resourceID | A string compliant with the SDMX _common:IDType_ | The id of the artefact for which data have been reported. | * | Yes
+version | A string compliant with the [SDMX _semantic versioning_ rules](querying_versions.md) | The version of the artefact for which data have been reported. | * | Yes
+key | A string compliant with the _KeyType_ defined in the SDMX Open API specification. | The combination of dimension values identifying the slice of the cube for which data should be returned. Wildcarding is supported via the `*` operator. For example, if the following key identifies the bilateral exchange rates for the daily US dollar exchange rate against the euro, D.USD.EUR.SP00.A, then the following key can be used to retrieve the data for all currencies against the euro: D.`*`.EUR.SP00.A. Any dimension value omitted at the end of the Key is assumed as equivalent to a wildcard, e.g. D.USD is equivalent to D.USD.`*`.`*`.`*`  | * | Yes
 c | Map | Filter data by component value. For example, if a structure defines a frequency dimension (FREQ) and the code A (Annual) is an allowed value for that dimension, the following can be used to retrieve annual data: `c[FREQ]=A`. The same applies to attributes (e.g. `c[CONF_STATUS]=F`) and measures. Multiple values are supported, using a comma (`,`) as separator: `c[FREQ]=A,M`. The comma effectively acts as an `OR` statement (i.e. FREQ is A OR FREQ is M). The plus (`+`) can be used whenever an `AND` statement is required, such as for example, for attributes with multiple values or for time ranges. For example, to indicate that ATTR1 must either be A or (B AND M), use the following: `c[ATTR1]=A,B+M`. Operators may be used too (see table with operators below). This parameter can be used in addition, or instead of, the `key` path parameter. This parameter may be used multiple times (e.g. `c[FREQ]=A,M&c[CONF_STATUS]=F`), but only once per Component. | | Yes
 updatedAfter | xs:dateTime | The last time the query was performed by the client in the database. If this parameter is used, the returned message should only include the latest version of what has changed in the database since that point in time (updates and revisions). This should include observations that have been added since the last time the query was performed (INSERT), observations that have been revised since the last time the query was performed (UPDATE) and observations that have been deleted since the last time the query was performed (DELETE). If no offset is specified, default to local time of the web service. If the information about when the data has been updated is not available at the observation level, the web service should return either the series that have changed (if the information is attached at the series level) or the dataflows that have changed (if the information is attached at the dataflow level). | | No
 firstNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, starting from the first observation | | No
 lastNObservations | Positive integer | The maximum number of observations to be returned for each of the matching series, counting back from the most recent observation ||No
-dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a *timeseries* view of the data), the `ID of any other dimension` used in that dataflow (a *cross-sectional* view of the data) or the keyword `AllDimensions` (a *flat* / *table* view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to `TIME_PERIOD`, if the data structure definition has one, or else, to default to `AllDimensions`.|Depends on DSD|No
+dimensionAtObservation | A string compliant with the SDMX common:NCNameIDType | The ID of the dimension to be attached at the observation level. This parameter allows the client to indicate how the data should be packaged by the service. The options are `TIME_PERIOD` (a _timeseries_ view of the data), the `ID of any other dimension` used in that dataflow (a _cross-sectional_ view of the data) or the keyword `AllDimensions` (a _flat_ / _table_ view of the data where the observations are not grouped, neither in time series, nor in sections). In case this parameter is not set, the service is expected to default to `TIME_PERIOD`, if the data structure definition has one, or else, to default to `AllDimensions`.|Depends on DSD|No
 attributes | String | This parameter specifies the attributes to be returned. Possible options are: `dsd` (all the attributes defined in the data structure definition), `msd` (all the reference metadata attributes), `dataset` (all the attributes attached to the dataset-level), `series` (all the attributes attached to the series- and group-level), `obs` (all the attributes attached to the observation-level), `all` (all attributes), `none` (no attributes), `{attribute_id}`: The ID of one or more attributes the caller is interested in. |`dsd`| Yes
 measures | String | This parameter specifies the measures to be returned. Possible options are: `all` (all measures), `none` (no measure), `{measure_id}`: The ID of one or more measures the caller is interested in. |`all`| Yes
-includeHistory | Boolean | This parameter allows retrieving previous versions of the data, as they were disseminated in the past (*history* or *timeline* functionality). When the value is set to `true`, the returned data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. | `false` | No
+includeHistory | Boolean | This parameter allows retrieving previous versions of the data, as they were disseminated in the past (_history_ or _timeline_ functionality). When the value is set to `true`, the returned data message should contain one or two datasets per data dissemination, depending on whether a dissemination also deleted observations from the data source. The `validFromDate` and/or `validToDate` attributes of the dataset should be used to indicate the periods of validity for the data contained in the data set. See below for an example on how to handle the `includeHistory` parameter. | `false` | No
 offset | Positive integer | The number of observations (or series keys) to skip before beginning to return observations (or series keys). | 0 | No
 limit | Positive integer | The maximum number of observations (or series keys) to be returned. If no limit is set, all matching observations (or series keys) must be returned. | | No
 sort | String | This parameter specifies the order in which the returned data should be sorted. It contains either one or more component (dimension, attribute or measure) IDs, by which the data should be sorted, separated by `+` (to indicate an AND), the `*` operator, which represents all dimensions as positioned in the DSD, or the keyword `series_key`, which represents, when `dimensionAtObservation` is not equal to `AllDimensions`, all dimensions not presented at the observational level and as positioned in the DSD. The sorting must respect the sequence, in which the components are listed. In addition, each component, or the set of components (through the operator or keyword) can be sorted in ascending or descending order by appending `:asc` or `:desc`, with `:asc` being the default. For any component not included in the sort parameter, the related order is non-deterministic. Except for time periods, which have a natural chronological order, the sorting within a component is based on the code IDs or the non-coded component values. | | No
@@ -56,7 +56,7 @@ Operators appear as prefix to the component value(s) and are separated from it b
 The table below offers a few examples and how they should be interpreted.
 
 | Example | Meaning |
-| --- | --- | 
+| --- | --- |
 |c[X]=A |X = A|
 |c[X]=A,B |X = A OR X = B|
 |c[X]=ge:A |X >= A|
@@ -69,13 +69,16 @@ The table below offers a few examples and how they should be interpreted.
 |c[X]=ne:A+ne:B |X <> A AND X <> B|
 
 > [!TIP]
-> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.    
+> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.
 
 ## Response types
 
 The following media types can be used with _data_ queries:
 
-- **application/vnd.sdmx.data+json;version=2.0.0**
+- **application/vnd.sdmx.data+json;version=2.1.0**
+- application/vnd.sdmx.data+xml;version=3.1.0
+- application/vnd.sdmx.data+csv;version=2.1.0;labels=[id|name|both];timeFormat=[original|normalized];keys=[none|obs|series|both]
+- application/vnd.sdmx.data+json;version=2.0.0
 - application/vnd.sdmx.data+xml;version=3.0.0
 - application/vnd.sdmx.data+csv;version=2.0.0;labels=[id|name|both];timeFormat=[original|normalized];keys=[none|obs|series|both]
 
@@ -87,11 +90,11 @@ SDMX-CSV offers the possibility to set the value for two parameters via the medi
 
 ### Efficient data exchanges
 
-When executing a data query such as, for example `https://ws-endpoint/data/dataflow/ECB/EXR`, you will get the current version of the data matching that query. However, you may want to only retrieve the most recent changes since the last time you executed the same query (so called *deltas*). This is the purpose of the `updatedAfter` query parameters. This option supports very efficient data exchanges, as only the most recent changes will be transmitted between the service and the client.
+When executing a data query such as, for example `https://ws-endpoint/data/dataflow/ECB/EXR`, you will get the current version of the data matching that query. However, you may want to only retrieve the most recent changes since the last time you executed the same query (so called _deltas_). This is the purpose of the `updatedAfter` query parameters. This option supports very efficient data exchanges, as only the most recent changes will be transmitted between the service and the client.
 
 ### Data caching
 
-Sometimes, you may want your data store to act as a data cache, i.e. you want to cache the result of a query, while ensuring that the cache remains up-to-date. 
+Sometimes, you may want your data store to act as a data cache, i.e. you want to cache the result of a query, while ensuring that the cache remains up-to-date.
 
 In this scenario, you want to retrieve all the data, but only if something has changed since the last time you executed the same query. To support this, you can leverage HTTP features, such as the `If-Modified-Since` or `If-None-Match` HTTP headers. In this case, you will get a `200` status code (`OK`) and all the data matching the query if something has changed in the data, or a `304` status code (`Not Modified`) if nothing was modified. Whenever you get a 304, you can serve the data from your cache, as it is still valid. In case you get a 200, you need to replace the content of your cache with the updated content.
 
@@ -103,7 +106,7 @@ Sometimes, you may want your data store to act as a replica of another data stor
 
 ### Time travel
 
-Using the `asOf` parameter, you can retrieve the data as they were at a certain point in time, for example, as they were when a certain report or press release was published. 
+Using the `asOf` parameter, you can retrieve the data as they were at a certain point in time, for example, as they were when a certain report or press release was published.
 
 This can be combined with `updatedAfter`, to retrieve the data as they were at the `asOf` point in time, but only those that were updated after the `updatedAfter` point in time. The `updatedAfter` point in time must be before the `asOf` point in time.
 
@@ -145,7 +148,7 @@ This can be combined with `updatedAfter`, to retrieve the data as they were at t
 
         https://ws-entry-point/data/dataflow/ECB/EXR?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00
 
-  By supplying a percent-encoded timestamp to the `updatedAfter` parameter, it is possible to **only retrieve the latest version of changed values** in the database since a certain point in time (so-called *updates and revisions* or *deltas*).
+  By supplying a percent-encoded timestamp to the `updatedAfter` parameter, it is possible to **only retrieve the latest version of changed values** in the database since a certain point in time (so-called _updates and revisions_ or _deltas_).
 
   The response to such a query could include one or more dataset(s) representing:
 
@@ -153,7 +156,7 @@ This can be combined with `updatedAfter`, to retrieve the data as they were at t
   - The observations that have been **revised** since the last time the query was performed.
   - The observations that have been **deleted** since the last time the query was performed.
   
-  Developers who update their local databases should make use of the `updatedAfter` parameter as it is likely to significantly **improve performance**. Instead of systematically downloading data that may not have changed, you would only receive the *consolidated* changes to be made in your database since the last time your client performed the same query.
+  Developers who update their local databases should make use of the `updatedAfter` parameter as it is likely to significantly **improve performance**. Instead of systematically downloading data that may not have changed, you would only receive the _consolidated_ changes to be made in your database since the last time your client performed the same query.
 
   An alternative, less efficient than the solution described above, but more efficient than downloading everything all the time, would be to use HTTP Conditional GET requests (i.e. the `If-Modified-Since` or `If-None-Match` HTTP Request headers). Using this mechanism, everything will be returned but only if something has changed since the previous query.
 
@@ -195,7 +198,7 @@ This can be combined with `updatedAfter`, to retrieve the data as they were at t
   - `false`: Only the version currently in production will be returned. This is the default.
   - `true`: The version currently in production, as well as all previous versions, will be returned.
 
-  Such a query would give you the *history* between that point in time and today.
+  Such a query would give you the _history_ between that point in time and today.
 
   A sample response message is provided below. In the response the `action` & the `validFromDate` attributes of the `Dataset` element are both equally important. While the `action` attribute indicates what needs to be done, the `validFromDate` attribute allows defining the validity periods of the reported data.
   
