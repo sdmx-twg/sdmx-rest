@@ -868,6 +868,15 @@ components:
     "200":
       description: OK
       content:
+        application/vnd.sdmx.data+json;version=2.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.data+csv;version=2.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.data+xml;version=3.1.0:
+          schema:
+            type: string
         application/vnd.sdmx.data+json;version=2.0.0:
           schema:
             type: string
@@ -898,6 +907,18 @@ components:
     "200-schemas":
       description: OK
       content:
+        application/vnd.sdmx.schema+xml;version=3.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.schema+json;version=2.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+xml;version=3.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+json;version=2.1.0:
+          schema:
+            type: string
         application/vnd.sdmx.schema+xml;version=3.0.0:
           schema:
             type: string
@@ -919,6 +940,12 @@ components:
     "200-struct":
       description: OK
       content:
+        application/vnd.sdmx.structure+xml;version=3.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.structure+json;version=2.1.0:
+          schema:
+            type: string
         application/vnd.sdmx.structure+xml;version=3.0.0:
           schema:
             type: string
@@ -934,6 +961,15 @@ components:
     "200-meta":
       description: OK
       content:
+        application/vnd.sdmx.metadata+json;version=2.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.metadata+xml;version=3.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.metadata+csv;version=2.1.0:
+          schema:
+            type: string
         application/vnd.sdmx.metadata+json;version=2.0.0:
           schema:
             type: string
