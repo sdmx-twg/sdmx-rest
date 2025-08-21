@@ -46,7 +46,7 @@ Operators appear as prefix to the component value(s) and are separated from it b
 As already mentioned, the response from the Data Availability API is an SDMX AvailabilityConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data. These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
 
 > [!TIP]
-> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.    
+> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.
 
 ### Response Mode
 
@@ -139,9 +139,11 @@ Included references are:
 
 ## Response types
 
-The following media types can be used with _availability_ queries:
+The following media types can be used with *availability* queries:
 
-- **application/vnd.sdmx.structure+json;version=2.0.0**
+- **application/vnd.sdmx.structure+json;version=2.1.0**
+- application/vnd.sdmx.structure+xml;version=3.1.0
+- application/vnd.sdmx.structure+json;version=2.0.0
 - application/vnd.sdmx.structure+xml;version=3.0.0
 
 The default format is highlighted in **bold**.
