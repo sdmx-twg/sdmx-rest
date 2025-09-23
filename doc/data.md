@@ -124,11 +124,6 @@ The SDMX REST API provides two mechanisms to work with vintages:
 
 By default, the REST API interprets the timestamps used by `includeHistory` and `asOf` as the **transactional time** — the moment when the data was loaded into the database. However, some systems may implement techniques to *backload* datasets with custom timestamps to reflect earlier publication dates.
 
-
-
-
-
-
 ## Examples of queries
 
 - Retrieve the data matching the supplied path parameters:
