@@ -84,7 +84,7 @@ The following media types can be used with _data_ queries:
 
 The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
-SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
+SDMX-CSV offers the possibility to set the value for three parameters via the media-type. These parameters are `label`, `timeFormat`, and `keys`. All the parameters are optional. The default values for these parameters are `id`, `original`, and `none` respectively. For additional information about these parameters, please refer to the [SDMX-CSV specification](https://github.com/sdmx-twg/sdmx-csv).
 
 ## Use cases behind the various time-related queries
 
@@ -178,7 +178,12 @@ By default, the REST API interprets the timestamps used by `includeHistory` and 
 
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
-  <message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
+  <message:GenericData
+    xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+    xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic"
+    xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message https://xml.sdmx.org/2.1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common https://xml.sdmx.org/2.1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic https://xml.sdmx.org/2.1/SDMXDataGeneric.xsd">
     <message:Header>
         <message:ID>388d1c9a-d187-4f6a-8792-e117cf34047f</message:ID>
         <message:Test>false</message:Test>
@@ -218,7 +223,12 @@ By default, the REST API interprets the timestamps used by `includeHistory` and 
   
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
-  <message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
+  <message:GenericData
+    xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+    xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic"
+    xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message https://xml.sdmx.org/2.1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common https://xml.sdmx.org/2.1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic https://xml.sdmx.org/2.1/SDMXDataGeneric.xsd">
     <message:Header>
         <message:ID>a2c99026-00c8-4f9a-a3d4-1891f89bd2b0</message:ID>
         <message:Test>false</message:Test>
