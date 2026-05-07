@@ -1,16 +1,16 @@
 site_name: rest_api
 
 nav:
-  - rest_api/index.md
-  - Data queries: rest_api/data.md
-  - Structure queries: rest_api/structures.md
-  - Reference metadata queries: rest_api/metadata.md
-  - Schema queries: rest_api/schema.md
-  - Availability queries: rest_api/availability.md
-  - Registration queries: rest_api/registration.md
-  - Query syntax for versions: rest_api/querying_versions.md
-  - Content-Negotiation: rest_api/content_negotiation.md
-  - Status codes: rest_api/status.md
-  - Structure maintenance: rest_api/maintenance.md
-  - Tips for providers and consumers: rest_api/tips.md
-  - Extending the API: rest_api/extend.md
+  - index.md
+  - Data queries: data.md
+  - Structure queries: structures.md
+  - Reference metadata queries: metadata.md
+  - Schema queries: schema.md
+  - Availability queries: availability.md
+  - Registration queries: registration.md
+  - Query syntax for versions: querying_versions.md
+  - Content-Negotiation: content_negotiation.md
+  - Status codes: status.md
+  - Structure maintenance: maintenance.md
+  - Tips for providers and consumers: tips.md
+  - Extending the API: extend.md

@@ -15,7 +15,6 @@ This repository contains:
 >
 > * **tags**: Tags can be used to retrieve the Open API definition, cheatsheet and documentation of a specific version of the SDMX-REST API. Tags are located towards the top of this page.
 > * **releases**: Releases are located in the navigation bar on the right of this page. They too can be used to retrieve the Open API definition, cheatsheet and documentation of a specific version of the SDMX-REST API.
-
 ## Repository Structure
 
 -   `docs/` — Markdown content pages for the REST API and registry
@@ -45,4 +44,3 @@ published on the documentation site.
 
 For Markdown and MkDocs formatting conventions that apply to content in `docs/`,
 see the [`sdmx-docs` README](https://github.com/sdmx-twg/sdmx-docs#readme).
-

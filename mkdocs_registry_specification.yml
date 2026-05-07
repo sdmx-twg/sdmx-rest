@@ -1,8 +1,0 @@
-site_name: registry_specification
-
-nav:
-    - registry_specification/1_Introduction.md
-    - Scope and Normative Status: registry_specification/2_Scope_and_Normative_Status.md
-    - Scope of the SDMX Registry Repository: registry_specification/3_Scope_of_the_SDMX_Registry_Repository.md
-    - SDMX Registry Repository Architecture: registry_specification/4_SDMX_Registry_Repository_Architecture.md
-    - Registry Interfaces and Services: registry_specification/5_Registry_Interfaces_and_Services.md
