@@ -94,7 +94,7 @@ The following media types can be used with _data_ queries:
 
 The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
-SDMX-CSV offers the possibility to set the value for two parameters via the media-type. These parameters are `label` and `timeFormat`; both are optional. The default values for these parameters are marked with * in the above media-type (i.e. `id` and `original` respectively). For additional information about these parameters, please refer to the [SDMX-CSV specification](https://sdmx.org/?sdmx_news=sdmx-csv-format-specifications-just-released).
+SDMX-CSV offers the possibility to set the value for three parameters via the media-type. These parameters are `label`, `timeFormat`, and `keys`. All the parameters are optional. The default values for these parameters are `id`, `original`, and `none` respectively. For additional information about these parameters, please refer to the [SDMX-CSV specification](https://github.com/sdmx-twg/sdmx-csv).
 
 ## Use cases behind the various time-related queries
 
@@ -119,6 +119,20 @@ Sometimes, you may want your data store to act as a replica of another data stor
 Using the `asOf` parameter, you can retrieve the data as they were at a certain point in time, for example, as they were when a certain report or press release was published.
 
 This can be combined with `updatedAfter`, to retrieve the data as they were at the `asOf` point in time, but only those that were updated after the `updatedAfter` point in time. The `updatedAfter` point in time must be before the `asOf` point in time.
+
+
+### Vintages
+
+In statistics (and especially in economics and finance), a **vintage** refers to the version of a dataset that was available at a specific point in time. Because statistical data are often revised as new information comes in or methods change (e.g., GDP estimates, inflation, employment figures), multiple vintages of the same statistic may exist.
+
+For example, the first vintage of quarterly GDP might be released shortly after the quarter ends, based on partial data. Later vintages (second, third, final) are published as more complete or revised information becomes available. In practice, this can mean that the same observation changes over time as more information becomes known. Researchers may need to access these historical versions to compare vintages, study data revisions, or simulate how policymakers would have made decisions in real time (since they only had access to earlier vintages).
+
+The SDMX REST API provides two mechanisms to work with vintages:
+
+- The `includeHistory` parameter allows a researcher to retrieve an observation (e.g., GDP for a country) together with its historical changes over time.  
+- The `asOf` parameter allows a researcher to retrieve the dataset *as it was* at a given point in time, enabling the reconstruction of historical datasets as they were originally published.  
+
+By default, the REST API interprets the timestamps used by `includeHistory` and `asOf` as the **transactional time** — the moment when the data was loaded into the database. However, some systems may implement techniques to *backload* datasets with custom timestamps to reflect earlier publication dates.
 
 ## Examples of queries
 
@@ -172,26 +186,31 @@ This can be combined with `updatedAfter`, to retrieve the data as they were at t
 
   A sample response message is provided below. In the response the `action` attribute of the `Dataset` element is of importance whereas the `validFromDate` is just there for information purposes.
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
-<message:Header>
-<message:ID>388d1c9a-d187-4f6a-8792-e117cf34047f</message:ID>
-<message:Test>false</message:Test>
-<message:Prepared>2016-12-20T16:19:56.398+01:00</message:Prepared>
-<message:Sender id="ECB"/>
-<message:Structure structureID="ECB_RTD1" dimensionAtObservation="TIME_PERIOD">
-        <common:Structure>
-        <URN>urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=ECB:ECB_RTD1(1.0)</URN>
-        </common:Structure>
-</message:Structure>
-</message:Header>
-<message:DataSet action="Replace" validFromDate="2016-12-20T16:19:56.398+01:00" structureRef="ECB_RTD1"> 
-[...]</message:DataSet>
-<message:DataSet action="Delete" validToDate="2016-12-20T16:19:56.440+01:00" structureRef="ECB_RTD1"> 
-[...]</message:DataSet>
-</message:GenericData>
-```
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <message:GenericData
+    xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+    xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic"
+    xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message https://xml.sdmx.org/2.1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common https://xml.sdmx.org/2.1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic https://xml.sdmx.org/2.1/SDMXDataGeneric.xsd">
+    <message:Header>
+        <message:ID>388d1c9a-d187-4f6a-8792-e117cf34047f</message:ID>
+        <message:Test>false</message:Test>
+        <message:Prepared>2016-12-20T16:19:56.398+01:00</message:Prepared>
+        <message:Sender id="ECB"/>
+        <message:Structure structureID="ECB_RTD1" dimensionAtObservation="TIME_PERIOD">
+            <common:Structure>
+                <URN>urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=ECB:ECB_RTD1(1.0)</URN>
+            </common:Structure>
+        </message:Structure>
+    </message:Header>
+    <message:DataSet action="Replace" validFromDate="2016-12-20T16:19:56.398+01:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+    <message:DataSet action="Delete" validToDate="2016-12-20T16:19:56.440+01:00" structureRef="ECB_RTD1"> 
+    [...]</message:DataSet>
+  </message:GenericData>
+  ```
 
 - Retrieve a limited amount of observations using `firstNObservations` and `lastNObservations`:
 
@@ -214,7 +233,12 @@ This can be combined with `updatedAfter`, to retrieve the data as they were at t
   
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
-  <message:GenericData xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic" xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic http://sdw-wsrest.ecb.europa.eu:80/vocabulary/sdmx/2_1/SDMXDataGeneric.xsd">
+  <message:GenericData
+    xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+    xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic"
+    xsi:schemaLocation="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message https://xml.sdmx.org/2.1/SDMXMessage.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common https://xml.sdmx.org/2.1/SDMXCommon.xsd http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic https://xml.sdmx.org/2.1/SDMXDataGeneric.xsd">
     <message:Header>
         <message:ID>a2c99026-00c8-4f9a-a3d4-1891f89bd2b0</message:ID>
         <message:Test>false</message:Test>
