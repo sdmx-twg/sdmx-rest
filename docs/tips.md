@@ -38,7 +38,7 @@ Let's say you want to get some exchange rates from a web service. And let's say 
 
 ### Opt for fat-free messages
 
-Plain text formats (XML, JSON, CSV, etc.) compress very well. Compressed data are typically several times smaller than uncompressed ones. In our tests, the compressed files were between 3 and ... 47 times smaller than the uncompressed ones, depending on the type of query and the selected formats. So, in order to optimise network transfer times, request **compressed representations** of the data, using the appropriate HTTP `Accept-Encoding header`. See the section about [HTTP Content Negotiation](conneg.md) for additional information.
+Plain text formats (XML, JSON, CSV, etc.) compress very well. Compressed data are typically several times smaller than uncompressed ones. In our tests, the compressed files were between 3 and ... 47 times smaller than the uncompressed ones, depending on the type of query and the selected formats. So, in order to optimise network transfer times, request **compressed representations** of the data, using the appropriate HTTP `Accept-Encoding header`. See the section about [HTTP Content Negotiation](content_negotiation.md) for additional information.
 
 ### Check the response status code
 
@@ -52,11 +52,11 @@ Clients of web services have a high interest in ensuring that they are connected
 
 ### Check the mime-type and support various formats
 
-By default, SDMX 2.1 REST services are expected to return the most recent version of the SDMX-ML Generic Data format they support, while SDMX 3.0 REST services are expected to return the most recent version of SDMX-JSON. However, clients can use the HTTP Accept header to specify the format they want, so check it and make sure you don't return XML if they asked for JSON ;-). Also, if you don't offer the requested format, simply return an HTTP 406 status code. This being said, if you offer them a **choice between various formats**, you will most likely improve the usability and accessibility of your service, as different clients have different needs. See the section about [HTTP Content Negotiation](conneg.md) for a list of SDMX formats.
+By default, SDMX 2.1 REST services are expected to return the most recent version of the SDMX-ML Generic Data format they support, while SDMX 3.0 REST services are expected to return the most recent version of SDMX-JSON. However, clients can use the HTTP Accept header to specify the format they want, so check it and make sure you don't return XML if they asked for JSON ;-). Also, if you don't offer the requested format, simply return an HTTP 406 status code. This being said, if you offer them a **choice between various formats**, you will most likely improve the usability and accessibility of your service, as different clients have different needs. See the section about [HTTP Content Negotiation](content_negotiation.md) for a list of SDMX formats.
 
 ### Support data compression
 
-Plain text formats (XML, JSON, CSV, etc.) compress very well. Compressed data are typically several times smaller than uncompressed ones. In our tests, the compressed files were between 3 and ... 47 times smaller than the uncompressed ones, depending on the type of query and the selected formats. So, in order to optimise network transfer times, offer the possibility to **get compressed representations** of the data, using the appropriate HTTP `Accept-Encoding header`. See the section about [HTTP Content Negotiation](conneg.md) for additional information.
+Plain text formats (XML, JSON, CSV, etc.) compress very well. Compressed data are typically several times smaller than uncompressed ones. In our tests, the compressed files were between 3 and ... 47 times smaller than the uncompressed ones, depending on the type of query and the selected formats. So, in order to optimise network transfer times, offer the possibility to **get compressed representations** of the data, using the appropriate HTTP `Accept-Encoding header`. See the section about [HTTP Content Negotiation](content_negotiation.md) for additional information.
 
 ### Support Cross-origin queries
 
