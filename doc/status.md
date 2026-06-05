@@ -10,7 +10,7 @@ HTTP status code | Description
 ---|---
 200 | A successful HTTP request. For GET requests, it means the request was successfully processed, and the response body contains the requested data.
 204 | The query result is empty, but this lack of results is acceptable.
-304 | No changes since the version specified by the request headers (If-Modified-Since or If-None-Match). The response does not include data, as previously downloaded data is still valid.
+304 | No changes since the version specified by the request headers `If-Modified-Since` or `If-None-Match`. The response does not include data, as previously downloaded data is still valid.
 400 | The query does not comply with the SDMX-REST API.
 401 | Authentication is required but has failed or has not been provided.
 403 | Authentication was successful, but the user is not authorized to access the requested resource.
