@@ -1,6 +1,6 @@
 # Error handling and status information
 
-RESTful web services rely on HTTP status codes to indicate the outcome of requests, including errors. While an SDMX RESTful web service can return any [HTTP-defined status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes), the most commonly used codes are described below.
+RESTful web services rely on HTTP status codes to indicate the outcome of requests, including errors. While an SDMX RESTful web service can return any [HTTP-defined status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml), the most commonly used codes are described below.
 
 - **Codes below 400**: Indicate successful or normal operations (non-problematic).
 - **Codes between 400 and 499**: Indicate client errors.
