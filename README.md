@@ -1,5 +1,9 @@
 # Overview
 
+> [!IMPORTANT]
+> For the best reading experience, use the SDMX documentation website:
+> [SDMX REST API: Developers' documentation](https://sdmx-twg.github.io/sdmx-docs/3.1/rest_api/)
+
 This repository is used to maintain the SDMX REST API.
 
 The API allows implementers to offer programmatic access to statistical data and metadata over HTTP.
