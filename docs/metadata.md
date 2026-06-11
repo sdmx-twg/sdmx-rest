@@ -1,4 +1,14 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 # Metadata queries
+
+!!! note
+    To enhance readability of the large tables on this page, navigation
+    panels are hidden. To return to the introduction, click [REST API](./index.md).
 
 ## By metadataset
 

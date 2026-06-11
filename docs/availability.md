@@ -1,4 +1,14 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 # Data availability queries
+
+!!! note
+    To enhance readability of the large tables on this page, navigation
+    panels are hidden. To return to the introduction, click [REST API](./index.md).
 
 ## Overview
 
@@ -45,8 +55,8 @@ Operators appear as prefix to the component value(s) and are separated from it b
 
 As already mentioned, the response from the Data Availability API is an SDMX AvailabilityConstraint containing a CubeRegion which defines the distinct Values for each Dimension of the data. These distinct values contained in the CubeRegion are determined by the server based on the data query presented to this API.  The meaning of the distinct values depends on the response mode.
 
-> [!TIP]
-> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.
+!!! tip
+    Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.
 
 ### Response Mode
 

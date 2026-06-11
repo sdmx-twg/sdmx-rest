@@ -81,10 +81,10 @@ In order to update Artefact(s), the client:
 - MUST set the `Content-type` header according to the format of the submitted Artefact(s);
 - MUST include in the request body, one or more Maintainable Artefacts in the SDMX format indicated in the `Content-type` header and of the SDMX type indicated in the resource, i.e.:
 - for `POST`:
-  - any set of Maintainable Artefacts under resource `/structure/`
-  - one or more Maintainable Artefacts of the specific type under the corresponding resource type, e.g. Dataflows under `/structure/dataflow/`
+    - any set of Maintainable Artefacts under resource `/structure/`
+    - one or more Maintainable Artefacts of the specific type under the corresponding resource type, e.g. Dataflows under `/structure/dataflow/`
 - for `PUT`:
-  - one Maintainable Artefact, of the specific type under the corresponding resource type and identified according to the resource parameters, e.g., DSD `ESTAT:NA_MAIN(1.1)` under `/structure/datastructure/ESTAT/NA_MAIN/1.1`
+    - one Maintainable Artefact, of the specific type under the corresponding resource type and identified according to the resource parameters, e.g., DSD `ESTAT:NA_MAIN(1.1)` under `/structure/datastructure/ESTAT/NA_MAIN/1.1`
 
 ##### Server
 

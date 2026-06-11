@@ -1,4 +1,14 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 # Data queries
+
+!!! note
+    To enhance readability of the large tables on this page, navigation
+    panels are hidden. To return to the introduction, click [REST API](./index.md).
 
 ## Overview
 
@@ -68,8 +78,8 @@ The table below offers a few examples and how they should be interpreted.
 |c[X]=ne:A,ne:B |X <> A OR X <> B|
 |c[X]=ne:A+ne:B |X <> A AND X <> B|
 
-> [!TIP]
-> Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.
+!!! tip
+     Some servers treat square brackets (`[` and `]`) as invalid characters in URLs. If the issue occurs, please encode them using `%5B` and `%5D` respectively.
 
 ## Response types
 
