@@ -42,7 +42,7 @@ Plain text formats (XML, JSON, CSV, etc.) compress very well. Compressed data ar
 
 ### Check the response status code
 
-The response status code is used to report potential issues. So, check it. It’s not always 200 (or 42). See the section about the [status codes](status.md) for additional information.
+The response status code is used to report potential issues. So, check it. It’s not always 200 (or 42). See the section about the [status codes](status.md) for additional information, and keep in mind that additional status codes are allowed in HTTP. Also, be ready to accept both `204` and `404` to indicate that there is nothing matching your request. Some might even return `501` to indicate they don't support a certain type of artefact. Likewise, remember that some services might have generic "fallback" error codes such as `400` for any client error and `500` for any service error.
 
 ## Tips for data providers
 
