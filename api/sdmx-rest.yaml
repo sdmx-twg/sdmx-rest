@@ -342,72 +342,88 @@ components:
     structureType:
       in: path
       name: structureType
-      description: The type of structural metadata (e.g. codelist, dataflow, etc.)
+      description: |
+        The type of structural metadata (e.g. codelist, dataflow, etc.).
+
+        Instances of custom structure definitions are addressed using a namespaced type token of the form `{csd-agency}:{classtype}`,
+        where `{csd-agency}` is the lower case, period-separated agency path of the agency maintaining the custom structure definition,
+        and `{classtype}` is the lower case class name defined by that custom structure definition (e.g. `imf:pivottable`).
       required: true
       schema:
-        type: string
-        enum: [
-            datastructure,
-            metadatastructure,
-            dataflow,
-            metadataflow,
-            provisionagreement,
-            process,
-            categorisation,
-            dataconstraint,
-            metadataconstraint,
-            conceptscheme,
-            codelist,
-            categoryscheme,
-            hierarchy,
-            hierarchyassociation,
-            agencyscheme,
-            dataproviderscheme,
-            dataconsumerscheme,
-            organisationunitscheme,
-            transformationscheme,
-            rulesetscheme,
-            userdefinedoperatorscheme,
-            customtypescheme,
-            namepersonalisationscheme,
-            vtlmappingscheme,
-            valuelist,
-            structuremap,
-            representationmap,
-            conceptschememap,
-            categoryschememap,
-            organisationschememap,
-            reportingtaxonomymap,
-            metadataproviderscheme,
-            reportingtaxonomy,
-            metadataprovisionagreement,
-            "*"
-          ]
+        anyOf:
+          - type: string
+            enum: [
+                datastructure,
+                metadatastructure,
+                dataflow,
+                metadataflow,
+                provisionagreement,
+                process,
+                categorisation,
+                dataconstraint,
+                metadataconstraint,
+                conceptscheme,
+                codelist,
+                categoryscheme,
+                hierarchy,
+                hierarchyassociation,
+                agencyscheme,
+                dataproviderscheme,
+                dataconsumerscheme,
+                organisationunitscheme,
+                transformationscheme,
+                rulesetscheme,
+                userdefinedoperatorscheme,
+                customtypescheme,
+                namepersonalisationscheme,
+                vtlmappingscheme,
+                valuelist,
+                structuremap,
+                representationmap,
+                conceptschememap,
+                categoryschememap,
+                organisationschememap,
+                reportingtaxonomymap,
+                metadataproviderscheme,
+                reportingtaxonomy,
+                metadataprovisionagreement,
+                customstructuredefinition,
+                "*"
+              ]
+          - type: string
+            pattern: '^[a-z][a-z\d_-]*(\.[a-z][a-z\d_-]*)*:[a-z][a-z\d]*$'
     itemSchemeType:
       in: path
       name: itemSchemeType
-      description: The type of item scheme (e.g. codelist, agencyscheme, etc.)
+      description: |
+        The type of item scheme (e.g. codelist, agencyscheme, etc.).
+
+        Instances of item scheme based custom structure definitions are addressed using a namespaced type token of the form
+        `{csd-agency}:{classtype}` (e.g. `imf:glossary`); see the structureType parameter for details.
       required: true
       schema:
-        type: string
-        enum:
-          [
-            conceptscheme,
-            codelist,
-            categoryscheme,
-            agencyscheme,
-            dataproviderscheme,
-            dataconsumerscheme,
-            organisationunitscheme,
-            transformationscheme,
-            rulesetscheme,
-            userdefinedoperatorscheme,
-            customtypescheme,
-            namepersonalisationscheme,
-            vtlmappingscheme,
-            valuelist,
-            "*"
-          ]
+        anyOf:
+          - type: string
+            enum:
+              [
+                conceptscheme,
+                codelist,
+                categoryscheme,
+                agencyscheme,
+                dataproviderscheme,
+                dataconsumerscheme,
+                organisationunitscheme,
+                transformationscheme,
+                rulesetscheme,
+                userdefinedoperatorscheme,
+                customtypescheme,
+                namepersonalisationscheme,
+                vtlmappingscheme,
+                valuelist,
+                "*"
+              ]
+          - type: string
+            pattern: '^[a-z][a-z\d_-]*(\.[a-z][a-z\d_-]*)*:[a-z][a-z\d]*$'
     context:
       in: path
       name: context
@@ -729,56 +745,62 @@ components:
       in: query
       name: references
       description: |
-        Instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query), 
+        Instructs the web service to return (or not) the artefacts referenced by the artefact to be returned (for example, the code lists and concepts used by the data structure definition matching the query),
         as well as the artefacts that use the matching artefact (for example, the dataflows that use the data structure definition matching the query).
+
+        A concrete type of resource may also be used, including the namespaced type token of instances of a custom structure definition (e.g. `imf:pivottable`).
       required: false
       schema:
         type: array
         items:
-          type: string
-          enum:
-            [
-              none,
-              parents,
-              parentsandsiblings,
-              ancestors,
-              children,
-              descendants,
-              all,
-              datastructure,
-              metadatastructure,
-              categoryscheme,
-              conceptscheme,
-              codelist,
-              hierarchy,
-              hierarchyassociation,
-              agencyscheme,
-              dataproviderscheme,
-              dataconsumerscheme,
-              organisationunitscheme,
-              dataflow,
-              metadataflow,
-              reportingtaxonomy,
-              provisionagreement,
-              structureset,
-              process,
-              categorisation,
-              dataconstraint,
-              metadataconstraint,
-              transformationscheme,
-              rulesetscheme,
-              userdefinedoperatorscheme,
-              customtypescheme,
-              namepersonalisationscheme,
-              namealiasscheme,
-              valuelist,
-              structuremap,
-              representationmap,
-              conceptschememap,
-              categoryschememap,
-              organisationschememap,
-              reportingtaxonomymap
-            ]
+          anyOf:
+            - type: string
+              enum:
+                [
+                  none,
+                  parents,
+                  parentsandsiblings,
+                  ancestors,
+                  children,
+                  descendants,
+                  all,
+                  datastructure,
+                  metadatastructure,
+                  categoryscheme,
+                  conceptscheme,
+                  codelist,
+                  hierarchy,
+                  hierarchyassociation,
+                  agencyscheme,
+                  dataproviderscheme,
+                  dataconsumerscheme,
+                  organisationunitscheme,
+                  dataflow,
+                  metadataflow,
+                  reportingtaxonomy,
+                  provisionagreement,
+                  structureset,
+                  process,
+                  categorisation,
+                  dataconstraint,
+                  metadataconstraint,
+                  transformationscheme,
+                  rulesetscheme,
+                  userdefinedoperatorscheme,
+                  customtypescheme,
+                  namepersonalisationscheme,
+                  namealiasscheme,
+                  valuelist,
+                  structuremap,
+                  representationmap,
+                  conceptschememap,
+                  categoryschememap,
+                  organisationschememap,
+                  reportingtaxonomymap,
+                  customstructuredefinition
+                ]
+            - type: string
+              pattern: '^[a-z][a-z\d_-]*(\.[a-z][a-z\d_-]*)*:[a-z][a-z\d]*$'
           default: none
       style: form
       explode: false

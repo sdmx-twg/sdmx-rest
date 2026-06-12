@@ -33,7 +33,7 @@ For item schemes, an additional path parameter (itemID) is permissible.
 
 Parameter | Type | Description | Default | Multiple values?
 --- | --- | --- | --- | ---
-artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist,  agencyscheme, dataproviderscheme, metadataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, metadataprovisionagreement, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, reportingtaxonomymap, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme | The type of structural metadata to be returned. | * | No
+artefactType | One of the following types: datastructure, metadatastructure, categoryscheme, conceptscheme, codelist, hierarchy, hierarchyassociation, valuelist,  agencyscheme, dataproviderscheme, metadataproviderscheme, dataconsumerscheme, organisationunitscheme, dataflow, metadataflow, reportingtaxonomy, provisionagreement, metadataprovisionagreement, structuremap, representationmap, conceptschememap, categoryschememap, organisationschememap, reportingtaxonomymap, process, categorisation, dataconstraint, metadataconstraint, transformationscheme, rulesetscheme, userdefinedoperatorscheme, customtypescheme, namepersonalisationscheme, vtlmappingscheme, customstructuredefinition, or a namespaced custom structure class token of the form `{csd-agency}:{classtype}` (e.g. `imf:pivottable`, see [Custom structure definitions and their instances](#custom-structure-definitions-and-their-instances)) | The type of structural metadata to be returned. | * | No
 agencyID | A string compliant with the SDMX *common:NestedNCNameIDType* | The agency maintaining the artefact to be returned. It is possible to set more than one agency, using `,` as separator (e.g. BIS,ECB). | * | Yes
 resourceID | A string compliant with the SDMX *common:IDType* | The id of the artefact to be returned. It is possible to set more than one id, using `,` as separator (e.g. CL_FREQ,CL_CONF_STATUS). | * | Yes
 version | A string compliant with the [SDMX *semantic versioning* rules](querying_versions.md) | The version of the artefact to be returned. It is possible to set more than one version, using `,` as separator (e.g. 1.0.0,2.1+.7). | ~ | Yes
@@ -61,6 +61,7 @@ As mentioned, `itemID` can be used for item scheme queries only! These are:
 - customtypescheme
 - namepersonalisationscheme
 - vtlmappingscheme
+- custom structure instances whose custom structure definition has the *ItemScheme* base (e.g. `imf:glossary`, see below)
 
 Although it is not following the *item scheme* pattern, the *valuelist* is also a collection, i.e. a collection of values.
 
@@ -93,6 +94,29 @@ While most Item Schemes are flat, hence the above table is easy to interpret, fo
 
 Further to the above, the reference resolution mechanism will be applied to all items returned. For example, querying for a category which has two ancestors in the hierarchy of the category scheme, will result into returning three categories (the requested one and its ancestors), as well as all references of those three categories.
 
+### Custom structure definitions and their instances
+
+A *custom structure definition* (CSD) defines a new structure type (a *class*) which does not exist in the SDMX Information Model, for example a PivotTable. The definition itself is a maintainable artefact and is queried with the `customstructuredefinition` artefact type, like any other structure:
+
+        https://ws-entry-point/structure/customstructuredefinition/IMF/PIVOT_TABLE/1.0.0
+
+*Instances* of a custom structure definition are also maintainable artefacts, and are addressed with a **namespaced artefact type token** of the form `{csd-agency}:{classtype}`:
+
+        https://ws-entry-point/structure/imf:pivottable/OECD/POP_SEX_AGE/1.0.0
+
+- `{csd-agency}` is the agency path of the agency **maintaining the custom structure definition**, in lower case, with `.` separating an agency from a sub-agency (e.g. `sdmx.imf:pivottable`). This is required because class names are only unique within the namespace of the agency that defines them.
+- `{classtype}` is the class name defined by the custom structure definition, in lower case (matching against the definition's classType is case-insensitive).
+- The remaining path parameters (`agencyID`, `resourceID`, `version`) identify the **instance** and behave exactly as for any other artefact type, including wildcards, multiple values and version forms.
+
+The token mirrors the package of the instance URN, so the two are mechanically convertible: `urn:sdmx:org.sdmx.infomodel.csd.imf.PivotTable=OECD:POP_SEX_AGE(1.0.0)` ↔ `imf:pivottable/OECD/POP_SEX_AGE/1.0.0`. Since no fixed artefact type token contains a `:`, the namespaced form is always unambiguous. The class token does not carry the version of the custom structure definition: the returned instance identifies the exact definition version it conforms to through its mandatory CustomStructureDefinition reference.
+
+The catch-all artefact type (`*`) includes custom structure definitions **and all custom structure instances**.
+
+References work as for every other artefact type, with no special rules. An instance references its custom structure definition (as well as any artefact referenced by its reference properties), so:
+
+- querying an instance with `references=children` also returns the custom structure definition it conforms to (and the other artefacts it references, e.g. a dataflow);
+- querying a custom structure definition with `references=parents` also returns the instances that conform to it.
+
 ### Applicability and meaning of references (including referencepartial)
 
 The table below lists the 1st level artefacts (one level up, one level down) that will be returned if the references parameter is set to `all`. Artefacts referenced by the matching artefact are displayed in regular style, artefacts that reference the matching artefact are displayed in *Italic* and artefacts that can both reference and be referenced by the matching artefact are displayed in ***bold italic***.
@@ -106,6 +130,8 @@ CategorySchemeMap | AgencyScheme, *Categorisation*, CategoryScheme, *HierarchyAs
 Codelist | AgencyScheme, *Categorisation*, ***Codelist***, *ConceptScheme*, *DataStructureDefinition*, *Hierarchy*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataStructureDefinition*, *Process*, *RepresentationMap*, *VtlMappingScheme*
 ConceptScheme | AgencyScheme, *Categorisation*, Codelist, *ConceptSchemeMap*, *DataStructureDefinition*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *MetadataStructureDefinition*, *Process*, *VtlMappingScheme*
 ConceptSchemeMap | AgencyScheme, *Categorisation*, ConceptScheme, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+CustomStructureDefinition | AgencyScheme, *Categorisation*, *Custom structure instances*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*
+Custom structure instance (e.g. `imf:pivottable`) | AgencyScheme, *Categorisation*, CustomStructureDefinition, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, plus any artefact referenced by the instance's reference properties (e.g. Dataflow, Codelist), as declared in its custom structure definition
 CustomTypeScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, *TranformationScheme*
 DataConstraint | AgencyScheme, *Categorisation*, Dataflow, DataProviderScheme, DataStructureDefinition, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *Process*, ProvisionAgreement
 DataConsumerScheme | AgencyScheme, *Categorisation*, *HierarchyAssociation*, *Metadataflow*, *MetadataProvisionAgreement*, *OrganisationSchemeMap*, *Process*
@@ -196,3 +222,15 @@ The default format is highlighted in **bold**. For media types of previous SDMX 
 - To retrieve the latest version of the CL_FREQ codelists maintained by the BIS or the ECB:
 
         https://ws-entry-point/structure/codelist/BIS,ECB/CL_FREQ
+
+- To retrieve version 1.0.0 of the PivotTable custom structure instance with id POP_SEX_AGE maintained by the OECD (PivotTable being a class defined by the custom structure definition maintained by the IMF), together with the custom structure definition it conforms to and the dataflow it references:
+
+        https://ws-entry-point/structure/imf:pivottable/OECD/POP_SEX_AGE/1.0.0?references=children
+
+- To retrieve version 1.0.0 of the PIVOT_TABLE custom structure definition maintained by the IMF, together with the instances that conform to it:
+
+        https://ws-entry-point/structure/customstructuredefinition/IMF/PIVOT_TABLE/1.0.0?references=parents
+
+- To retrieve the term GDP_PC (a child of the term GDP) from the latest version of the STAT_GLOSSARY custom structure instance maintained by the ECB (Glossary being an item scheme based class defined by the custom structure definition maintained by the IMF):
+
+        https://ws-entry-point/structure/imf:glossary/ECB/STAT_GLOSSARY/+/GDP.GDP_PC
