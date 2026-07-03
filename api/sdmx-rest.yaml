@@ -134,6 +134,7 @@ paths:
         - $ref: "#/components/parameters/dimensionAtObservation"
         - $ref: "#/components/parameters/deletion"
         - $ref: "#/components/parameters/asOf"
+        - $ref: "#/components/parameters/validAt"
         - $ref: "#/components/parameters/accept-encoding"
         - $ref: "#/components/parameters/if-modified-since"
       responses:
@@ -590,6 +591,14 @@ components:
       schema:
         type: string
         format: date-time
+    validAt:
+      in: query
+      name: validAt
+      description: |
+        Constraints may include business validity information (validFrom/validTo), specifying the reporting periods during which they apply. This parameter enables the selection of a reporting period for which data validity should be returned. 
+      required: false
+      schema:
+        type: string
     firstNObservations:
       in: query
       name: firstNObservations
