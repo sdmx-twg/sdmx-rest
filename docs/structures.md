@@ -100,15 +100,15 @@ A *custom structure definition* (CSD) defines a new structure type (a *class*) w
 
         https://ws-entry-point/structure/customstructuredefinition/IMF/PIVOT_TABLE/1.0.0
 
-*Instances* of a custom structure definition are also maintainable artefacts, and are addressed with a **namespaced artefact type token** of the form `{csd-agency}:{classtype}`:
+A *custom structure instance* (CSI) is an instance of metadata, which conforms to the rules defined by the CSD.  The CSI is also a maintainable artefact, and are addressed with a **namespaced artefact type token** of the form `{csd-agency}:{classname}`:
 
         https://ws-entry-point/structure/imf:pivottable/OECD/POP_SEX_AGE/1.0.0
 
-- `{csd-agency}` is the agency path of the agency **maintaining the custom structure definition**, in lower case, with `.` separating an agency from a sub-agency (e.g. `sdmx.imf:pivottable`). This is required because class names are only unique within the namespace of the agency that defines them.
-- `{classtype}` is the class name defined by the custom structure definition, in lower case (matching against the definition's classType is case-insensitive).
+- `{csd-agency}` is the agency path of the agency **maintaining the custom structure definition**, in lower case, with `.` separating an agency from a sub-agency (e.g. `imf.sta:pivottable`). The *agency* prefix to the class name is required because class names are only unique within the namespace of the agency that defines them.
+- `{classname}` is the class name defined by the custom structure definition, in lower case (matching against the definition's classType is case-insensitive).
 - The remaining path parameters (`agencyID`, `resourceID`, `version`) identify the **instance** and behave exactly as for any other artefact type, including wildcards, multiple values and version forms.
 
-The token mirrors the package of the instance URN, so the two are mechanically convertible: `urn:sdmx:org.sdmx.infomodel.csd.imf.PivotTable=OECD:POP_SEX_AGE(1.0.0)` ↔ `imf:pivottable/OECD/POP_SEX_AGE/1.0.0`. Since no fixed artefact type token contains a `:`, the namespaced form is always unambiguous. The class token does not carry the version of the custom structure definition: the returned instance identifies the exact definition version it conforms to through its mandatory CustomStructureDefinition reference.
+The class token does not carry the version of the custom structure definition: the returned instance identifies the exact definition version it conforms to through its mandatory CustomStructureDefinition reference.
 
 The catch-all artefact type (`*`) includes custom structure definitions **and all custom structure instances**.
 
