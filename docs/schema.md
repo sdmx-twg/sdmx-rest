@@ -8,7 +8,7 @@ This is typically used for **validation and/or communication purposes**, for exa
 
 ## Syntax
 
-    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}&{deletion}&{asOf}
+    protocol://ws-entry-point/schema/{context}/{agencyID}/{resourceID}/{version}?{dimensionAtObservation}&{deletion}&{asOf}&{validAt}
 
 Parameter | Type | Description | Default
 --- | --- | --- | ---
@@ -19,6 +19,7 @@ version | A string compliant with the [SDMX *semantic versioning* rules](queryin
 dimensionAtObservation | A string compliant with the SDMX *common:NCNameIDType* | The ID of the dimension to be attached at the observation level. |
 deletion | Boolean | Whether the generated schema will be used to validate deletion messages. | `false`
 asOf | xs:dateTime | Retrieve the schema as it was at the specified point in time (aka time travel). | | No
+validAt | A string compliant with *SDMX common:StandardTimePeriodType* | Constraints may include business validity information (validFrom/validTo), specifying the reporting periods during which they apply. This parameter enables the selection of a reporting period for which data validity should be returned. | No
 
 Note: Mandatory parameters are highlighted in **bold**.
 
@@ -37,9 +38,32 @@ The following media types can be used with *schema* queries:
 
 The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
+### Schema formats
+
 The *schema* formats are meant to be used for **validation** purposes (i.e. to validate SDMX-ML and SDMX-JSON data files).
 
-The *structure* formats are meant to be used for **communication** purposes. In that case, the response must only include the following types of artefact: (meta)data structures, codelists, concept schemes, agency schemes and, optionally, constraints. The various item schemes must only contain the relevant items: Codelists must only contain the codes that are allowed after applying the constraints up to the specified *context*; Concept schemes must only contain the concepts that are used by the data structure; Agency schemes must only contain agencies maintaining artefacts that are part of the response. Constraints may be added to the response in case multiple components reference the same codelist. For example, let's consider a data structure where two components, reference area and counterparty country, reference the same codelist (containing 10 codes). For reference area, only code A is allowed, while, for counterparty country, only codes B & C are allowed. The codelist returned in the response must only include the 3 allowed codes (A, B and C), as mentioned above. In addition, constraints should also be returned in the response, to indicate which codes are allowed as reference area (A) and which codes are allowed as counterparty country (B and C).
+### Structure formats
+
+The *structure* formats are intended for **communication** purposes. The response must include only the following types of artefacts:
+
+- (Meta)data structures
+- Codelists
+- Concept schemes
+- Agency schemes
+- Constraints (optional, see below)
+
+Each item scheme must include only the relevant items:
+
+- Codelists must contain only the codes allowed after applying the constraints up to the specified *context*.
+- Concept schemes must contain only the concepts used by the data structure.
+- Agency schemes must contain only the agencies that maintain artefacts included in the response.
+
+Constraints must be included in the response if either of the following conditions is met:
+
+- **Multiple components reference the same codelist.** For example, consider a data structure in which two components, reference area and counterparty country, both reference the same codelist containing 10 codes. If only code A is allowed for reference area, and only codes B and C are allowed for counterparty country, then the codelist returned in the response must contain only the three allowed codes: A, B, and C. In addition, constraints must be included to indicate that A is allowed for reference area, while B and C are allowed for counterparty country.
+- **A keyset constraint is defined.** In this case, constraints are necessary for accurate validation, because the Cartesian product of the constrained codelists may be broader than the set of series allowed by the keyset constraint.
+
+If neither condition is met, constraints must not be included in the response.
 
 ## Examples
 
