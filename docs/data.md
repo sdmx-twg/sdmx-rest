@@ -88,6 +88,7 @@ The following media types can be used with _data_ queries:
 - **application/vnd.sdmx.data+json;version=2.1.0**
 - application/vnd.sdmx.data+xml;version=3.1.0
 - application/vnd.sdmx.data+csv;version=2.1.0;labels=[id|name|both];timeFormat=[original|normalized];keys=[none|obs|series|both]
+- application/vnd.sdmx.data+parquet;version=1.0.0
 - application/vnd.sdmx.data+json;version=2.0.0
 - application/vnd.sdmx.data+xml;version=3.0.0
 - application/vnd.sdmx.data+csv;version=2.0.0;labels=[id|name|both];timeFormat=[original|normalized];keys=[none|obs|series|both]
@@ -95,6 +96,37 @@ The following media types can be used with _data_ queries:
 The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
 
 SDMX-CSV offers the possibility to set the value for three parameters via the media-type. These parameters are `label`, `timeFormat`, and `keys`. All the parameters are optional. The default values for these parameters are `id`, `original`, and `none` respectively. For additional information about these parameters, please refer to the [SDMX-CSV specification](https://github.com/sdmx-twg/sdmx-csv).
+
+### SDMX-Parquet
+
+[SDMX-Parquet](https://github.com/sdmx-twg/sdmx-parquet) is a data format based on [Apache Parquet](https://parquet.apache.org/), designed for data analytics. A response always contains the **complete data of one dataflow**, in a flat representation (one row per observation) with typed columns and IDs only, as defined in the [SDMX-Parquet Data Message Field Guide](https://github.com/sdmx-twg/sdmx-parquet/blob/develop/data-message/sdmx-parquet-field-guide.md).
+
+The media type has no parameter other than `version`. `version=1.0` is equivalent to `version=1.0.0`, and unsupported versions return `406 Not Acceptable`, as for other formats.
+
+SDMX-Parquet can therefore only be returned for a query that identifies exactly one dataflow and applies no filter, for example:
+
+    https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/*
+
+Parameter | Supported with SDMX-Parquet
+--- | ---
+context | `dataflow` only
+agencyID, resourceID, version | Must identify exactly one dataflow
+key | All values only (`*`)
+asOf | Yes: the response contains the complete data of the dataflow as it was at the requested point in time, which the file records in the `sdmx.as_of` key of its file-level metadata
+c, updatedAfter, firstNObservations, lastNObservations, dimensionAtObservation, attributes, measures, includeHistory, offset, limit, sort, reportingYearStartDay | No
+Media type parameters other than `version` | No
+`Accept-Language` header | Ignored: SDMX-Parquet files contain IDs only
+
+When a request for SDMX-Parquet contains key filtering or an unsupported parameter:
+
+- if the `Accept` header also lists other acceptable media types (e.g. `application/vnd.sdmx.data+parquet;version=1.0.0, application/vnd.sdmx.data+csv;version=2.1.0;q=0.5`), the service should answer with the most preferred of them that can represent the result, following [HTTP content negotiation](content_negotiation.md);
+- otherwise, the service must return `406 Not Acceptable`, and the error message should name the unsupported parameter(s).
+
+When the dataflow has no data, the service returns `204 No Content`, without a Parquet file. Error responses never contain a Parquet file.
+
+Compression is applied inside the Parquet file (column-chunk compression), not negotiated over HTTP. ZSTD is the recommended default codec, and Snappy is acceptable for compatibility with older readers. The `Accept-Encoding` header is not used to select the Parquet compression codec, and services should not apply an additional `Content-Encoding` by default, as the payload is already compressed.
+
+Services should send the `Content-Disposition` header with the `attachment` type and a file name built from the dataflow identification, for example `Content-Disposition: attachment; filename="ECB_EXR_1.0.0.parquet"`.
 
 ## Use cases behind the various time-related queries
 
@@ -327,3 +359,13 @@ By default, the REST API interprets the timestamps used by `includeHistory` and 
   ```
 
   When querying for `D.CHF.*`, the first data row would be matched. All attributes applying to this row must be returned, regardless of their attachment level, i.e. the response must include the dataflow-level (`UNIT_MULT`), the group-level (`DECIMALS`, `UNIT_MEAS`), the series-level (`COLL`), and the observation-level (`OBS_STATUS`) attributes. `OBS_COM` can be ignored, as no value is available for this optional attribute.
+
+- Retrieve the complete data of a dataflow as SDMX-Parquet, using the HTTP `Accept` header `application/vnd.sdmx.data+parquet;version=1.0.0`:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/*
+
+- Retrieve the complete data of a dataflow as SDMX-Parquet, as it was at a certain point in time:
+
+        https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/*?asOf=2026-10-01T00:00:00Z
+
+  If SDMX-Parquet is the only acceptable media type, a filtered query such as `https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/M.USD.EUR.SP00.A` returns `406 Not Acceptable`.

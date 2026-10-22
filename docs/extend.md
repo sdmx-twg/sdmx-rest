@@ -46,6 +46,7 @@ The `format`, as explained above, represents a combination of the representation
 - `jsondata` for the SDMX-JSON Dataset
 - `jsonstructure` for the SDMX-JSON Structural Metadata
 - `csvdata` for the SDMX-CSV Dataset
+- `parquetdata` for the SDMX-Parquet Dataset
 
 #### The `formatVersion` query parameter
 
@@ -74,6 +75,10 @@ To retrieve an SDMX-ML 2.1 Codelist, using the representation query parameters:
 To retrieve a json dataset, using the representation query parameters:
 
     https://ws-entry-point/data/dataflow/ECB/EXR/+/M.USD.EUR.SP00.A?format=jsondata&formatVersion=1.0.0
+
+To retrieve the complete data of a dataflow as an SDMX-Parquet dataset, using the representation query parameters:
+
+    https://ws-entry-point/data/dataflow/ECB/EXR/1.0.0/*?format=parquetdata&formatVersion=1.0.0
 
 ## Other parameters used for Content-Negotiation
 
