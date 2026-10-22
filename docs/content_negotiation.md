@@ -52,6 +52,8 @@ The [Accept-Language header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.h
 
 Compression can be enabled using the appropriate [Accept-Encoding header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 
+SDMX-Parquet is an exception: its compression is applied inside the file and is not negotiated over HTTP. The `Accept-Encoding` header is not used to select the Parquet compression codec, and services should not apply an additional `Content-Encoding` by default (see [Data queries](data.md#sdmx-parquet)).
+
 ## Helping web caches and Content Delivery Networks (CDN)
 
 The [Vary header](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html) is used to indicate the list of headers that are relevant for a particular service.
