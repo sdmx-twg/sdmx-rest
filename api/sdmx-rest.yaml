@@ -270,7 +270,7 @@ paths:
       responses:
         <<: *common_responses
         "200":
-          $ref: '#/components/responses/200-meta'
+          $ref: '#/components/responses/200-reg'
 
   /registration/provider/{agencyID}/{providerID}:
     get:
@@ -287,7 +287,7 @@ paths:
       responses:
         <<: *common_responses
         "200":
-          $ref: '#/components/responses/200-meta'
+          $ref: '#/components/responses/200-reg'
 
   /registration/{context}/{agencyID}/{resourceID}/{version}:
     get:
@@ -306,7 +306,7 @@ paths:
       responses:
         <<: *common_responses
         "200":
-          $ref: '#/components/responses/200-meta'          
+          $ref: '#/components/responses/200-reg'          
           
 components:
   parameters:
@@ -992,6 +992,18 @@ components:
           schema:
             type: string
         application/vnd.sdmx.structurespecificmetadata+xml;version=2.1:
+          schema:
+            type: string
+    "200-reg":
+      description: OK
+      content:
+        application/vnd.sdmx.registry+xml;version=3.1.0:
+          schema:
+            type: string
+        application/vnd.sdmx.registry+json;version=2.2.0:
+          schema:
+            type: string
+        application/vnd.sdmx.registry+xml;version=3.0.0:
           schema:
             type: string
     "204":
