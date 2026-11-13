@@ -110,6 +110,7 @@ Retrieve all Registrations updated after a specific point in time (percent encod
 The following media types can be used with *registration* queries:
 
 - **application/vnd.sdmx.registry+xml;version=3.1.0**
+- application/vnd.sdmx.registry+json;version=2.2.0
 - application/vnd.sdmx.registry+xml;version=3.0.0
 
 The default format is highlighted in **bold**. For media types of previous SDMX versions, please consult the documentation of the SDMX version you are interested in.
